@@ -1,0 +1,1 @@
+--blank-lines-before-block-comments --space-after-for --space-after-for --space-after-if --space-after-while 
