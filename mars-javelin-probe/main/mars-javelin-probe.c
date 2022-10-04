@@ -8,6 +8,7 @@
 
 
 #include <stdio.h>
+#include "Arduino.h"
 
 void app_main(void)
 {
