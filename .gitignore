@@ -1,4 +1,5 @@
 mars-javelin-probe/build/
 mars-javelin-probe/sdkconfig
 mars-javelin-probe/sdkconfig.old
+mars-javelin-probe/managed_components
 *.vscode

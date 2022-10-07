@@ -2,7 +2,7 @@
 *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-03 22:40]
-*     Last Modified       :     [2022-10-03 22:42]
+*     Last Modified       :     [2022-10-04 19:40]
 *     Description         :     Coordinates and controls generation of new tasks 
 *                               Using the ESP Arduino library for access to a wider number of
 *                               libraries for components, such as the IridiumSBD library.
@@ -13,14 +13,19 @@
 
 
 
-#include <stdio.h>
+#include <cstdio>
+#include "esp_log.h"
 #include "Arduino.h"
 #include "HardwareSerial.h"
 #include "IridiumSBD.h"
 
+#define IRIDIUM_INSTALLED 0
+
+const char* TAG = "MARS JAVELIN";
 
 void vIridiumSBDUpdate(void *pvParameters)
 {
+#if IRIDIUM_INSTALLED
     HardwareSerial IridiumSerial(1); // using uart_num 1
     
     IridiumSBD modem(IridiumSerial);
@@ -73,7 +78,9 @@ void vIridiumSBDUpdate(void *pvParameters)
     {
         printf("Hey, it worked!");
     }
+#endif /* IRIDIUM_INSTALLED */
 
+    printf("Ending IridiumSBD\n");
     vTaskDelete( NULL) ;
 }
 
@@ -83,6 +90,7 @@ extern "C" void app_main(void)
     BaseType_t xReturned;
     TaskHandle_t xHandle = NULL;
 
+    printf("Starting IridiumSBD task\n");
     xReturned = xTaskCreate(
                         vIridiumSBDUpdate,          // Task
                         "Iridium SBD Connection",   // Name of task
