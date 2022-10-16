@@ -2,7 +2,7 @@
 *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-03 22:40]
-*     Last Modified       :     [2022-10-04 19:40]
+*     Last Modified       :     [2022-10-14 00:03]
 *     Description         :     Coordinates and controls generation of new tasks 
 *                               Using the ESP Arduino library for access to a wider number of
 *                               libraries for components, such as the IridiumSBD library.
@@ -15,92 +15,36 @@
 
 #include <cstdio>
 #include "esp_log.h"
+#include "esp_timer.h"
 #include "Arduino.h"
-#include "HardwareSerial.h"
 #include "IridiumSBD.h"
+#include "CopernicusII.h"
+#include "datalogger.h"
 
-#define IRIDIUM_INSTALLED 0
+#define MICRO2MILLI(x)  ((x) / 1000UL)
 
 const char* TAG = "MARS JAVELIN";
 
-void vIridiumSBDUpdate(void *pvParameters)
-{
-#if IRIDIUM_INSTALLED
-    HardwareSerial IridiumSerial(1); // using uart_num 1
-    
-    IridiumSBD modem(IridiumSerial);
-    IridiumSerial.begin(19200, SERIAL_8N1, 4, 2);
-    printf("Starting modem...\n");
-    int err = modem.begin();
-    if (err != ISBD_SUCCESS)
-    {
-        printf("Begin failed: error %d\n", err);
-        if (err == ISBD_NO_MODEM_DETECTED)
-        {
-            printf("No modem detected: check wiring.");
-        }
-    }
 
-    // Test getting firmware version
-    char version[12];
-    err = modem.getFirmwareVersion(version, sizeof(version));
-    if (err != ISBD_SUCCESS)
-    {
-        printf("FirmwareVersion failed: error %d\n", err);
-        return;
-    }
-    // This is assuming that getFirmwareVersion is supplying us with 0-terminated string
-    printf("Firmware Version is %s.", version);
-
-    // Test the signal quality. Value between 1 and 5
-    int signalQuality = -1;
-    err = modem.getSignalQuality(signalQuality);
-    if (err != ISBD_SUCCESS)
-    {
-        printf("SignalQuality failed: error %d\n", err);
-        return;
-    }
-
-    printf("On a scale of 0 to 5, signal quality is currently %d.", signalQuality);
-
-    // Try to send a message
-    printf("Trying to send the message. This might take several minutes.\r\n");
-    err = modem.sendSBDText("Hello, world!");
-    if (err != ISBD_SUCCESS)
-    {
-        printf("sendSBDText failed: error %d\n", err);
-        if (err == ISBD_SENDRECEIVE_TIMEOUT)
-        {
-            printf("Try again with a better view of the sky.");
-        }
-    }
-    else
-    {
-        printf("Hey, it worked!");
-    }
-#endif /* IRIDIUM_INSTALLED */
-
-    printf("Ending IridiumSBD\n");
-    vTaskDelete( NULL) ;
-}
 
 extern "C" void app_main(void)
 {
     initArduino();
     BaseType_t xReturned;
-    TaskHandle_t xHandle = NULL;
 
-    printf("Starting IridiumSBD task\n");
+    TaskHandle_t xGPSHandle = NULL;
+
+    printf("Starting GPS loop\n");
     xReturned = xTaskCreate(
-                        vIridiumSBDUpdate,          // Task
-                        "Iridium SBD Connection",   // Name of task
-                        1024*4,                     // Stack size
-                        NULL,                       // Parameters
-                        10,                          // Priority
-                        &xHandle                     // Task handle
-                        );
+                        vPrintReceived_Task,
+                        "GPS",
+                        1024*3,
+                        NULL,
+                        10,
+                        &xGPSHandle
+    );
     if (xReturned != pdPASS)
     {
-        printf("Could not start the Iridium SBD task");
+      printf("Could not start the GPS task");
     }
 }
