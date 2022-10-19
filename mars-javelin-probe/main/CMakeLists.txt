@@ -5,6 +5,7 @@ idf_component_register(SRCS "main.cpp"
                     REQUIRES BMI085
                     REQUIRES DataLogger
                     REQUIRES CopernicusII
+                    REQUIRES lora
                     )
 
 
