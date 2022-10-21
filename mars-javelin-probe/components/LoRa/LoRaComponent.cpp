@@ -1,11 +1,11 @@
 /*********************************************************************************
-*     File Name           :     mars-javelin-probe/components/lora/lora_commlogic.cpp
+*     File Name           :     /components/lora/lora_commlogic.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-18 20:25]
-*     Last Modified       :     [2022-10-19 01:39]
+*     Last Modified       :     [2022-10-21 00:51]
 *     Description         :     Communication logic for LoRa modules 
 **********************************************************************************/
-#include "LoRa_comm_logic.h"
+#include "LoRaComponent.h"
 
 void vTX_Task(void *p)
 {

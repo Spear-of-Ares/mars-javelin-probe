@@ -1,0 +1,56 @@
+menu "SD Card DataLog Configuration"
+
+config SD1_CS_GPIO
+  int "SD1_CS_GPIO"
+  range 0 35
+  default 13
+  help
+  Pin number where the CS pin of the onboard SD card module is connected to.
+
+config SD2_CS_GPIO
+  int "SD2_CS_GPIO"
+  range 0 35
+  default 12
+  help
+  Pin number where the CS pin of the external SD card module is connected to.
+
+config SPI2_MISO_GPIO
+  int "SPI_MISO_GPIO"
+  range 0 35
+  default 2
+  help
+  Pin number to be used as the MISO signal for SPI 2
+
+config SPI2_MOSI_GPIO
+  int "SPI_MOSI_GPIO"
+  range 0 35
+  default 15
+  help
+  Pin number to be used as the MOSI signal for SPI 2
+
+config SPI2_SCK_GPIO
+  int "SPI2_SCK_GPIO"
+  range 0 35
+  default 14
+  help
+  Pin number to be used as the SCK signal ofr SPI 2
+
+config SD1_MOUNT
+  string "SD1_MOUNT"
+  default "/sd1"
+  help 
+  Mount point within the file system for SD1
+
+config SD2_MOUNT
+  string "SD2_MOUNT"
+  default "/sd2"
+  help
+  Mount point within the file system for SD2
+
+config SD2_ATTACHED
+  bool "SD2_ATTACHED"
+  default false
+  help 
+  Is the SD2 card reader physically attached to the SPI bus
+
+endmenu
