@@ -1,4 +1,4 @@
-idf_component_register(SRCS "main.cpp"
+idf_component_register(SRCS "main.cpp" 
                     INCLUDE_DIRS "."
                     REQUIRES IridiumSBD
                     REQUIRES BME280
@@ -6,6 +6,8 @@ idf_component_register(SRCS "main.cpp"
                     REQUIRES DataLogger
                     REQUIRES GPS
                     REQUIRES LoRa
+                    REQUIRES Stats
+                    REQUIRES ComBus
                     )
 
 

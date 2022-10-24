@@ -2,61 +2,55 @@
 *     File Name           :     /components/lora/lora_commlogic.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-18 20:25]
-*     Last Modified       :     [2022-10-21 00:51]
+*     Last Modified       :     [2022-10-23 22:00]
 *     Description         :     Communication logic for LoRa modules 
 **********************************************************************************/
 #include "LoRaComponent.h"
 
-void vTX_Task(void *p)
-{
-  SPIClass SPI_1(3);
-  SPI_1.begin(SPI_1_SCLK, SPI_1_MISO, SPI_1_MOSI, SPI_1_CS);
-  LoRa.setPins(SPI_1_CS, SPI_1_RST, SPI_1_DI0);
-  LoRa.setSPI(SPI_1);
-  LoRa.setSPIFrequency(1E6);
-  if( !LoRa.begin(915E6))
-  {
-    printf("Starting LoRa failed!\n");
+void LoRaComponent::vMainLoop_Task(void *arg){
+  LoRaComponent lora_component = *((LoRaComponent*)arg);
+  if (!lora_component.setup()){
     vTaskDelete(NULL);
   }
 
-  int counter = 0;
   for(;;){
-    vTaskDelay(5000/portTICK_PERIOD_MS);
-    LoRa.beginPacket();
-    LoRa.print("Hello ");
-    LoRa.print(counter);
-    LoRa.endPacket();
-    counter++;
-    printf("Packet sent...\n");
+    lora_component.vRX();  
+    vTaskDelay(1);
   }
 }
 
-void vRX_Task(void *p)
-{
-  SPIClass *hspi = new SPIClass(HSPI);
-  hspi->begin(SPI_1_SCLK, SPI_1_MISO, SPI_1_MOSI, SPI_1_CS);
-  LoRa.setPins(SPI_1_CS, SPI_1_RST, SPI_1_DI0);
-  LoRa.setSPI(*hspi);
+// Assumes that initLoRaSPI() has been called from the ComBus component
+bool LoRaComponent::setup(){
+  LoRa.setSPIFrequency(1E6);
+
   if (!LoRa.begin(915E6))
   {
     printf("Starting LoRa failed!\n");
-    vTaskDelete(NULL);
+    return false;
   }
+  return true;
+}
 
-  for(;;){
-    // Try and parse the packet
-    int packetSize = LoRa.parsePacket();
-    if (packetSize)
-    {
-      printf("Received packet '");
-      
-      while(LoRa.available())
-        {
-          printf("%c", (char)LoRa.read());
-        }
-      printf("' with RSSI %d\n", LoRa.packetRssi());
-    }
-    vTaskDelay(1);
+void LoRaComponent::vTX()
+{
+  vTaskDelay(5000/portTICK_PERIOD_MS);
+  LoRa.beginPacket();
+  LoRa.print("Hello ");
+  LoRa.endPacket();
+  printf("Packet sent...\n");
+}
+
+void LoRaComponent::vRX()
+{
+  int packetSize = LoRa.parsePacket();
+  if (packetSize)
+  {
+    printf("Received packet '");
+
+    while(LoRa.available())
+      {
+        printf("%c", (char)LoRa.read());
+      }
+    printf("' with RSSI %d\n", LoRa.packetRssi());
   }
 }

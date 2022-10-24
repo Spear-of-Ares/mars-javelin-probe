@@ -1,3 +1,4 @@
-idf_component_register(SRCS "LoRa.cpp" "LoRa_comm_logic.cpp"
+idf_component_register(SRCS "LoRa.cpp" "LoRaComponent.cpp"
                        INCLUDE_DIRS "include"
-                       REQUIRES arduino)
+                       REQUIRES arduino
+                       REQUIRES ComBus)

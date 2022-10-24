@@ -1,5 +1,10 @@
 #include "datalogger.h"
 
+/**
+* @brief Handles the unqueueing of data from other tasks and writing that data to SD card
+*
+* @param data_logger Data logger class, giving access to other functions and fields
+*/
 void DataLogger::vLogLoop_Task(void* data_logger)
 {
   DataLogger *data_log = (DataLogger*)data_logger;
@@ -15,7 +20,11 @@ void DataLogger::vLogLoop_Task(void* data_logger)
   vTaskDelete(NULL);
 }
 
-// Returns the number of bytes received
+
+/**
+* @brief Gets SDData from the dataOut queue and writes to both SD1 and SD2 if data if larger than
+*        the internal buffer size.
+*/
 void DataLogger::handleQueueData(){
 
   SDData *sd_data;
@@ -26,21 +35,41 @@ void DataLogger::handleQueueData(){
 
   std::string sd_data_msg = sd_data->getMessage();
   int msg_len = sd_data_msg.length();
+
   // Can change number of setors to write (*20, or *40 or something) to increase write efficiency
   // Does take longer for buffer to fill though
   int size_left = (SECTOR_SIZE * 1)- (_dataOutBuf.length());
-  if (size_left - msg_len<= 0)
+  if (size_left - msg_len < 0)
   {
     // Append to sector size
     _dataOutBuf.append(sd_data_msg, 0, size_left);
 
     // Fill sd_data_msg with remaining bytes
-    sd_data_msg = sd_data_msg.substr(size_left+1, msg_len - size_left);
+    sd_data_msg = sd_data_msg.substr(size_left, msg_len-size_left);
 
     // TODO:: Don't clear bufer if appendFile fails
-    appendFile(_path1, _dataOutBuf);
+    // if not connected, attemp to remount
+    if (!_sd1_connected){
+      printf("Mount\n");
+      mountSDFileSystem(_onboard_sd_conf, MOUNT1, 1);
+    }
+    else{
+      esp_err_t ret = appendFile(_path1, _dataOutBuf);
+      if (ret == ESP_FAIL){
+        _sd1_connected = false;
+      }
+    }
+
 #ifdef SD2_ATTACHED
-    appendFile(_path2, _dataOutBuf);
+    if ( !_sd2_connected ){
+      mountSDFileSystem(_external_sd_conf, MOUNT2, 2);
+    }
+  else{
+      appendFile(_path2, _dataOutBuf);
+      if (ret == ESP_FAIL){
+        _sd2_connected = false;
+      }
+    }
 #endif
 
     // reset data out buf
@@ -51,34 +80,58 @@ void DataLogger::handleQueueData(){
   }
 }
 
-void DataLogger::appendFile(std::string path, std::string message){
+
+/**
+* @brief Appends message to file at path
+*
+* @param path       Path of file to append to
+* @param message    Message to append
+*/
+esp_err_t DataLogger::appendFile(std::string path, std::string message){
 #ifdef SPEED_LOG
   uint32_t start = millis();
 #endif
   printf("Appending to file: %s\n", path.c_str());
-  modifyFile(path, message, "a");
+  esp_err_t ret = modifyFile(path, message, "a");
 #ifdef SPEED_LOG
   printf("Took %lu ms to append %u B\n", millis() - start, message.length());
 #endif
+  return ret;
 }
 
-void DataLogger::writeFile(std::string path, std::string message){
+
+/**
+* @brief Writes message to file at path
+*
+* @param path       Path of file to write
+* @param message    Message to write
+*/
+esp_err_t DataLogger::writeFile(std::string path, std::string message){
 #ifdef SPEED_LOG
   uint32_t start = millis();
 #endif
   printf("Writing to file: %s\n", path.c_str());
-  modifyFile(path, message, "w");
+  esp_err_t ret =modifyFile(path, message, "w");
 #ifdef SPEED_LOG
   printf("Took %lu ms to write %u B\n", millis() - start, message.length());
 #endif
+  return ret;
 }
 
-void DataLogger::modifyFile(std::string path, std::string message, std::string open_mode){
+
+/**
+* @brief Modifys a file by either writing or appending
+*
+* @param path       Path of file to modify
+* @param message    Message to add to file
+* @param open_mode  Mode to open file in. Accepted values are "w" and "a"
+*/
+esp_err_t DataLogger::modifyFile(std::string path, std::string message, std::string open_mode){
 
   FILE *file = fopen(path.c_str(), open_mode.c_str());
   if (!file){
     printf("Failed to open file for writing\n");
-    return;
+    return ESP_FAIL;
   }
 
   if(fprintf(file, "%s", message.c_str()) >= 0){
@@ -88,13 +141,23 @@ void DataLogger::modifyFile(std::string path, std::string message, std::string o
     printf("Append failed\n");
   }
   fclose(file);
+
+  return ESP_OK;
 }
 
 
+/**
+* @brief Setup of the various things needed for SD card writing
+*        
+*        Initializes an SPI bus using SPI3_HOST and custom SPI ports defined in the
+*        Kconfig file.
+*
+*        Mounts both SD1 and SD2 at MOUNT1 and MOUNT2 locations. 
+*/
 void DataLogger::setup()
 {
   // Init mount points
-  esp_vfs_fat_sdmmc_mount_config_t mount_config = {
+  _mount_config = {
     .format_if_mount_failed = false,
     .max_files = 5,
     .allocation_unit_size = 16 * 1024
@@ -102,81 +165,84 @@ void DataLogger::setup()
   const char mount_point1[] = MOUNT1;
   const char mount_point2[] = MOUNT2;
 
-  // Host config. Use SPI3_HOST as LoRa is on SPI2_HOST
-  sdmmc_host_t host = SDSPI_HOST_DEFAULT();
-  host.slot = SPI3_HOST;
-
-  // Init spi bus pins
-  spi_bus_config_t spi_conf = {
-    .mosi_io_num = SPI2_MOSI,
-    .miso_io_num = SPI2_MISO,
-    .sclk_io_num = SPI2_SCK,
-    .quadwp_io_num = -1,
-    .quadhd_io_num = -1,
-    .max_transfer_sz = 4092,
-  };
-
-  // Initialize the SPI bus
-  esp_err_t ret = spi_bus_initialize((spi_host_device_t)host.slot, &spi_conf, SDSPI_DEFAULT_DMA);
-  if (ret != ESP_OK){
-    printf("Failed to initialize bus.\n");
-    return; 
-  }
-
+  _host = SDHost;
+  
   // Configure SD1 device and mount its filesystem
-  sdspi_device_config_t onboard_sd_conf = SDSPI_DEVICE_CONFIG_DEFAULT();
-  onboard_sd_conf.host_id = (spi_host_device_t)host.slot;
-  onboard_sd_conf.gpio_cs = (gpio_num_t)SD1_CS;
+  _onboard_sd_conf = SDSPI_DEVICE_CONFIG_DEFAULT();
+  _onboard_sd_conf.host_id = (spi_host_device_t)_host.slot;
+  _onboard_sd_conf.gpio_cs = (gpio_num_t)SD1_CS_GPIO;
+
 
   printf("Mounting Filesystem 1\n");
-  ret = esp_vfs_fat_sdspi_mount(mount_point1, &host, &onboard_sd_conf, &mount_config, &_card1);
-
-  if (ret != ESP_OK){
-    if (ret == ESP_FAIL){
-      printf("Failed to mount filesystem.");
-    }
-  else{
-      printf("Failed to initialize the card. Make sure the SD card lines have pull up resistors in place.");
-    }
-    return;
-  }
+  mountSDFileSystem(_onboard_sd_conf, mount_point1, 1);
   printf("Filesystem 1 Mounted\n");
 
-  sdmmc_card_print_info(stdout, _card1);
 
   // Clear the log file
   _path1 = MOUNT1;
   _path1 += "/";
   _path1 += LOGFILE;
-  writeFile(_path1, "");
+  appendFile(_path1, "\n\n SD 1 Mounted\n");
 
 #ifdef SD2_ATTACHED
   // Configure SD2 device and mount its filesystem
-  sdspi_device_config_t external_sd_conf = SDSPI_DEVICE_CONFIG_DEFAULT();
-  external_sd_conf.host_id = (spi_host_device_t)host.slot;
-  external_sd_conf.gpio_cs = (gpio_num_t)SD2_CS;
+  _external_sd_conf = SDSPI_DEVICE_CONFIG_DEFAULT();
+  _external_sd_conf.host_id = (spi_host_device_t)host.slot;
+  _external_sd_conf.gpio_cs = (gpio_num_t)SD2_CS_GPIO;
 
   printf("Mounting Filesystem 2\n");
-  ret = esp_vfs_fat_sdspi_mount(mount_point2, &host, &external_sd_conf, &mount_config, &_card2);
+  mountSDFileSystem(_external_sd_conf, mount_point2, 2)
+  printf("Filesystem 2 Mounted\n");
 
+  // Clear the log file
+  _path2 = MOUNT2;
+  _path2 += "/";
+  _path2 += LOGFILE;
+  appendFile(_path1, "\n\n SD 2 Mounted\n");
+
+#endif /* SD2_ATTACHED */
+}
+
+
+/**
+  * @brief Mounts the file system of an SD card
+  *
+  * @param mount_point place to mount the SD card at
+  */
+void DataLogger::mountSDFileSystem(sdspi_device_config_t sd_conf, const char* mount_point, uint8_t card_num){
+  sdmmc_card_t *card;
+  bool *connected;
+   
+  switch(card_num){
+    case 1:
+      card = _card1;
+      connected = &_sd1_connected;
+      break;
+    case 2:
+      card = _card2;
+      connected = &_sd2_connected;
+      break;
+    default:
+      printf("Not a valid card number. card in range [0, 1]");
+      return;
+  }
+
+  esp_err_t ret = esp_vfs_fat_sdspi_mount(mount_point, &_host, &sd_conf, &_mount_config, &card);
+
+  *connected = true;
   if (ret != ESP_OK){
     if (ret == ESP_FAIL){
       printf("Failed to mount filesystem.");
     }
   else{
       printf("Failed to initialize the card. Make sure the SD card lines have pull up resistors in place.");
+      *connected = false;
     }
     return;
   }
-  printf("Filesystem 2 Mounted\n");
 
-  sdmmc_card_print_info(stdout, _card2);
-
-  // Clear the log file
-  _path2 = MOUNT2;
-  _path2 += "/";
-  _path2 += LOGFILE;
-  writeFile(_path2, "");
-
-#endif /* SD2_ATTACHED */
+  printf("Mounted Card:\n");
+  sdmmc_card_print_info(stdout, card);
+  printf("\n");
 }
+

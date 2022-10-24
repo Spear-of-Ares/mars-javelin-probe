@@ -2,7 +2,7 @@
 *     File Name           :    /DataLogger/include/datalogger.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-06 20:25]
-*     Last Modified       :     [2022-10-20 23:29]
+*     Last Modified       :     [2022-10-23 22:25]
 *     Description         :      
 **********************************************************************************/
 
@@ -13,16 +13,8 @@
 #include <cstring>
 #include <stdio.h>
 #include "esp_vfs_fat.h"
-#include "sdmmc_cmd.h"
-#include "FS.h"
-#include "SD.h"
-#include "SPI.h"
+#include "ComBus.h"
 
-#define SPI2_MISO CONFIG_SPI2_MISO_GPIO
-#define SPI2_MOSI CONFIG_SPI2_MOSI_GPIO
-#define SPI2_SCK  CONFIG_SPI2_SCK_GPIO
-#define SD1_CS    CONFIG_SD1_CS_GPIO
-#define SD2_CS    CONFIG_SD2_CS_GPIO
 
 #define MOUNT1    CONFIG_SD1_MOUNT
 #define MOUNT2    CONFIG_SD2_MOUNT
@@ -60,15 +52,28 @@ public:
   static void vLogLoop_Task(void* data_logger);
 private:
 
-  void appendFile(std::string path, std::string message);
-  void writeFile(std::string path, std::string message);
-  void modifyFile(std::string path, std::string message, std::string open_mode);
+  esp_err_t appendFile(std::string path, std::string message);
+  esp_err_t writeFile(std::string path, std::string message);
+  esp_err_t modifyFile(std::string path, std::string message, std::string open_mode);
+
+  void mountSDFileSystem(sdspi_device_config_t sd_conf, const char* mount_point, uint8_t card_num);
+  void initSPIBus();
 
   std::string getPath1(){ return _path1; }
   std::string getPath2(){ return _path2; }
 
   std::string _path1;
   std::string _path2;
+
+  bool _sd1_connected;
+  bool _sd2_connected;
+
+
+  // Configurations to allow for reaquisition of SD cards
+  esp_vfs_fat_sdmmc_mount_config_t _mount_config;
+  sdmmc_host_t                     _host;
+  sdspi_device_config_t            _onboard_sd_conf;
+  sdspi_device_config_t            _external_sd_conf;
 
   void handleQueueData();
   std::string _dataOutBuf;
@@ -77,10 +82,5 @@ private:
   sdmmc_card_t *_card2;
   
 };
-
-
-void appendFile(fs::FS &fs, const char * path, const char * messgae);
-void testFileIO(fs::FS &fs, const char * path);
-
 
 #endif /* __DATA_LOGGER_H__ */

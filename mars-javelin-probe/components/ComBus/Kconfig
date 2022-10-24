@@ -1,0 +1,121 @@
+menu "ComBus Configuration"
+
+config I2C_MASTER_PORT 
+  int "I2C Master Port"
+  range 0 1 
+  default 1 
+  help
+  Master port number for the I2C bus
+
+config I2C_MASTER_FREQ_HZ
+  int "I2C Master frequency"
+  range 0 400000
+  default 40000
+  help
+  The speed of the I2C bus for the master
+
+config I2C_SDA_GPIO
+  int "I2C SDA GPIO"
+  range 0 35
+  default 21
+  help
+  The SDA gpio for the I2C bus
+
+config I2C_SCL_GPIO
+  int "I2C SCL GPIO"
+  range 0 35
+  default 22
+  help
+  The SCL gpio for the I2C bus
+
+config HSPI_MOSI_GPIO
+  int "HSPI MOSI GPIO"
+  range 0 35
+  default 27
+  help
+  The MOSI GPIO for the LoRa SPI bus
+
+config HSPI_MISO_GPIO
+  int "HSPI MISO GPIO"
+  range 0 35
+  default 19
+  help
+  The MISO GPIO for the LoRa SPI bus
+
+config HSPI_SCK_GPIO
+  int "HSPI SCK GPIO"
+  range 0 35
+  default 5
+  help
+  The SCK GPIO for the LoRa SPI bus
+
+config LORA_CS_GPIO
+  int "LORA CS GPIO"
+  range 0 35
+  default 18
+  help
+  The CS GPIO for the LoRa SPI bus
+
+config HSPI_RST_GPIO
+  int "HSPI RST GPIO"
+  range 0 35
+  default 23
+  help
+  The RST GPIO for the LoRa SPI bus
+
+config HSPI_DI0_GPIO
+  int "HSPI DI0 GPIO"
+  range 0 35
+  default 26
+  help
+  The DI0 GPIO for the LoRa SPI bus
+
+config VSPI_MOSI_GPIO
+  int "VSPI MOSI GPIO"
+  range 0 35
+  default 15
+  help
+  The MOSI GPIO for the SD card SPI bus
+
+config VSPI_MISO_GPIO
+  int "VSPI MISO GPIO"
+  range 0 35
+  default 2
+  help
+  The MISO GPIO for the SD card SPI bus
+
+config VSPI_SCK_GPIO
+  int "VSPI SCK GPIO"
+  range 0 35
+  default 14
+  help
+  The SCK GPIO for the SD card SPI bus
+
+config SD1_CS_GPIO
+  int "SD1 CS GPIO"
+  range 0 35
+  default 13
+  help
+  The CS GPIO for the onboard (SD1) SD card on SD card SPI bus
+
+config SD2_CS_GPIO
+  int "SD2 CS GPIO"
+  range 0 35
+  default 12
+  help
+  The CS GPIO for the external (SD2) SD card on the SD card SPI bus
+
+config VSPI_HOST
+  int "VSPI_HOST"
+  range 1 3 
+  default 2
+  help
+  The host slot for the SD card SPI bus
+
+config SD2_ATTACHED
+  bool "SD2 Attached"
+  default false
+  help
+  Is the external SD card (SD2) physically attached?
+
+endmenu

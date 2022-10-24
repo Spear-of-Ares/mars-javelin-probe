@@ -2,7 +2,7 @@
 *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-03 22:40]
-*     Last Modified       :     [2022-10-21 00:54]
+*     Last Modified       :     [2022-10-24 00:08]
 *     Description         :     Coordinates and controls generation of new tasks 
 *                               Using the ESP Arduino library for access to a wider number of
 *                               libraries for components, such as the IridiumSBD library.
@@ -15,21 +15,32 @@
 
 #include <string>
 #include <cstdio>
+
 #include "esp_log.h"
 #include "esp_timer.h"
+#include "esp_freertos_hooks.h"
+
 #include "Arduino.h"
 #include "IridiumSBD.h"
 #include "datalogger.h"
-#include "LoRa_comm_logic.h"
-
+#include "LoRaComponent.h"
+#include "Stats.h"
+#include "ComBus.h"
 
 extern "C" void app_main(void)
 {
+    // Initialize artuidno library
     initArduino();
-    BaseType_t xReturned;
+    initComBus();
+    i2cScan();
 
+    /**************************************
+     *
+     *  Initialization
+     *
+     ***************************************/
     QueueHandle_t dataOutSD = xQueueCreate(50, sizeof(SDData));
-
+    BaseType_t xReturned;
 
 
     /**************************************
@@ -44,7 +55,7 @@ extern "C" void app_main(void)
     xReturned = xTaskCreate(
       DataLogger::vLogLoop_Task, // Function for task
       "Log Loop Task",           // Name of task
-      1024 * 4,                  // Stack size of task
+      1024 * 4,                 // Stack size of task
       (void*)(&data_log),        // task parameters
       10,                        // Task priority
       &xDataLogHandle            // Handle to resulting task
@@ -57,14 +68,6 @@ extern "C" void app_main(void)
     // Delay to allow SPI bus to fully initialize
     vTaskDelay(1000/portTICK_PERIOD_MS);
 
-    // Testing interprocess communication. Will be deleted in the future
-    SDData *send_data = new SDData("sendData", "This is a message\n");
-    for(;;){
-      if(xQueueSend(dataOutSD, (&send_data), 10/portTICK_PERIOD_MS) != pdTRUE){
-        printf("Failed to post data\n");
-      }
-      vTaskDelay(10/portTICK_PERIOD_MS);
-    }
 
  // Don't include these as they are not implemented
 #if false
@@ -202,4 +205,35 @@ extern "C" void app_main(void)
       printf("Could not start the Thermistor Component task\n");
     }
 #endif
+
+    /**************************************
+     *
+     *  Creating the Stats process
+     *
+     ***************************************/
+    RunTimeStats stats_component = RunTimeStats(dataOutSD);
+
+    TaskHandle_t xStatsComponent = NULL;
+    xReturned = xTaskCreatePinnedToCore(
+      RunTimeStats::stats_task,         // Function for task
+      "stats",                          // Name of task
+      1024 * 4,                        // Stack size of task
+      (void*)(&stats_component),         // task parameters
+      12,                              // Task priority
+      &xStatsComponent,             // Handle to resulting task
+      tskNO_AFFINITY
+    );
+    if (xReturned != pdPASS)
+    {
+      printf("Could not start the GPS Component task\n");
+    }
+
+    // Testing interprocess communication. Will be deleted in the future
+    SDData *send_data = new SDData("sendData", "This is a message\n");
+    for(;;){
+      if(xQueueSend(dataOutSD, (&send_data), 10/portTICK_PERIOD_MS) != pdTRUE){
+        printf("Failed to post data\n");
+      }
+      vTaskDelay(1000/portTICK_PERIOD_MS);
+    }
 }
