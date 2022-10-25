@@ -97,9 +97,7 @@ esp_err_t RunTimeStats::print_real_time_stats(TickType_t xTicksToWait, char *pcW
 void RunTimeStats::get_stats(){
   char pcWriteBuffer[1028];
 
-  printf("\n\nGetting real time stats over %d ticks\n", STATS_TICKS);
   if (print_real_time_stats(STATS_TICKS, pcWriteBuffer) == ESP_OK) {
-    printf("Real time stats obtained\n");
     SDData *send_data = new SDData("sendData", std::string(pcWriteBuffer));
     if(xQueueSend(_dataOutSD, (&send_data), 10/portTICK_PERIOD_MS) != pdTRUE){
       printf("Failed to post stats data\n");

@@ -2,7 +2,7 @@
 *     File Name           :     /components/lora/lora_commlogic.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-18 20:25]
-*     Last Modified       :     [2022-10-23 22:00]
+*     Last Modified       :     [2022-10-25 00:38]
 *     Description         :     Communication logic for LoRa modules 
 **********************************************************************************/
 #include "LoRaComponent.h"
@@ -15,7 +15,7 @@ void LoRaComponent::vMainLoop_Task(void *arg){
 
   for(;;){
     lora_component.vRX();  
-    vTaskDelay(1);
+    vTaskDelay(10);
   }
 }
 

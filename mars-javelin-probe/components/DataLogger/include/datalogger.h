@@ -2,7 +2,7 @@
 *     File Name           :    /DataLogger/include/datalogger.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-06 20:25]
-*     Last Modified       :     [2022-10-23 22:25]
+*     Last Modified       :     [2022-10-25 00:28]
 *     Description         :      
 **********************************************************************************/
 
@@ -28,6 +28,7 @@
 #define SPEED_LOG
 
 #define SECTOR_SIZE 512
+
 
 class SDData{
 public:
@@ -82,5 +83,6 @@ private:
   sdmmc_card_t *_card2;
   
 };
+
 
 #endif /* __DATA_LOGGER_H__ */

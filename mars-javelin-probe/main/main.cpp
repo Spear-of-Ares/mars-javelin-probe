@@ -2,7 +2,7 @@
 *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-03 22:40]
-*     Last Modified       :     [2022-10-24 00:08]
+*     Last Modified       :     [2022-10-25 00:42]
 *     Description         :     Coordinates and controls generation of new tasks 
 *                               Using the ESP Arduino library for access to a wider number of
 *                               libraries for components, such as the IridiumSBD library.
@@ -26,6 +26,8 @@
 #include "LoRaComponent.h"
 #include "Stats.h"
 #include "ComBus.h"
+#include "Thermistor.h"
+
 
 extern "C" void app_main(void)
 {
@@ -39,17 +41,22 @@ extern "C" void app_main(void)
      *  Initialization
      *
      ***************************************/
-    QueueHandle_t dataOutSD = xQueueCreate(50, sizeof(SDData));
     BaseType_t xReturned;
 
+    QueueHandle_t dataOutSD = xQueueCreate(50, sizeof(SDData));
+
+    // TODO:: Change from SDData to LoRaData class
+    QueueHandle_t dataOutLoRa = xQueueCreate(50, sizeof(SDData));
 
     /**************************************
      *
      *  Creating the DataLogger process
      *
      ***************************************/
+    // Init before other tasks that need dataOutSD Queue
     DataLogger data_log = DataLogger(dataOutSD);
     data_log.setup();
+
 
     TaskHandle_t xDataLogHandle = NULL;
     xReturned = xTaskCreate(
@@ -69,22 +76,19 @@ extern "C" void app_main(void)
     vTaskDelay(1000/portTICK_PERIOD_MS);
 
 
- // Don't include these as they are not implemented
-#if false
     /**************************************
      *
      *  Creating the LoRa process
      *
      ***************************************/
-    LoRaComponent lora_component = LoRaComponent(dataOutSD);
-    lora_component.setup();
+    LoRaComponent lora_component = LoRaComponent(dataOutSD, dataOutLoRa);
 
     TaskHandle_t xLoraHandle = NULL;
     xReturned = xTaskCreate(
-      LoRaComponent::vMainLoop_Task(),
+      LoRaComponent::vMainLoop_Task,
       "LoRa Component Task",
-      1024*2,
-      NULL,
+      1024*3,
+      (void*)(&lora_component),
       10,
       &xLoraHandle
     );
@@ -94,6 +98,8 @@ extern "C" void app_main(void)
     }
 
 
+ // Don't include these as they are not implemented
+#if false
     /**************************************
      *
      *  Creating the IMU process
@@ -183,18 +189,18 @@ extern "C" void app_main(void)
       printf("Could not start the GPS Component task\n");
     }
 
+#endif
     /**************************************
      *
      *  Creating the Thermistor process
      *
      ***************************************/
     ThermistorComponent thermistor_component = ThermistorComponent(dataOutSD);
-    thermistor_component.setup();
 
     TaskHandle_t xThermistorComponentHandle = NULL;
     xReturned = xTaskCreate(
       ThermistorComponent::vMainLoop_Task,    // Function for task
-      "Thermistor Component Task",   // Name of task
+      "Therm Comp Task",   // Name of task
       1024 * 2,                      // Stack size of task
       (void*)(&thermistor_component),// task parameters
       10,                            // Task priority
@@ -204,7 +210,6 @@ extern "C" void app_main(void)
     {
       printf("Could not start the Thermistor Component task\n");
     }
-#endif
 
     /**************************************
      *
@@ -225,15 +230,11 @@ extern "C" void app_main(void)
     );
     if (xReturned != pdPASS)
     {
-      printf("Could not start the GPS Component task\n");
+      printf("Could not start the Run Time stats Component task\n");
     }
 
-    // Testing interprocess communication. Will be deleted in the future
-    SDData *send_data = new SDData("sendData", "This is a message\n");
+    // Main task must stay alive as it has references to classes that will be deleted otherwise
     for(;;){
-      if(xQueueSend(dataOutSD, (&send_data), 10/portTICK_PERIOD_MS) != pdTRUE){
-        printf("Failed to post data\n");
-      }
-      vTaskDelay(1000/portTICK_PERIOD_MS);
+      vTaskDelay(1000);
     }
 }

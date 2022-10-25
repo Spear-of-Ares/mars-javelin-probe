@@ -10,11 +10,16 @@ void DataLogger::vLogLoop_Task(void* data_logger)
   DataLogger *data_log = (DataLogger*)data_logger;
   for(;;)
     {
+      if(data_log->_data_out == NULL){
+        printf("This is null rn dude\n");
+        vTaskDelay(1);
+      }
+      
       while (uxQueueMessagesWaiting(data_log->_data_out) != 0){
         data_log->handleQueueData();
       }
       // Delay so watchdog does not freak out
-      vTaskDelay(1);
+      vTaskDelay(50);
     }
 
   vTaskDelete(NULL);
@@ -71,6 +76,9 @@ void DataLogger::handleQueueData(){
       }
     }
 #endif
+    printf("     Written to SD\n");
+    printf("++++++++++++++++++++++++++\n");
+    printf("%s\n\n", _dataOutBuf.c_str());
 
     // reset data out buf
     _dataOutBuf = "";
@@ -91,7 +99,6 @@ esp_err_t DataLogger::appendFile(std::string path, std::string message){
 #ifdef SPEED_LOG
   uint32_t start = millis();
 #endif
-  printf("Appending to file: %s\n", path.c_str());
   esp_err_t ret = modifyFile(path, message, "a");
 #ifdef SPEED_LOG
   printf("Took %lu ms to append %u B\n", millis() - start, message.length());
@@ -110,7 +117,6 @@ esp_err_t DataLogger::writeFile(std::string path, std::string message){
 #ifdef SPEED_LOG
   uint32_t start = millis();
 #endif
-  printf("Writing to file: %s\n", path.c_str());
   esp_err_t ret =modifyFile(path, message, "w");
 #ifdef SPEED_LOG
   printf("Took %lu ms to write %u B\n", millis() - start, message.length());
@@ -134,17 +140,13 @@ esp_err_t DataLogger::modifyFile(std::string path, std::string message, std::str
     return ESP_FAIL;
   }
 
-  if(fprintf(file, "%s", message.c_str()) >= 0){
-    printf("Message written\n");
-  }
-  else{
+  if(fprintf(file, "%s", message.c_str()) < 0){
     printf("Append failed\n");
   }
   fclose(file);
 
   return ESP_OK;
 }
-
 
 /**
 * @brief Setup of the various things needed for SD card writing
@@ -165,7 +167,7 @@ void DataLogger::setup()
   const char mount_point1[] = MOUNT1;
   const char mount_point2[] = MOUNT2;
 
-  _host = SDHost;
+  _host = SDHost; // defined in ComBus.h
   
   // Configure SD1 device and mount its filesystem
   _onboard_sd_conf = SDSPI_DEVICE_CONFIG_DEFAULT();

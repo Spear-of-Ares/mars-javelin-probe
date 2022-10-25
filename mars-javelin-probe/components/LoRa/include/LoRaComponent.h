@@ -2,7 +2,7 @@
 *     File Name           :     /components/lora/include/lora_commlogic.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-18 20:25]
-*     Last Modified       :     [2022-10-23 22:21]
+*     Last Modified       :     [2022-10-25 00:39]
 *     Description         :      Communication logic for LoRa modules
 **********************************************************************************/
 
@@ -14,7 +14,10 @@
 
 class LoRaComponent{
 public:
-  LoRaComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa);
+  LoRaComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa){
+    _dataOutSD = dataOutSD;
+    _dataOutLoRa = dataOutLoRa;
+  }
   static void vMainLoop_Task(void *arg);
 private:
   void vRX();
