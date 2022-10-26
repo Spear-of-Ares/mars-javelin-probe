@@ -2,7 +2,7 @@
 *     File Name           :     /components/lora/lora_commlogic.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-18 20:25]
-*     Last Modified       :     [2022-10-25 00:38]
+*     Last Modified       :     [2022-10-26 02:04]
 *     Description         :     Communication logic for LoRa modules 
 **********************************************************************************/
 #include "LoRaComponent.h"
@@ -45,12 +45,26 @@ void LoRaComponent::vRX()
   int packetSize = LoRa.parsePacket();
   if (packetSize)
   {
-    printf("Received packet '");
+    std::string received("");
+    SDData *sdOut = new SDData();
+    sdOut->file_name = new std::string("file");
 
+    
     while(LoRa.available())
       {
-        printf("%c", (char)LoRa.read());
+        received += (char)LoRa.read();
       }
-    printf("' with RSSI %d\n", LoRa.packetRssi());
+
+    if(received[0] == 0x01){
+      xTaskNotify(_cmd_center, received[1], eSetBits);
+    }
+
+    std::ostringstream sd_msg("");
+    sd_msg << xTaskGetTickCount() << " LoRa Message: " << received << "| RSSI " << LoRa.packetRssi();
+    sd_msg << " | SNR " << LoRa.packetSnr() << " | Freq Err " << LoRa.packetFrequencyError() << "\n";
+    sdOut->message =  new std::string(sd_msg.str());
+    if(xQueueSend(_dataOutSD, &(sdOut), 10/portTICK_PERIOD_MS) != pdTRUE){
+      printf("Failed to post stats data\n");
+    }
   }
 }

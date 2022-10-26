@@ -2,14 +2,13 @@
 *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-03 22:40]
-*     Last Modified       :     [2022-10-25 00:42]
+*     Last Modified       :     [2022-10-26 02:17]
 *     Description         :     Coordinates and controls generation of new tasks 
 *                               Using the ESP Arduino library for access to a wider number of
 *                               libraries for components, such as the IridiumSBD library.
 *
 *                               Using Arduino as a component from the following article:
-*                               https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/esp-idf_component.html
-**********************************************************************************/
+*                               https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/esp-idf_component.html **********************************************************************************/
 
 
 
@@ -27,7 +26,39 @@
 #include "Stats.h"
 #include "ComBus.h"
 #include "Thermistor.h"
+#include "CommandCenter.h"
 
+//#define LoRaTRANSMITTER
+
+// Alternate main task for an outside LoRa transmitter to test receive and transmit of probe
+#ifdef LoRaTRANSMITTER
+#include "SPI.h"
+#include "LoRa.h"
+extern "C" void app_main(void){
+  initArduino();
+
+  SPIClass *hspi = new SPIClass(HSPI);
+  hspi->begin(CONFIG_HSPI_SCK_GPIO, CONFIG_HSPI_MISO_GPIO, CONFIG_HSPI_MOSI_GPIO, CONFIG_LORA_CS_GPIO);
+  LoRa.setPins(CONFIG_LORA_CS_GPIO, CONFIG_HSPI_RST_GPIO, CONFIG_HSPI_DI0_GPIO);
+  LoRa.setSPI(*hspi);
+  LoRa.setSPIFrequency(1E6);
+  if(!LoRa.begin(915E6)){
+    printf("Starting LoRa failed\n");
+    return;
+  }
+
+  std::string cut_down = "0x0101";
+  int count = 0;
+  for(;;){
+    vTaskDelay(5000/portTICK_PERIOD_MS);
+    LoRa.beginPacket();
+    LoRa.write(0x01);
+    LoRa.write(0x01);
+    LoRa.endPacket();
+    printf("Packet %d sent. \n", count++);
+  }
+}
+#else
 
 extern "C" void app_main(void)
 {
@@ -43,10 +74,10 @@ extern "C" void app_main(void)
      ***************************************/
     BaseType_t xReturned;
 
-    QueueHandle_t dataOutSD = xQueueCreate(50, sizeof(SDData));
+    QueueHandle_t dataOutSD = xQueueCreate(50, sizeof(SDData*));
 
     // TODO:: Change from SDData to LoRaData class
-    QueueHandle_t dataOutLoRa = xQueueCreate(50, sizeof(SDData));
+    QueueHandle_t dataOutLoRa = xQueueCreate(50, sizeof(SDData*));
 
     /**************************************
      *
@@ -78,10 +109,32 @@ extern "C" void app_main(void)
 
     /**************************************
      *
+     *  Creating the Command Center process
+     *
+     ***************************************/
+    // Init before other tasks that need dataOutSD Queue
+    CommandComponent cmd_center = CommandComponent(dataOutSD);
+
+    TaskHandle_t xCmdCenter = NULL;
+    xReturned = xTaskCreate(
+      CommandComponent::vMainLoop_Task, // Function for task
+      "Command Center Task",           // Name of task
+      1024 * 2,                 // Stack size of task
+      (void*)(&cmd_center),        // task parameters
+      10,                        // Task priority
+      &xCmdCenter            // Handle to resulting task
+    );
+    if (xReturned != pdPASS)
+    {
+      printf("Could not start the Data log loop task\n");
+    }
+
+    /**************************************
+     *
      *  Creating the LoRa process
      *
      ***************************************/
-    LoRaComponent lora_component = LoRaComponent(dataOutSD, dataOutLoRa);
+    LoRaComponent lora_component = LoRaComponent(dataOutSD, dataOutLoRa, xCmdCenter);
 
     TaskHandle_t xLoraHandle = NULL;
     xReturned = xTaskCreate(
@@ -238,3 +291,4 @@ extern "C" void app_main(void)
       vTaskDelay(1000);
     }
 }
+#endif

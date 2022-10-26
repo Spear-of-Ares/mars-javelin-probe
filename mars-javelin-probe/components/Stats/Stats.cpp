@@ -98,8 +98,11 @@ void RunTimeStats::get_stats(){
   char pcWriteBuffer[1028];
 
   if (print_real_time_stats(STATS_TICKS, pcWriteBuffer) == ESP_OK) {
-    SDData *send_data = new SDData("sendData", std::string(pcWriteBuffer));
-    if(xQueueSend(_dataOutSD, (&send_data), 10/portTICK_PERIOD_MS) != pdTRUE){
+    SDData *send_data = new SDData();
+    send_data->file_name = new std::string("file");
+    send_data->message = new std::string(pcWriteBuffer);
+
+    if(xQueueSend(_dataOutSD, &(send_data), 10/portTICK_PERIOD_MS) != pdTRUE){
       printf("Failed to post stats data\n");
     }
   } else {

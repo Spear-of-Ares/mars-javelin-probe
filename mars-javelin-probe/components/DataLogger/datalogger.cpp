@@ -38,7 +38,7 @@ void DataLogger::handleQueueData(){
     return; 
   }
 
-  std::string sd_data_msg = sd_data->getMessage();
+  std::string sd_data_msg = *(sd_data->message); 
   int msg_len = sd_data_msg.length();
 
   // Can change number of setors to write (*20, or *40 or something) to increase write efficiency
@@ -86,7 +86,8 @@ void DataLogger::handleQueueData(){
   if (sd_data_msg.length() != 0){
     _dataOutBuf.append(sd_data_msg);
   }
-}
+  delete sd_data;
+}                                                   
 
 
 /**

@@ -1,0 +1,17 @@
+menu "Command Center Config"
+
+config CUT_DWN_GPIO
+  int "Cut Down GPIO pin"
+  range 0 39
+  default 35
+  help
+  The pin that when set high will initiate cut down
+
+config CUT_DWN_DUR
+  int "Cut Down Duration"
+  range 0 10000
+  default 1000 
+  help
+  The duration (ms) cut down gpio needs to be high for cut down. Measured in ms
+
+endmenu

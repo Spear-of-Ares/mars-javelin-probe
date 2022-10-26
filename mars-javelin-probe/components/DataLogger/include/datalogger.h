@@ -2,7 +2,7 @@
 *     File Name           :    /DataLogger/include/datalogger.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-06 20:25]
-*     Last Modified       :     [2022-10-25 00:28]
+*     Last Modified       :     [2022-10-26 00:12]
 *     Description         :      
 **********************************************************************************/
 
@@ -32,16 +32,16 @@
 
 class SDData{
 public:
-  SDData(std::string file_name, std::string message){
-    _file_name = file_name;
-    _message = message;
+  ~SDData(){
+    if(file_name != NULL){
+      delete file_name;
+    }
+    if(message != NULL){
+      delete message;
+    }
   }
-  ~SDData(){}
-  std::string getFileName(){ return _file_name; }
-  std::string getMessage() { return _message; }
-private:
-  std::string _file_name;
-  std::string _message;
+  std::string *file_name;
+  std::string *message;
 };
 
 class DataLogger {
