@@ -2,7 +2,7 @@
 *     File Name           :     /components/CommandCenter/CommandCenter.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-26 00:34]
-*     Last Modified       :     [2022-10-26 02:01]
+*     Last Modified       :     [2022-10-26 03:19]
 *     Description         :     Component to control messages from LoRa and Iridium SBD 
 **********************************************************************************/
 
@@ -40,24 +40,31 @@ void CommandComponent::handleCommands(){
 
 void CommandComponent::cutdown(){
   SDData *sd_data = new SDData();
-  sd_data->file_name = new std::string("file");
+  sd_data->file_name = new std::string("Com Center");
 
-  std::ostringstream sd_msg("");
+  std::ostringstream sd_msg;
   sd_msg << xTaskGetTickCount() << " Cutdown Command Received\n";
   sd_data->message = new std::string(sd_msg.str());
 
   gpio_set_level(CUT_DWN_GPIO, 1);
   vTaskDelay(CUT_DWN_DUR/portTICK_PERIOD_MS);
   gpio_set_level(CUT_DWN_GPIO, 0);
+
+  if(xQueueSend(_dataOutSD, &(sd_data), 10/portTICK_PERIOD_MS) != pdTRUE){
+    printf("Failed to post thermistor data\n");
+  }
 }
 
 void CommandComponent::selftest(){
   SDData *sd_data = new SDData();
-  sd_data->file_name = new std::string("file");
+  sd_data->file_name = new std::string("Com Center");
 
-  std::ostringstream sd_msg("");
+  std::ostringstream sd_msg;
   sd_msg << xTaskGetTickCount() << " SelfTest Command Received\n";
   sd_data->message = new std::string(sd_msg.str());
 
+  if(xQueueSend(_dataOutSD, &(sd_data), 10/portTICK_PERIOD_MS) != pdTRUE){
+    printf("Failed to post thermistor data\n");
+  }
 }
 

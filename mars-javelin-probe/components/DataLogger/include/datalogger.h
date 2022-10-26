@@ -2,7 +2,7 @@
 *     File Name           :    /DataLogger/include/datalogger.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-06 20:25]
-*     Last Modified       :     [2022-10-26 00:12]
+*     Last Modified       :     [2022-10-26 03:08]
 *     Description         :      
 **********************************************************************************/
 
@@ -49,6 +49,9 @@ public:
   DataLogger(QueueHandle_t data_out){
     _data_out = data_out;
   }
+  ~DataLogger(){
+    delete _dataOutBuf;
+  }
   void setup();
   static void vLogLoop_Task(void* data_logger);
 private:
@@ -77,7 +80,7 @@ private:
   sdspi_device_config_t            _external_sd_conf;
 
   void handleQueueData();
-  std::string _dataOutBuf;
+  std::string *_dataOutBuf;
   QueueHandle_t _data_out;
   sdmmc_card_t *_card1;
   sdmmc_card_t *_card2;

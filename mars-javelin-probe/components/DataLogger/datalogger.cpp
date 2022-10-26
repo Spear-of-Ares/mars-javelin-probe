@@ -8,6 +8,7 @@
 void DataLogger::vLogLoop_Task(void* data_logger)
 {
   DataLogger *data_log = (DataLogger*)data_logger;
+  data_log->_dataOutBuf = new std::string();
   for(;;)
     {
       if(data_log->_data_out == NULL){
@@ -37,17 +38,18 @@ void DataLogger::handleQueueData(){
     printf("Could not receive from queue\n");
     return; 
   }
+  //printf("%d || Data Logger Start || %s || %d\n", xTaskGetTickCount(), sd_data->file_name->c_str(), xPortGetFreeHeapSize());
 
-  std::string sd_data_msg = *(sd_data->message); 
+  std::string sd_data_msg = *(sd_data->message);
   int msg_len = sd_data_msg.length();
 
   // Can change number of setors to write (*20, or *40 or something) to increase write efficiency
   // Does take longer for buffer to fill though
-  int size_left = (SECTOR_SIZE * 1)- (_dataOutBuf.length());
+  int size_left = (SECTOR_SIZE * 1)- (_dataOutBuf->length());
   if (size_left - msg_len < 0)
   {
     // Append to sector size
-    _dataOutBuf.append(sd_data_msg, 0, size_left);
+    _dataOutBuf->append(sd_data_msg, 0, size_left);
 
     // Fill sd_data_msg with remaining bytes
     sd_data_msg = sd_data_msg.substr(size_left, msg_len-size_left);
@@ -59,7 +61,7 @@ void DataLogger::handleQueueData(){
       mountSDFileSystem(_onboard_sd_conf, MOUNT1, 1);
     }
     else{
-      esp_err_t ret = appendFile(_path1, _dataOutBuf);
+      esp_err_t ret = appendFile(_path1, *_dataOutBuf);
       if (ret == ESP_FAIL){
         _sd1_connected = false;
       }
@@ -70,7 +72,7 @@ void DataLogger::handleQueueData(){
       mountSDFileSystem(_external_sd_conf, MOUNT2, 2);
     }
   else{
-      appendFile(_path2, _dataOutBuf);
+      appendFile(_path2, *_dataOutBuf);
       if (ret == ESP_FAIL){
         _sd2_connected = false;
       }
@@ -78,13 +80,13 @@ void DataLogger::handleQueueData(){
 #endif
     printf("     Written to SD\n");
     printf("++++++++++++++++++++++++++\n");
-    printf("%s\n\n", _dataOutBuf.c_str());
+    printf("%s\n\n", _dataOutBuf->c_str());
 
     // reset data out buf
-    _dataOutBuf = "";
+    _dataOutBuf->clear();
   }
   if (sd_data_msg.length() != 0){
-    _dataOutBuf.append(sd_data_msg);
+    _dataOutBuf->append(sd_data_msg);
   }
   delete sd_data;
 }                                                   

@@ -2,7 +2,7 @@
 *     File Name           :     /components/Thermistor/Thermistor.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-24 21:07]
-*     Last Modified       :     [2022-10-26 00:02]
+*     Last Modified       :     [2022-10-26 03:15]
 *     Description         :     Class definition and implementation for gathering data from both thermistors 
 **********************************************************************************/
 #include "Thermistor.h"
@@ -52,13 +52,12 @@ void ThermistorComponent::logThermistors(){
 #endif
 
   int ret = asprintf(&data, "THERM 1 | THERM 2\n%f  | %f\n", therm1_c, therm2_c);
-  // -100
   if(ret == -1){
     printf("Memory allocation for asprintf of logThermistors failed\n");
     return;
   }
   SDData *sddata = new SDData();                    
-  sddata->file_name = new std::string("file");     
+  sddata->file_name = new std::string("Therm Comp");     
   sddata->message = new std::string(data);        
 
 
