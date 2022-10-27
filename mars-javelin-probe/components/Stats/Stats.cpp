@@ -56,7 +56,7 @@ esp_err_t RunTimeStats::print_real_time_stats(TickType_t xTicksToWait, char *pcW
       return ret; 
     }
 
-    sprintf(pcWriteBuffer, "| Task | Run Time | Percentage | Stack HWM \n");
+    sprintf(pcWriteBuffer, "Task | Run Time | Percentage | Stack HWM \n");
     //Match each task in _start_array to those in the end_array
     for (int i = 0; i < _start_array_size; i++) {
         int k = -1;
@@ -74,22 +74,22 @@ esp_err_t RunTimeStats::print_real_time_stats(TickType_t xTicksToWait, char *pcW
             uint32_t task_elapsed_time = _end_array[k].ulRunTimeCounter - _start_array[i].ulRunTimeCounter;
             uint32_t percentage_time = (task_elapsed_time * 100UL) / (_total_elapsed_time * portNUM_PROCESSORS);
             uint32_t stack_usage = (_start_array[i].usStackHighWaterMark + _end_array[k].usStackHighWaterMark) / 2;
-            sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "| %s | %d | %d%% | %d\n", _start_array[i].pcTaskName, task_elapsed_time, percentage_time, stack_usage);
+            sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "%s | %d | %d%% | %d\n", _start_array[i].pcTaskName, task_elapsed_time, percentage_time, stack_usage);
         }
     }
 
     //Print unmatched tasks
     for (int i = 0; i < _start_array_size; i++) {
         if (_start_array[i].xHandle != NULL) {
-            sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "| %s | Deleted\n", _start_array[i].pcTaskName);
+            sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "%s | Deleted\n", _start_array[i].pcTaskName);
         }
     }
     for (int i = 0; i < _end_array_size; i++) {
         if (_end_array[i].xHandle != NULL) {
-            sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "| %s | Created\n", _end_array[i].pcTaskName);
+            sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "%s | Created\n", _end_array[i].pcTaskName);
         }
     }
-    sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "| Free Heap Size: %d\n", xPortGetFreeHeapSize());
+    sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "Free Heap Size: %d", xPortGetFreeHeapSize());
     free_arrays();
     return ret; // Will return ESP_OK due to check at top
 }
@@ -99,8 +99,22 @@ void RunTimeStats::get_stats(){
 
   if (print_real_time_stats(STATS_TICKS, pcWriteBuffer) == ESP_OK) {
     SDData *send_data = new SDData();
-    send_data->file_name = new std::string("Stats Component");
-    send_data->message = new std::string(pcWriteBuffer);
+
+    std::ostringstream data;
+    data << xTaskGetTickCount() << " || " << STATS_TASK_ID << " || ";
+    int header_len = data.str().length();
+    int i = 0;
+    while (pcWriteBuffer[i] != '\0'){
+      data << pcWriteBuffer[i];
+      if (pcWriteBuffer[i] == '\n'){
+        data << std::string(header_len-3, ' ') << "|| ";
+      }
+      i++;
+    }
+    data << "\n";
+
+    send_data->file_name = new std::string("stats");
+    send_data->message = new std::string(data.str());
 
     if(xQueueSend(_dataOutSD, &(send_data), 10/portTICK_PERIOD_MS) != pdTRUE){
       printf("Failed to post stats data\n");

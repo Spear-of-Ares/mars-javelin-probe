@@ -2,7 +2,7 @@
 *     File Name           :     /components/lora/include/lora_commlogic.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-18 20:25]
-*     Last Modified       :     [2022-10-26 01:25]
+*     Last Modified       :     [2022-10-27 00:41]
 *     Description         :      Communication logic for LoRa modules
 **********************************************************************************/
 
@@ -13,6 +13,8 @@
 #include "LoRa.h"
 #include "datalogger.h"
 #include "SPI.h"
+
+#define LoRa_TASK_ID    "LoRa_TASK "
 
 class LoRaComponent{
 public:

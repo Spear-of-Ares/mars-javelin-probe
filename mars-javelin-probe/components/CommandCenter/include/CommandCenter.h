@@ -2,7 +2,7 @@
 *     File Name           :     /components/CommandCenter/include/CommandCenter.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-26 00:29]
-*     Last Modified       :     [2022-10-26 01:56]
+*     Last Modified       :     [2022-10-27 00:40]
 *     Description         :     Component to control messages from LoRa and Iridium SBD 
 **********************************************************************************/
 
@@ -17,6 +17,8 @@
 
 #define CUT_DWN_GPIO    GPIO_NUM_25
 #define CUT_DWN_DUR     CONFIG_CUT_DWN_DUR
+
+#define CMDCNTR_TASK_ID "CMD CENTER"
 
 class CommandComponent{
 public:

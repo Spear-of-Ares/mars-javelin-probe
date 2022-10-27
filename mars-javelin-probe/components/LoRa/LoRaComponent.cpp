@@ -2,7 +2,7 @@
 *     File Name           :     /components/lora/lora_commlogic.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-18 20:25]
-*     Last Modified       :     [2022-10-26 03:16]
+*     Last Modified       :     [2022-10-27 00:43]
 *     Description         :     Communication logic for LoRa modules 
 **********************************************************************************/
 #include "LoRaComponent.h"
@@ -61,8 +61,8 @@ void LoRaComponent::vRX()
     }
 
     std::ostringstream sd_msg;
-    sd_msg << xTaskGetTickCount() << " LoRa Message: " << received << "| RSSI " << LoRa.packetRssi();
-    sd_msg << " | SNR " << LoRa.packetSnr() << " | Freq Err " << LoRa.packetFrequencyError() << "\n";
+    sd_msg << xTaskGetTickCount() << " || " LoRa_TASK_ID << " || Received: "<< received << "| RSSI: " << LoRa.packetRssi();
+    sd_msg << " | SNR: " << LoRa.packetSnr() << " | Freq Err: " << LoRa.packetFrequencyError() << "\n";
     sdOut->message =  new std::string(sd_msg.str());
     if(xQueueSend(_dataOutSD, &(sdOut), 10/portTICK_PERIOD_MS) != pdTRUE){
       printf("Failed to post stats data\n");

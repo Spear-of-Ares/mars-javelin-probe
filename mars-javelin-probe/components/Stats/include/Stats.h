@@ -5,6 +5,8 @@
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sstream>
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_err.h"
@@ -13,6 +15,8 @@
 
 #define STATS_TICKS         pdMS_TO_TICKS(1000)
 #define ARRAY_SIZE_OFFSET   5   //Increase this if print_real_time_stats returns ESP_ERR_INVALID_SIZE
+
+#define STATS_TASK_ID       "STATS_COMP"
 
 class RunTimeStats{
 public:

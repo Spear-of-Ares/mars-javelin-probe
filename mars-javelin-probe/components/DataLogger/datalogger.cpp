@@ -45,7 +45,7 @@ void DataLogger::handleQueueData(){
 
   // Can change number of setors to write (*20, or *40 or something) to increase write efficiency
   // Does take longer for buffer to fill though
-  int size_left = (SECTOR_SIZE * 1)- (_dataOutBuf->length());
+  int size_left = WRITE_BLK_SIZE - (_dataOutBuf->length());
   if (size_left - msg_len < 0)
   {
     // Append to sector size
@@ -78,9 +78,9 @@ void DataLogger::handleQueueData(){
       }
     }
 #endif
-    printf("     Written to SD\n");
-    printf("++++++++++++++++++++++++++\n");
-    printf("%s\n\n", _dataOutBuf->c_str());
+    // printf("     Written to SD\n");
+    // printf("++++++++++++++++++++++++++\n");
+    printf("%s", _dataOutBuf->c_str());
 
     // reset data out buf
     _dataOutBuf->clear();

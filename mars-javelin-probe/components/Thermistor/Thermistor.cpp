@@ -2,7 +2,7 @@
 *     File Name           :     /components/Thermistor/Thermistor.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-24 21:07]
-*     Last Modified       :     [2022-10-26 03:15]
+*     Last Modified       :     [2022-10-27 00:36]
 *     Description         :     Class definition and implementation for gathering data from both thermistors 
 **********************************************************************************/
 #include "Thermistor.h"
@@ -41,7 +41,6 @@ float ThermistorComponent::calcTemp(float To, int Beta, float Ro, float RT){
 
 void ThermistorComponent::logThermistors(){
   readThermistors();
-  char *data;
   float therm1_RT = calcRT(THERM1_R1, THERM1_VS, _therm1_vo);
   float therm1_c = KELVIN_TO_CELSIUS(calcTemp(THERM1_TO, THERM1_B, THERM1_RO, therm1_RT));
 #ifdef THERM2_ATTACHED
@@ -51,20 +50,17 @@ void ThermistorComponent::logThermistors(){
   float therm2_c = 0;
 #endif
 
-  int ret = asprintf(&data, "THERM 1 | THERM 2\n%f  | %f\n", therm1_c, therm2_c);
-  if(ret == -1){
-    printf("Memory allocation for asprintf of logThermistors failed\n");
-    return;
-  }
+  std::ostringstream data;
+
+  data << xTaskGetTickCount() << " || " THERM_TASK_ID << " || T1: " << therm1_c << " C | T2: " << therm2_c << " C\n";
   SDData *sddata = new SDData();                    
-  sddata->file_name = new std::string("Therm Comp");     
-  sddata->message = new std::string(data);        
+  sddata->file_name = new std::string("measure");     
+  sddata->message = new std::string(data.str());        
 
 
   if(xQueueSend(_dataOutSD, &(sddata), 10/portTICK_PERIOD_MS) != pdTRUE){
     printf("Failed to post thermistor data\n");
   }
-  free(data); 
 }
 
 void ThermistorComponent::readThermistors(){

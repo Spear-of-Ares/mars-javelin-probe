@@ -2,7 +2,7 @@
 *     File Name           :    /DataLogger/include/datalogger.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-06 20:25]
-*     Last Modified       :     [2022-10-26 03:08]
+*     Last Modified       :     [2022-10-27 00:48]
 *     Description         :      
 **********************************************************************************/
 
@@ -25,13 +25,19 @@
 #define SD2_ATTACHED
 #endif
 
-#define SPEED_LOG
+//#define SPEED_LOG
 
 #define SECTOR_SIZE 512
+#define NUM_SECTORS 4
+#define WRITE_BLK_SIZE SECTOR_SIZE * NUM_SECTORS
 
 
 class SDData{
 public:
+  SDData(){
+    file_name = NULL;
+    message = NULL;
+  }
   ~SDData(){
     if(file_name != NULL){
       delete file_name;

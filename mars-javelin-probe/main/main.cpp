@@ -2,7 +2,7 @@
 *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-03 22:40]
-*     Last Modified       :     [2022-10-26 02:17]
+*     Last Modified       :     [2022-10-27 00:46]
 *     Description         :     Coordinates and controls generation of new tasks 
 *                               Using the ESP Arduino library for access to a wider number of
 *                               libraries for components, such as the IridiumSBD library.
@@ -50,7 +50,7 @@ extern "C" void app_main(void){
   std::string cut_down = "0x0101";
   int count = 0;
   for(;;){
-    vTaskDelay(5000/portTICK_PERIOD_MS);
+    vTaskDelay(10000/portTICK_PERIOD_MS);
     LoRa.beginPacket();
     LoRa.write(0x01);
     LoRa.write(0x01);
@@ -93,7 +93,7 @@ extern "C" void app_main(void)
     xReturned = xTaskCreate(
       DataLogger::vLogLoop_Task, // Function for task
       "Log Loop Task",           // Name of task
-      1024 * 4,                 // Stack size of task
+      1024 * 3,                 // Stack size of task
       (void*)(&data_log),        // task parameters
       10,                        // Task priority
       &xDataLogHandle            // Handle to resulting task
@@ -254,7 +254,7 @@ extern "C" void app_main(void)
     xReturned = xTaskCreate(
       ThermistorComponent::vMainLoop_Task,    // Function for task
       "Therm Comp Task",   // Name of task
-      1024 * 2,                      // Stack size of task
+      1024 * 3,                      // Stack size of task
       (void*)(&thermistor_component),// task parameters
       10,                            // Task priority
       &xThermistorComponentHandle    // Handle to resulting task

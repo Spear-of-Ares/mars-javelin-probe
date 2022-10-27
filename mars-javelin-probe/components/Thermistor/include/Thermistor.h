@@ -2,7 +2,7 @@
 *     File Name           :     /components/Thermistor/include/Thermistor.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-24 21:04]
-*     Last Modified       :     [2022-10-24 23:35]
+*     Last Modified       :     [2022-10-27 00:13]
 *     Description         :     Class definition for gathering data from both thermistors 
 **********************************************************************************/
 
@@ -13,6 +13,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <sstream>
 
 #include "driver/adc.h"
 #include "datalogger.h"
@@ -41,6 +42,8 @@
 #define THERM2_B        CONFIG_THERM2_B
 
 #define THERM_SAMPLE_HZ CONFIG_THERM_SAMPLE_HZ
+
+#define THERM_TASK_ID   "THERM_COMP"
 
 // in math.h, log == ln
 #define KELVIN_TO_CELSIUS(T_k) ((T_k) - 273.15)
