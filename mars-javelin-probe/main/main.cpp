@@ -2,7 +2,7 @@
 *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-03 22:40]
-*     Last Modified       :     [2022-10-27 00:46]
+*     Last Modified       :     [2022-10-27 01:44]
 *     Description         :     Coordinates and controls generation of new tasks 
 *                               Using the ESP Arduino library for access to a wider number of
 *                               libraries for components, such as the IridiumSBD library.
@@ -27,6 +27,8 @@
 #include "ComBus.h"
 #include "Thermistor.h"
 #include "CommandCenter.h"
+#include "IMUComponent.h"
+#include "BME280.h"
 
 //#define LoRaTRANSMITTER
 
@@ -151,21 +153,18 @@ extern "C" void app_main(void)
     }
 
 
- // Don't include these as they are not implemented
-#if false
     /**************************************
      *
      *  Creating the IMU process
      *
      ***************************************/
     IMUComponent imu_component = IMUComponent(dataOutSD);
-    imu_component.setup();
 
     TaskHandle_t xIMUComponentHandle= NULL;
     xReturned = xTaskCreate(
       IMUComponent::vMainLoop_Task, // Function for task
       "IMU Component Task",         // Name of task
-      1024 * 2,                     // Stack size of task
+      1024 * 3,                     // Stack size of task
       (void*)(&imu_component),      // task parameters
       10,                           // Task priority
       &xIMUComponentHandle          // Handle to resulting task
@@ -175,7 +174,30 @@ extern "C" void app_main(void)
       printf("Could not start the IMUComponent task\n");
     }
     
+    /**************************************
+     *
+     *  Creating the BME280 process
+     *
+     ***************************************/
+    BME280Component bme_component = BME280Component(dataOutSD);
 
+    TaskHandle_t xBMEComponentHandle = NULL;
+    xReturned = xTaskCreate(
+      BME280Component::vMainLoop_Task,   // Function for task
+      "BME280 Component Task",           // Name of task
+      1024 * 3,                          // Stack size of task
+      (void*)(&bme_component),           // task parameters
+      10,                                // Task priority
+      &xBMEComponentHandle             // Handle to resulting task
+    );
+    if (xReturned != pdPASS)
+    {
+      printf("Could not start the BME280 Component task\n");
+    }
+
+
+ // Don't include these as they are not implemented
+#if false
     /**************************************
      *
      *  Creating the IridiumSBD process
@@ -196,28 +218,6 @@ extern "C" void app_main(void)
     if (xReturned != pdPASS)
     {
       printf("Could not start the IridiumSBD Component task\n");
-    }
-
-    /**************************************
-     *
-     *  Creating the BME280 process
-     *
-     ***************************************/
-    BME280Component bme_component = BME280Component(dataOutSD);
-    bme_component.setup();
-
-    TaskHandle_t xBMEComponentHandle = NULL;
-    xReturned = xTaskCreate(
-      BME280Component::vMainLoop_Task,   // Function for task
-      "BME280 Component Task",           // Name of task
-      1024 * 2,                          // Stack size of task
-      (void*)(&bme_component),           // task parameters
-      10,                                // Task priority
-      &xxBMEComponentHandle             // Handle to resulting task
-    );
-    if (xReturned != pdPASS)
-    {
-      printf("Could not start the BME280 Component task\n");
     }
 
     /**************************************

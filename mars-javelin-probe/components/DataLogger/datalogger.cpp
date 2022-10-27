@@ -78,9 +78,11 @@ void DataLogger::handleQueueData(){
       }
     }
 #endif
+    // WARNING:: These print statements cause Data logger to use many may clock cycles
+    //           Use at your own risk!! You have been warned!
     // printf("     Written to SD\n");
     // printf("++++++++++++++++++++++++++\n");
-    printf("%s", _dataOutBuf->c_str());
+    // printf("%s", _dataOutBuf->c_str());
 
     // reset data out buf
     _dataOutBuf->clear();

@@ -2,7 +2,7 @@
 *     File Name           :    /DataLogger/include/datalogger.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-06 20:25]
-*     Last Modified       :     [2022-10-27 00:48]
+*     Last Modified       :     [2022-10-27 01:49]
 *     Description         :      
 **********************************************************************************/
 
@@ -25,10 +25,10 @@
 #define SD2_ATTACHED
 #endif
 
-//#define SPEED_LOG
+#define SPEED_LOG
 
 #define SECTOR_SIZE 512
-#define NUM_SECTORS 4
+#define NUM_SECTORS 8
 #define WRITE_BLK_SIZE SECTOR_SIZE * NUM_SECTORS
 
 

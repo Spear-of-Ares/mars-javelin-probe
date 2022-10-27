@@ -2,7 +2,7 @@
 *     File Name           :     BMI085/include/BMI085.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-16 03:35]
-*     Last Modified       :     [2022-10-16 15:48]
+*     Last Modified       :     [2022-10-27 01:25]
 *     Description         :     A driver for the Bosch BMI085 6-axis IMU
 **********************************************************************************/
 
@@ -127,6 +127,7 @@ typedef enum
 class BMI085
 {
   public:
+    BMI085(){}
     BMI085(i2c_port_t master_port, 
            uint8_t gyro_i2c_addr = 0x68, uint8_t accel_i2c_addr = 0x18,
            accel_range_et accel_range = ACCEL_gFS16G, gyro_range_et gyro_range = GYRO_rFS2000);
