@@ -2,7 +2,7 @@
 *     File Name           :     /components/CommandCenter/CommandCenter.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-26 00:34]
-*     Last Modified       :     [2022-10-27 00:18]
+*     Last Modified       :     [2022-10-28 00:50]
 *     Description         :     Component to control messages from LoRa and Iridium SBD 
 **********************************************************************************/
 
@@ -43,7 +43,7 @@ void CommandComponent::cutdown(){
   sd_data->file_name = new std::string("status");
 
   std::ostringstream sd_msg;
-  sd_msg << xTaskGetTickCount() << " || " << CMDCNTR_TASK_ID << " ||  Cutdown Command Received\n";
+  sd_msg << xTaskGetTickCount() << " || " << CMDCNTR_TASK_ID << " || Cutdown Command Received\n";
   sd_data->message = new std::string(sd_msg.str());
 
   gpio_set_level(CUT_DWN_GPIO, 1);

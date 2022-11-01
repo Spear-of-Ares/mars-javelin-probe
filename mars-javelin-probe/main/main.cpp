@@ -2,7 +2,7 @@
 *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-03 22:40]
-*     Last Modified       :     [2022-10-27 01:44]
+*     Last Modified       :     [2022-10-27 23:09]
 *     Description         :     Coordinates and controls generation of new tasks 
 *                               Using the ESP Arduino library for access to a wider number of
 *                               libraries for components, such as the IridiumSBD library.
@@ -69,6 +69,8 @@ extern "C" void app_main(void)
     initComBus();
     i2cScan();
 
+
+    vTaskDelay(1000/portTICK_PERIOD_MS);
     /**************************************
      *
      *  Initialization
@@ -105,7 +107,6 @@ extern "C" void app_main(void)
       printf("Could not start the Data log loop task\n");
     }
 
-    // Delay to allow SPI bus to fully initialize
     vTaskDelay(1000/portTICK_PERIOD_MS);
 
 

@@ -105,17 +105,17 @@ config SD2_CS_GPIO
   help
   The CS GPIO for the external (SD2) SD card on the SD card SPI bus
 
-config VSPI_HOST
-  int "VSPI_HOST"
-  range 1 3 
-  default 2
-  help
-  The host slot for the SD card SPI bus
 
 config SD2_ATTACHED
   bool "SD2 Attached"
   default false
   help
   Is the external SD card (SD2) physically attached?
+
+config BME_ATTACHED
+  bool "BME280 Attached"
+  default false
+  help
+  Is the BME280 component physically attached?
 
 endmenu

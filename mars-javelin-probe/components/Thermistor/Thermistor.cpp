@@ -2,7 +2,7 @@
 *     File Name           :     /components/Thermistor/Thermistor.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-24 21:07]
-*     Last Modified       :     [2022-10-27 00:36]
+*     Last Modified       :     [2022-10-28 01:50]
 *     Description         :     Class definition and implementation for gathering data from both thermistors 
 **********************************************************************************/
 #include "Thermistor.h"
@@ -14,7 +14,7 @@ ThermistorComponent::ThermistorComponent(QueueHandle_t dataOutSD){
   adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_DB_11);
 
 #ifdef THERM2_ATTACHED
-  adc1_config_channel_atten(ADC1_CHANNEL_3, ADC_ATTeN_DB_11)
+  adc1_config_channel_atten(ADC1_CHANNEL_3, ADC_ATTEN_DB_11);
 #endif 
 }
 
@@ -65,9 +65,9 @@ void ThermistorComponent::logThermistors(){
 
 void ThermistorComponent::readThermistors(){
   adc_power_acquire();
-  _therm1_vo = adc1_get_raw(ADC1_CHANNEL_0) * THERM1_VS/4095.0;
+  _therm1_vo = adc1_get_raw(ADC1_CHANNEL_6) * THERM1_VS/4095.0;
 #ifdef THERM2_ATTACHED
-  _therm2_vo = adc1_get_raw(ADC1_CHANNEL_3) * THERM1_VS/4095.0;
+  _therm2_vo = adc1_get_raw(ADC1_CHANNEL_7) * THERM1_VS/4095.0;
 #else
   _therm2_vo = 0;
 #endif

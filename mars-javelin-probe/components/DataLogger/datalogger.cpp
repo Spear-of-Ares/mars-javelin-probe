@@ -7,8 +7,7 @@
 */
 void DataLogger::vLogLoop_Task(void* data_logger)
 {
-  DataLogger *data_log = (DataLogger*)data_logger;
-  data_log->_dataOutBuf = new std::string();
+  DataLogger *data_log = (DataLogger*)data_logger; data_log->_dataOutBuf = new std::string();
   for(;;)
     {
       if(data_log->_data_out == NULL){
@@ -72,7 +71,7 @@ void DataLogger::handleQueueData(){
       mountSDFileSystem(_external_sd_conf, MOUNT2, 2);
     }
   else{
-      appendFile(_path2, *_dataOutBuf);
+      esp_err_t ret = appendFile(_path2, *_dataOutBuf);
       if (ret == ESP_FAIL){
         _sd2_connected = false;
       }
@@ -80,9 +79,9 @@ void DataLogger::handleQueueData(){
 #endif
     // WARNING:: These print statements cause Data logger to use many may clock cycles
     //           Use at your own risk!! You have been warned!
-    // printf("     Written to SD\n");
-    // printf("++++++++++++++++++++++++++\n");
-    // printf("%s", _dataOutBuf->c_str());
+    printf("     Written to SD\n");
+    printf("++++++++++++++++++++++++++\n");
+    printf("%s", _dataOutBuf->c_str());
 
     // reset data out buf
     _dataOutBuf->clear();
@@ -182,7 +181,6 @@ void DataLogger::setup()
 
   printf("Mounting Filesystem 1\n");
   mountSDFileSystem(_onboard_sd_conf, mount_point1, 1);
-  printf("Filesystem 1 Mounted\n");
 
 
   // Clear the log file
@@ -194,18 +192,19 @@ void DataLogger::setup()
 #ifdef SD2_ATTACHED
   // Configure SD2 device and mount its filesystem
   _external_sd_conf = SDSPI_DEVICE_CONFIG_DEFAULT();
-  _external_sd_conf.host_id = (spi_host_device_t)host.slot;
+  _external_sd_conf.host_id = (spi_host_device_t)_host.slot;
   _external_sd_conf.gpio_cs = (gpio_num_t)SD2_CS_GPIO;
 
+
   printf("Mounting Filesystem 2\n");
-  mountSDFileSystem(_external_sd_conf, mount_point2, 2)
-  printf("Filesystem 2 Mounted\n");
+  mountSDFileSystem(_external_sd_conf, mount_point2, 2);
+  sdspi_dev_handle_t external_device;
 
   // Clear the log file
   _path2 = MOUNT2;
   _path2 += "/";
   _path2 += LOGFILE;
-  appendFile(_path1, "\n\n SD 2 Mounted\n");
+  appendFile(_path2, "\n\n SD 2 Mounted\n");
 
 #endif /* SD2_ATTACHED */
 }
@@ -230,7 +229,7 @@ void DataLogger::mountSDFileSystem(sdspi_device_config_t sd_conf, const char* mo
       connected = &_sd2_connected;
       break;
     default:
-      printf("Not a valid card number. card in range [0, 1]");
+      printf("Not a valid card number. card in range [0, 1]\n");
       return;
   }
 
@@ -239,10 +238,10 @@ void DataLogger::mountSDFileSystem(sdspi_device_config_t sd_conf, const char* mo
   *connected = true;
   if (ret != ESP_OK){
     if (ret == ESP_FAIL){
-      printf("Failed to mount filesystem.");
+      printf("Failed to mount filesystem.\n");
     }
   else{
-      printf("Failed to initialize the card. Make sure the SD card lines have pull up resistors in place.");
+      printf("Failed to initialize the card: %s\n", esp_err_to_name(ret));
       *connected = false;
     }
     return;

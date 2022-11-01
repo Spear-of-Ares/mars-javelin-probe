@@ -2,7 +2,7 @@
 *     File Name           :     /mars-javelin-probe/components/BME280/BME280.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-20 23:56]
-*     Last Modified       :     [2022-10-27 01:40]
+*     Last Modified       :     [2022-10-28 01:32]
 *     Description         :     Component handler for the BME280, a pressure sensor      
 **********************************************************************************/
 
@@ -21,6 +21,9 @@ void BME280Component::vMainLoop_Task(void *bme_280_component){
 
 void BME280Component::setup(){
   device = Adafruit_BME280();
+#ifdef BME_ATTACHED
+  device.begin();
+#endif
 }
 
 void BME280Component::logBME(){
@@ -28,7 +31,9 @@ void BME280Component::logBME(){
   float temp = device.readTemperature();
   float pressure = device.readPressure();
   float humidity = device.readHumidity();
-  float altitude = device.readAltitude();
+  // Standard pressure of sea level: 1013.25
+  // Could be pressure at launch site to estimate hight above ground
+  float altitude = device.readAltitude(1013.25);
 #else
   float temp = 0;
   float pressure = 0;
@@ -38,7 +43,7 @@ void BME280Component::logBME(){
 
   std::ostringstream data;
   data << xTaskGetTickCount() << " || " << BME_TASK_ID << " || ";
-  data << "Temp: " << temp << " C | Pressure: " << pressure << " ? | humidity: " << humidity << " ? | altitude: " << altitude << " ?\n";
+  data << "Temp: " << temp << " C | Pressure: " << pressure << " Pa | humidity: " << humidity << " % | altitude: " << altitude << " m\n";
   SDData *sddata = new SDData();
   sddata->file_name = new std::string("measure");
   sddata->message = new std::string(data.str());

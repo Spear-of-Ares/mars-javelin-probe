@@ -2,7 +2,7 @@
 *     File Name           :     /mars-javelin-probe/components/BME280/include/BME280.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-20 23:54]
-*     Last Modified       :     [2022-10-27 01:47]
+*     Last Modified       :     [2022-10-27 20:15]
 *     Description         :     Component handler for the BME280, a pressure sensor
 **********************************************************************************/
 #ifndef __BME280_COMPONENT_H__
@@ -16,7 +16,9 @@
 
 #define BME_TASK_ID "BME TASK  "
 #define BME_SAMPLE_RATE_HZ  10
-//#define BME_ATTACHED
+#if CONFIG_BME_ATTACHED == true
+#define BME_ATTACHED
+#endif
 class BME280Component{
 public:
   BME280Component(QueueHandle_t dataOutSD){

@@ -11,8 +11,8 @@ int i2c_master_port;
 
 // Need to init SPI in different ways. One uses espidf SPI and one uses Arduino SPI
 void initSPI(){
-  initLoRaSPI();
   initSDSPI();
+  initLoRaSPI();
 }
 
 void initLoRaSPI(){
@@ -25,7 +25,8 @@ void initLoRaSPI(){
 void initSDSPI(){
   // Host config. Use SPI3_HOST as LoRa is on SPI2_HOST
   sdmmc_host_t host = SDSPI_HOST_DEFAULT();
-  host.slot = VSPI_HOST;
+  host.max_freq_khz = 20 * 1000; // Too fast of freq results in failures on breadboard
+  host.slot = SPI3_HOST;
   SDHost = host;
 
   // Init spi bus pins
@@ -35,13 +36,13 @@ void initSDSPI(){
     .sclk_io_num = VSPI_SCK_GPIO,
     .quadwp_io_num = -1,
     .quadhd_io_num = -1,
-    .max_transfer_sz = 4092,
+    .max_transfer_sz = 16*1024,
   };
 
   // Initialize the SPI bus
   esp_err_t ret = spi_bus_initialize((spi_host_device_t)SDHost.slot, &spi_conf, SDSPI_DEFAULT_DMA);
   if (ret != ESP_OK){
-    printf("Failed to initialize bus.\n");
+    printf("Failed to initialize bus: %s\n", esp_err_to_name(ret));
     return; 
   }
 }
@@ -52,20 +53,22 @@ void initSDSPI(){
  *
  *************************/
 void initI2C(){
-  i2c_master_port = I2C_MASTER_PORT;
-
-  i2c_config_t conf = {
-    .mode = I2C_MODE_MASTER,
-    .sda_io_num = I2C_SDA_GPIO,
-    .scl_io_num = I2C_SCL_GPIO,
-    .sda_pullup_en = GPIO_PULLUP_DISABLE,
-    .scl_pullup_en = GPIO_PULLUP_DISABLE,
-    .master {.clk_speed = I2C_MASTER_FREQ_HZ}
-  };
-
-  //conf.master.clk_speed = I2C_MASTER_FREQ_HZ;
-  ESP_ERROR_CHECK(i2c_param_config(i2c_master_port, &conf));
-  ESP_ERROR_CHECK(i2c_driver_install(i2c_master_port, conf.mode, 0, 0, 0));
+  Wire.begin(I2C_SDA_GPIO, I2C_SCL_GPIO);
+  Wire.setClock(I2C_MASTER_FREQ_HZ);
+  // i2c_master_port = I2C_MASTER_PORT;
+  //
+  // i2c_config_t conf = {
+  //   .mode = I2C_MODE_MASTER,
+  //   .sda_io_num = I2C_SDA_GPIO,
+  //   .scl_io_num = I2C_SCL_GPIO,
+  //   .sda_pullup_en = GPIO_PULLUP_DISABLE,
+  //   .scl_pullup_en = GPIO_PULLUP_DISABLE,
+  //   .master {.clk_speed = I2C_MASTER_FREQ_HZ}
+  // };
+  //
+  // //conf.master.clk_speed = I2C_MASTER_FREQ_HZ;
+  // ESP_ERROR_CHECK(i2c_param_config(i2c_master_port, &conf));
+  // ESP_ERROR_CHECK(i2c_driver_install(i2c_master_port, conf.mode, 0, 0, 0));
 }
 
 

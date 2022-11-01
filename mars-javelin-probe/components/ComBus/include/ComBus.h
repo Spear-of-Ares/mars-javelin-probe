@@ -2,7 +2,7 @@
 *     File Name           :     /components/ComBus/include/ComBus.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-23 19:22]
-*     Last Modified       :     [2022-10-24 00:05]
+*     Last Modified       :     [2022-10-28 01:04]
 *     Description         :     Definitions and initializtion for the communication busses (1 I2C and 2 SPI)
 **********************************************************************************/
 
@@ -10,9 +10,11 @@
 #define __COM_BUS_H__
 
 #include <stdio.h>
+#include <Wire.h>
 
 #include "driver/i2c.h"
 #include "sdmmc_cmd.h"
+#include "driver/sdmmc_host.h"
 #include "esp_vfs_fat.h"
 #include "esp_log.h"
 #include "sdkconfig.h"
@@ -39,7 +41,6 @@
 #define SD1_CS_GPIO         CONFIG_SD1_CS_GPIO
 #define SD2_CS_GPIO         CONFIG_SD2_CS_GPIO
 
-//#define VSPI_HOST       CONFIG_VSPI_HOST
 
 static void initLoRaSPI();
 static void initSDSPI();
