@@ -1,3 +1,27 @@
 menu "General Javelin Config"
+  config DATA_LOG_STACK_SZ
+   int "Data Logger Stack size"
+   default 3072
+   help
+   The size on the stack allocated at compile time to the datalogger task
+
+  config DATA_LOG_PRIORITY
+    int "Data Logger Priority"
+    range 1 10
+    default 9
+    help
+    The freeRTOS priority of the data logger task
+
+  config CMD_CNTR_STACK_SZ
+    int "Command Center Stack Size"
+    default 2048
+    help
+    The size on the stack allocated at compile time for the command center task
+
+  config CMD_CNTR_PRIORITY
+    int "Command Center Priority"
+    default 7
+    help
+    The freeRTOS priority of the command center task
 
 endmenu

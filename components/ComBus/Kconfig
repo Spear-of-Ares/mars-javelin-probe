@@ -101,7 +101,7 @@ config SD1_CS_GPIO
 config SD2_CS_GPIO
   int "SD2 CS GPIO"
   range 0 35
-  default 12
+  default 25
   help
   The CS GPIO for the external (SD2) SD card on the SD card SPI bus
 

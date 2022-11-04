@@ -40,6 +40,8 @@ esp_err_t RunTimeStats::get_real_time_stats(TickType_t xTicksToWait){
 
     //Calculate total_elapsed_time in units of run time stats clock period.
     _total_elapsed_time = (_end_run_time - _start_run_time);
+
+    // Will fail if configGENERATE_RUN_TIME_STATS is not set
     if (_total_elapsed_time == 0) {
         ret = ESP_ERR_INVALID_STATE;
         free_arrays();
@@ -96,8 +98,10 @@ esp_err_t RunTimeStats::print_real_time_stats(TickType_t xTicksToWait, char *pcW
 
 void RunTimeStats::get_stats(){
   char pcWriteBuffer[1028];
+  esp_err_t ret;
 
-  if (print_real_time_stats(STATS_TICKS, pcWriteBuffer) == ESP_OK) {
+  ret = print_real_time_stats(STATS_TICKS, pcWriteBuffer);
+  if (ret == ESP_OK) {
     SDData *send_data = new SDData();
 
     std::ostringstream data;
@@ -116,11 +120,12 @@ void RunTimeStats::get_stats(){
     send_data->file_name = new std::string("stats");
     send_data->message = new std::string(data.str());
 
-    if(xQueueSend(_dataOutSD, &(send_data), 10/portTICK_PERIOD_MS) != pdTRUE){
+    ret =xQueueSend(_dataOutSD, &(send_data), 10/portTICK_PERIOD_MS); 
+    if( ret != pdTRUE){
       printf("Failed to post stats data\n");
     }
   } else {
-    printf("Error getting real time stats\n");
+    printf("Error getting real time stats: %s\n", esp_err_to_name(ret));
   }
 }
 

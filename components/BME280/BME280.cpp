@@ -2,7 +2,7 @@
 *     File Name           :     /mars-javelin-probe/components/BME280/BME280.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-20 23:56]
-*     Last Modified       :     [2022-10-28 01:32]
+*     Last Modified       :     [2022-11-02 05:03]
 *     Description         :     Component handler for the BME280, a pressure sensor      
 **********************************************************************************/
 
@@ -12,7 +12,6 @@ void BME280Component::vMainLoop_Task(void *bme_280_component){
   BME280Component bme_comp = *((BME280Component*)bme_280_component);
   bme_comp.setup();
   const TickType_t xDelay = (1000/BME_SAMPLE_RATE_HZ) / portTICK_PERIOD_MS;
-
   for(;;){
     bme_comp.logBME();
     vTaskDelay(xDelay);
@@ -24,6 +23,7 @@ void BME280Component::setup(){
 #ifdef BME_ATTACHED
   device.begin();
 #endif
+  printf("BME280 setup complete\n");
 }
 
 void BME280Component::logBME(){

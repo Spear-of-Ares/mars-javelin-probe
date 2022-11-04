@@ -53,22 +53,9 @@ void initSDSPI(){
  *
  *************************/
 void initI2C(){
-  Wire.begin(I2C_SDA_GPIO, I2C_SCL_GPIO);
+  Wire.setPins(I2C_SDA_GPIO, I2C_SCL_GPIO);
   Wire.setClock(I2C_MASTER_FREQ_HZ);
-  // i2c_master_port = I2C_MASTER_PORT;
-  //
-  // i2c_config_t conf = {
-  //   .mode = I2C_MODE_MASTER,
-  //   .sda_io_num = I2C_SDA_GPIO,
-  //   .scl_io_num = I2C_SCL_GPIO,
-  //   .sda_pullup_en = GPIO_PULLUP_DISABLE,
-  //   .scl_pullup_en = GPIO_PULLUP_DISABLE,
-  //   .master {.clk_speed = I2C_MASTER_FREQ_HZ}
-  // };
-  //
-  // //conf.master.clk_speed = I2C_MASTER_FREQ_HZ;
-  // ESP_ERROR_CHECK(i2c_param_config(i2c_master_port, &conf));
-  // ESP_ERROR_CHECK(i2c_driver_install(i2c_master_port, conf.mode, 0, 0, 0));
+  Wire.begin();
 }
 
 

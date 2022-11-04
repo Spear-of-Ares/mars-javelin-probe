@@ -2,7 +2,7 @@
 *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-03 22:40]
-*     Last Modified       :     [2022-10-27 23:09]
+*     Last Modified       :     [2022-11-02 05:10]
 *     Description         :     Coordinates and controls generation of new tasks 
 *                               Using the ESP Arduino library for access to a wider number of
 *                               libraries for components, such as the IridiumSBD library.
@@ -14,7 +14,6 @@
 
 #include <string>
 #include <cstdio>
-
 #include "esp_log.h"
 #include "esp_timer.h"
 #include "esp_freertos_hooks.h"
@@ -66,11 +65,12 @@ extern "C" void app_main(void)
 {
     // Initialize artuidno library
     initArduino();
-    initComBus();
-    i2cScan();
 
 
     vTaskDelay(1000/portTICK_PERIOD_MS);
+
+    initComBus();
+    i2cScan();
     /**************************************
      *
      *  Initialization
@@ -99,7 +99,7 @@ extern "C" void app_main(void)
       "Log Loop Task",           // Name of task
       1024 * 3,                 // Stack size of task
       (void*)(&data_log),        // task parameters
-      10,                        // Task priority
+      9,                        // Task priority
       &xDataLogHandle            // Handle to resulting task
     );
     if (xReturned != pdPASS)
@@ -107,7 +107,6 @@ extern "C" void app_main(void)
       printf("Could not start the Data log loop task\n");
     }
 
-    vTaskDelay(1000/portTICK_PERIOD_MS);
 
 
     /**************************************
@@ -124,7 +123,7 @@ extern "C" void app_main(void)
       "Command Center Task",           // Name of task
       1024 * 2,                 // Stack size of task
       (void*)(&cmd_center),        // task parameters
-      10,                        // Task priority
+      5,                        // Task priority
       &xCmdCenter            // Handle to resulting task
     );
     if (xReturned != pdPASS)
@@ -145,7 +144,7 @@ extern "C" void app_main(void)
       "LoRa Component Task",
       1024*3,
       (void*)(&lora_component),
-      10,
+      8,
       &xLoraHandle
     );
     if (xReturned != pdPASS)
@@ -153,6 +152,7 @@ extern "C" void app_main(void)
       printf("Could not start the Lora RX task\n");
     }
 
+    vTaskDelay(1000/portTICK_PERIOD_MS);
 
     /**************************************
      *
@@ -167,7 +167,7 @@ extern "C" void app_main(void)
       "IMU Component Task",         // Name of task
       1024 * 3,                     // Stack size of task
       (void*)(&imu_component),      // task parameters
-      10,                           // Task priority
+      9,                           // Task priority
       &xIMUComponentHandle          // Handle to resulting task
     );
     if (xReturned != pdPASS)
@@ -175,6 +175,7 @@ extern "C" void app_main(void)
       printf("Could not start the IMUComponent task\n");
     }
     
+    vTaskDelay(5000/portTICK_PERIOD_MS);
     /**************************************
      *
      *  Creating the BME280 process
@@ -188,7 +189,7 @@ extern "C" void app_main(void)
       "BME280 Component Task",           // Name of task
       1024 * 3,                          // Stack size of task
       (void*)(&bme_component),           // task parameters
-      10,                                // Task priority
+      8,                                // Task priority
       &xBMEComponentHandle             // Handle to resulting task
     );
     if (xReturned != pdPASS)
@@ -257,7 +258,7 @@ extern "C" void app_main(void)
       "Therm Comp Task",   // Name of task
       1024 * 3,                      // Stack size of task
       (void*)(&thermistor_component),// task parameters
-      10,                            // Task priority
+      6,                            // Task priority
       &xThermistorComponentHandle    // Handle to resulting task
     );
     if (xReturned != pdPASS)
@@ -273,14 +274,13 @@ extern "C" void app_main(void)
     RunTimeStats stats_component = RunTimeStats(dataOutSD);
 
     TaskHandle_t xStatsComponent = NULL;
-    xReturned = xTaskCreatePinnedToCore(
+    xReturned = xTaskCreate(
       RunTimeStats::stats_task,         // Function for task
       "stats",                          // Name of task
       1024 * 4,                        // Stack size of task
       (void*)(&stats_component),         // task parameters
-      12,                              // Task priority
-      &xStatsComponent,             // Handle to resulting task
-      tskNO_AFFINITY
+      5,                              // Task priority
+      &xStatsComponent             // Handle to resulting task
     );
     if (xReturned != pdPASS)
     {

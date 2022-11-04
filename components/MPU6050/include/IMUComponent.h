@@ -2,7 +2,7 @@
 *     File Name           :     /components/BMI085/include/IMUComponent.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-21 00:42]
-*     Last Modified       :     [2022-10-27 01:21]
+*     Last Modified       :     [2022-11-02 00:57]
 *     Description         :     Component for handling the IMU and its data 
 **********************************************************************************/
 
@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <sstream>
 #include "datalogger.h"
-#include "BMI085.h"
+#include "MPU6050.h"
 #include "ComBus.h"
 
 #define IMU_TASK_ID "IMU TASK  "
@@ -28,7 +28,9 @@ private:
   void setup();
   void logIMU();
   QueueHandle_t _dataOutSD;
-  BMI085 _device;
+  MPU6050 _device;
+
+  float _pitch, _roll, _yaw;
 };
 
 #endif
