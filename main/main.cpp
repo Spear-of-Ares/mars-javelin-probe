@@ -28,6 +28,7 @@
 #include "CommandCenter.h"
 #include "IMUComponent.h"
 #include "BME280.h"
+#include "GPSComponent.h"
 
 //#define LoRaTRANSMITTER
 
@@ -71,6 +72,8 @@ extern "C" void app_main(void)
 
     initComBus();
     i2cScan();
+
+    vTaskDelay(1000/portTICK_PERIOD_MS);
     /**************************************
      *
      *  Initialization
@@ -222,13 +225,13 @@ extern "C" void app_main(void)
       printf("Could not start the IridiumSBD Component task\n");
     }
 
+#endif
     /**************************************
      *
      *  Creating the GPS process
      *
      ***************************************/
     GPSComponent gps_component = GPSComponent(dataOutSD);
-    gps_component.setup();
 
     TaskHandle_t xGPSComponentHandle = NULL;
     xReturned = xTaskCreate(
@@ -244,7 +247,6 @@ extern "C" void app_main(void)
       printf("Could not start the GPS Component task\n");
     }
 
-#endif
     /**************************************
      *
      *  Creating the Thermistor process

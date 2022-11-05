@@ -10,10 +10,10 @@
 
 void IMUComponent::vMainLoop_Task(void *arg){
   IMUComponent imu_component = *((IMUComponent*)arg);
-  imu_component.setup();
+  //imu_component.setup();
   const TickType_t xDelay = (1000 / SAMPLE_RATE_HZ) / portTICK_PERIOD_MS;
   for(;;){
-    imu_component.logIMU();    
+    //imu_component.logIMU();    
     vTaskDelay(xDelay);
   }
 }

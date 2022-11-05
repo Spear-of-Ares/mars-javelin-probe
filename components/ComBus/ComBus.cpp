@@ -53,9 +53,7 @@ void initSDSPI(){
  *
  *************************/
 void initI2C(){
-  Wire.setPins(I2C_SDA_GPIO, I2C_SCL_GPIO);
-  Wire.setClock(I2C_MASTER_FREQ_HZ);
-  Wire.begin();
+  Wire.begin(I2C_SDA_GPIO, I2C_SCL_GPIO);
 }
 
 
