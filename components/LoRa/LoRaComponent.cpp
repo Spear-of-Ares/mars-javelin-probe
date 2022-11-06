@@ -2,7 +2,7 @@
 *     File Name           :     /components/lora/lora_commlogic.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-18 20:25]
-*     Last Modified       :     [2022-10-27 00:43]
+*     Last Modified       :     [2022-11-06 02:38]
 *     Description         :     Communication logic for LoRa modules 
 **********************************************************************************/
 #include "LoRaComponent.h"
@@ -31,11 +31,10 @@ bool LoRaComponent::setup(){
   return true;
 }
 
-void LoRaComponent::vTX()
+void LoRaComponent::vTX(std::string msg)
 {
-  vTaskDelay(5000/portTICK_PERIOD_MS);
   LoRa.beginPacket();
-  LoRa.print("Hello ");
+  LoRa.print(msg.c_str());
   LoRa.endPacket();
   printf("Packet sent...\n");
 }
@@ -55,6 +54,10 @@ void LoRaComponent::vRX()
       {
         received += (char)LoRa.read();
       }
+
+    std::ostringstream response;
+    response << "[" << xTaskGetTickCount() << "] Message received";
+    vTX(response.str());
 
     if(received[0] == 0x01){
       xTaskNotify(_cmd_center, received[1], eSetBits);

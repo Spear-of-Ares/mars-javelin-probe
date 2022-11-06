@@ -53,7 +53,8 @@ void initSDSPI(){
  *
  *************************/
 void initI2C(){
-  Wire.begin(I2C_SDA_GPIO, I2C_SCL_GPIO);
+  Wire.begin(I2C_SDA_GPIO, I2C_SCL_GPIO, 400000);
+  Wire.setTimeOut(100);
 }
 
 

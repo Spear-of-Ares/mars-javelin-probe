@@ -2,7 +2,7 @@
 *     File Name           :     /components/lora/include/lora_commlogic.h
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-18 20:25]
-*     Last Modified       :     [2022-10-27 00:41]
+*     Last Modified       :     [2022-11-06 02:37]
 *     Description         :      Communication logic for LoRa modules
 **********************************************************************************/
 
@@ -26,7 +26,7 @@ public:
   static void vMainLoop_Task(void *arg);
 private:
   void vRX();
-  void vTX();
+  void vTX(std::string msg);
   bool setup();
   QueueHandle_t _dataOutSD;
   QueueHandle_t _dataOutLoRa;

@@ -66,6 +66,8 @@ void DataLogger::handleQueueData(){
       }
     }
 
+    // Delay to allow other tasks to run after long operation
+    vTaskDelay(10/portTICK_PERIOD_MS);
 #ifdef SD2_ATTACHED
     if ( !_sd2_connected ){
       mountSDFileSystem(_external_sd_conf, MOUNT2, 2);
@@ -79,8 +81,8 @@ void DataLogger::handleQueueData(){
 #endif
     // WARNING:: These print statements cause Data logger to use many may clock cycles
     //           Use at your own risk!! You have been warned!
-    printf("     Written to SD\n");
-    printf("++++++++++++++++++++++++++\n");
+    //printf("     Written to SD\n");
+    //printf("++++++++++++++++++++++++++\n");
     printf("%s", _dataOutBuf->c_str());
 
     // reset data out buf

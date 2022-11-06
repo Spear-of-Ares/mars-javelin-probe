@@ -2,7 +2,7 @@
 *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-03 22:40]
-*     Last Modified       :     [2022-11-02 05:10]
+*     Last Modified       :     [2022-11-06 03:29]
 *     Description         :     Coordinates and controls generation of new tasks 
 *                               Using the ESP Arduino library for access to a wider number of
 *                               libraries for components, such as the IridiumSBD library.
@@ -100,7 +100,7 @@ extern "C" void app_main(void)
     xReturned = xTaskCreate(
       DataLogger::vLogLoop_Task, // Function for task
       "Log Loop Task",           // Name of task
-      1024 * 3,                 // Stack size of task
+      1024 * 4,                 // Stack size of task
       (void*)(&data_log),        // task parameters
       9,                        // Task priority
       &xDataLogHandle            // Handle to resulting task
@@ -109,8 +109,6 @@ extern "C" void app_main(void)
     {
       printf("Could not start the Data log loop task\n");
     }
-
-
 
     /**************************************
      *
@@ -126,7 +124,7 @@ extern "C" void app_main(void)
       "Command Center Task",           // Name of task
       1024 * 2,                 // Stack size of task
       (void*)(&cmd_center),        // task parameters
-      5,                        // Task priority
+      10,                        // Task priority
       &xCmdCenter            // Handle to resulting task
     );
     if (xReturned != pdPASS)
@@ -147,7 +145,7 @@ extern "C" void app_main(void)
       "LoRa Component Task",
       1024*3,
       (void*)(&lora_component),
-      8,
+      10,
       &xLoraHandle
     );
     if (xReturned != pdPASS)
@@ -155,7 +153,6 @@ extern "C" void app_main(void)
       printf("Could not start the Lora RX task\n");
     }
 
-    vTaskDelay(1000/portTICK_PERIOD_MS);
 
     /**************************************
      *
@@ -165,20 +162,20 @@ extern "C" void app_main(void)
     IMUComponent imu_component = IMUComponent(dataOutSD);
 
     TaskHandle_t xIMUComponentHandle= NULL;
-    xReturned = xTaskCreate(
+    xReturned = xTaskCreatePinnedToCore(
       IMUComponent::vMainLoop_Task, // Function for task
       "IMU Component Task",         // Name of task
       1024 * 3,                     // Stack size of task
       (void*)(&imu_component),      // task parameters
-      9,                           // Task priority
-      &xIMUComponentHandle          // Handle to resulting task
+      8,                           // Task priority
+      &xIMUComponentHandle,          // Handle to resulting task
+      1
     );
     if (xReturned != pdPASS)
     {
       printf("Could not start the IMUComponent task\n");
     }
     
-    vTaskDelay(5000/portTICK_PERIOD_MS);
     /**************************************
      *
      *  Creating the BME280 process
@@ -187,13 +184,14 @@ extern "C" void app_main(void)
     BME280Component bme_component = BME280Component(dataOutSD);
 
     TaskHandle_t xBMEComponentHandle = NULL;
-    xReturned = xTaskCreate(
+    xReturned = xTaskCreatePinnedToCore(
       BME280Component::vMainLoop_Task,   // Function for task
       "BME280 Component Task",           // Name of task
       1024 * 3,                          // Stack size of task
       (void*)(&bme_component),           // task parameters
       8,                                // Task priority
-      &xBMEComponentHandle             // Handle to resulting task
+      &xBMEComponentHandle,             // Handle to resulting task
+      0
     );
     if (xReturned != pdPASS)
     {
@@ -234,13 +232,14 @@ extern "C" void app_main(void)
     GPSComponent gps_component = GPSComponent(dataOutSD);
 
     TaskHandle_t xGPSComponentHandle = NULL;
-    xReturned = xTaskCreate(
+    xReturned = xTaskCreatePinnedToCore(
       GPSComponent::vMainLoop_Task,    // Function for task
       "GPS Component Task",   // Name of task
-      1024 * 2,                        // Stack size of task
+      1024 * 3,                        // Stack size of task
       (void*)(&gps_component),         // task parameters
-      10,                              // Task priority
-      &xGPSComponentHandle             // Handle to resulting task
+      7,                              // Task priority
+      &xGPSComponentHandle,             // Handle to resulting task
+      1
     );
     if (xReturned != pdPASS)
     {

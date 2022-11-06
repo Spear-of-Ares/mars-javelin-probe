@@ -2,7 +2,7 @@
 *     File Name           :     /components/BMI085/IMUComponent.cpp
 *     Created By          :     jon
 *     Creation Date       :     [2022-10-21 00:43]
-*     Last Modified       :     [2022-11-02 05:04]
+*     Last Modified       :     [2022-11-06 03:46]
 *     Description         :     Component for handling the IMU and its data 
 **********************************************************************************/
 
@@ -10,10 +10,10 @@
 
 void IMUComponent::vMainLoop_Task(void *arg){
   IMUComponent imu_component = *((IMUComponent*)arg);
-  //imu_component.setup();
+  imu_component.setup();
   const TickType_t xDelay = (1000 / SAMPLE_RATE_HZ) / portTICK_PERIOD_MS;
   for(;;){
-    //imu_component.logIMU();    
+    imu_component.logIMU();    
     vTaskDelay(xDelay);
   }
 }
@@ -53,16 +53,16 @@ void IMUComponent::setup(){
   _device = MPU6050();
   while(!_device.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_16G))
   {
-      printf("Could not find a valid MPU6050 Sensor, check wiring!");
+      printf("Could not find a valid MPU6050 Sensor, check wiring!\n");
       vTaskDelay(500/portTICK_PERIOD_MS);
   }
 
   _device.setAccelPowerOnDelay(MPU6050_DELAY_3MS);
   
-  // // Disable interupts 
-  // _device.setIntFreeFallEnabled(false);
-  // _device.setIntZeroMotionEnabled(false);
-  // _device.setIntMotionEnabled(false);
+  // Disable interupts
+  _device.setIntFreeFallEnabled(false);
+  _device.setIntZeroMotionEnabled(false);
+  _device.setIntMotionEnabled(false);
 
   _device.calibrateGyro();
   _device.setThreshold(3);
