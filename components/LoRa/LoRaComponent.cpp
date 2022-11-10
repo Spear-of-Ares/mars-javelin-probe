@@ -15,6 +15,7 @@ void LoRaComponent::vMainLoop_Task(void *arg){
 
   for(;;){
     lora_component.vRX();  
+    lora_component.checkQueue();
     vTaskDelay(10);
   }
 }
@@ -31,12 +32,27 @@ bool LoRaComponent::setup(){
   return true;
 }
 
+void LoRaComponent::checkQueue(){
+  while (uxQueueMessagesWaiting(_dataOutLoRa) != 0)
+  {
+    std::string *msg;
+    if (xQueueReceive(_dataOutLoRa, &(msg), 5 / portTICK_PERIOD_MS) != pdTRUE)
+    {
+      printf("LoRa could not receive from queue\n");
+      return;
+    }
+    vTX(&msg);
+    delete msg;
+  }
+}
+
 void LoRaComponent::vTX(std::string msg)
 {
+  log_i("Sending LoRa packet\n");
   LoRa.beginPacket();
   LoRa.print(msg.c_str());
   LoRa.endPacket();
-  printf("Packet sent...\n");
+  log_i("Packet sent\n");
 }
 
 void LoRaComponent::vRX()

@@ -10,13 +10,16 @@
 
 #define ADDRESS_1 0x42
 #define ADDRESS_2 0x43
-//#define SET_GPS_ADDR
+
+GPSComponent::GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium){
+    _dataOutSD = dataOutSD;
+    _dataOutLoRa = dataOutLoRa;
+    _dataOutIridium = dataOutIridium;
+}
 
 void GPSComponent::vMainLoop_Task(void *arg){
     GPSComponent gps_component = *((GPSComponent*)(arg));
-#ifdef SET_GPS_ADDR
     gps_component.setup();
-#endif
     
     for(;;){
         gps_component.get_data();
@@ -25,93 +28,125 @@ void GPSComponent::vMainLoop_Task(void *arg){
 }
 
 void GPSComponent::setup(){
-#ifdef SET_GPS_ADDR
-  if(_GNSS_1.begin(Wire, 0x42, 0xFFFF) == false){
+  while(_GNSS_1.begin(Wire) == false){
     printf("Could not start _GNSS_1\n");
+    vTaskDelay(500/portTICK_PERIOD_MS);
   }
-  else{
-    printf("Started _GNSS_1\n");
-  }
-#endif
-  //
-  //
-  //
-  // if(_GNSS_2.begin(Wire, 0x42, 0xFFFF) == false){
-  //   printf("Could not start _GNSS_2\n");
-  // }
-  // else{
-  //   _GNSS_2.setMeasurementRate(5000);
-  //   printf("Started _GNSS_2\n");
-  // }
-  //
-  // // _GNSS_1.setI2CpollingWait(25);
-  // // _GNSS_2.setI2CpollingWait(25);
-  //
-#ifdef SET_GPS_ADDR
-  if(_GNSS_1.setI2CAddress(0x43) == false){
-    printf("Could not change the i2c address of _GNSS_1\n");
-  }
+  printf("GNSS 1 setup successfully\n");
 
-  if(_GNSS_1.saveConfiguration() == false){
-    printf("Unable to save configuration of _GNSS_1\n");
+  while(_GNSS_2.begin(Wire1) == false){
+    printf("Could not start _GNSS_2\n");
+    vTaskDelay(500/portTICK_PERIOD_MS);
   }
-#endif
+  printf("GNSS 2 setup successfully\n");
 
+  _GNSS_1.setNavigationFrequency(1); // Produce two solutions per second
+  _GNSS_1.setAutoPVT(true);
+
+  _GNSS_2.setNavigationFrequency(1); // Produce two solutions per second
+  _GNSS_2.setAutoPVT(true);
+
+  printf("Finished GPS startup\n");
 }
 
-std::string GPSComponent::getGPS_MSG(int addr){
-  Wire.beginTransmission(ADDRESS);
-  Wire.write(0xFF);
-  Wire.endTransmission();
+std::string GPSComponent::getGPS_MSG(int gps)
+{
+    std::ostringstream data;
 
-  int val = 0;
-  std::string msg = "";
-  // Get all data from GPS
-  for(int i = 0;; i++){
-    Wire.requestFrom(ADDRESS, 1, true);
-    val = Wire.read();
-    if(val == 0xFF || val == -1){
-      if(i == 0){
-        return "";
-      } 
-      break;
+    data << xTaskGetTickCount() << " || " << GPS_COMP_ID << " || ";
+    int header_len = data.str().length();
+
+    printf("Getting GPS data: %d\n", gps);
+    SFE_UBLOX_GNSS *myGNSS;
+    switch(gps){
+        case 1:
+            myGNSS = &_GNSS_1;
+            break;
+        case 2:
+            myGNSS = &_GNSS_2;
+            break;
+        default:
+            myGNSS = &_GNSS_1;
     }
-    msg += (char)val;
-    vTaskDelay(1);
-  }
+    // Calling getPVT returns true if there actually is a fresh navigation solution available.
+    // Start the reading only when valid LLH is available
+    if (myGNSS->getPVT() && (myGNSS->getInvalidLlh() == false))
+    {
+        long latitude = myGNSS->getLatitude();
+        data << "Lat: " << latitude;
 
-  int i = 0;
-  return msg;
+        long longitude = myGNSS->getLongitude();
+        data << " Long: " << longitude << " (degrees * 10^-7) ||";
+
+        long altitude = myGNSS->getAltitude();
+        data << " Alt: " << altitude << " (mm) ||";
+
+        byte SIV = myGNSS->getSIV();
+        data << " SIV: " << SIV << " ||";
+
+        int PDOP = myGNSS->getPDOP();
+        data << " PDOP: " << PDOP << " (10^-2)";
+
+        uint16_t year = myGNSS->getYear();
+        uint8_t month = myGNSS->getMonth();
+        uint8_t day = myGNSS->getDay();
+        uint8_t hour = myGNSS->getHour();
+        uint8_t minute = myGNSS->getMinute();
+        uint8_t second = myGNSS->getSecond();
+        uint16_t msec = myGNSS->getMillisecond();
+        data << "\n" << std::string(header_len-3, ' ');
+        data << "|| Time: " << year << "-" << month << "-" << day << " " << minute << ":" << second << ":" << msec;
+
+        data << " || Time is ";
+        if (myGNSS->getTimeValid() == false)
+        {
+            data << "not ";
+        }
+        data << "valid  Date is ";
+        if (myGNSS->getDateValid() == false)
+        {
+            data << "not ";
+        }
+        data << "valid";
+
+    }
+    else{
+        data << "No Data";
+    }
+    return data.str();
 }
 
-void GPSComponent::sendData(int gps_num ,std::string msg){
-  int i = 0;
-  while(i < msg.length() && _tiny_gps.encode(msg[i++]));
+void GPSComponent::sendData(std::string msg){
 
-  unsigned long date, time, time_age;
-  _tiny_gps.get_datetime(&date, &time, &time_age);
-  long latitude, longitude;
-  unsigned long pos_age;
-  _tiny_gps.get_position(&latitude, &longitude, &pos_age);
+    SDData *sddata = new SDData();
+    sddata->file_name = new std::string("measure");
+    sddata->message = new std::string(msg);
 
-  std::ostringstream data;
-  data << xTaskGetTickCount() << " || " GPS_COMP_ID << " || GPS "<< gps_num << " ||  Date:Time:Age: "<< date << ":"<< time << ":" << time_age << " || Lat:Long:Age: "<<latitude << ":" << longitude << ":" << pos_age<< " || sats: " << _tiny_gps.satellites() << "\n";
-  SDData *sddata = new SDData();
-  sddata->file_name = new std::string("measure");
-  sddata->message = new std::string(data.str());
+    std::string *loradata = new std::string(msg);
+    std::string *iriddata = new std::string(msg);
 
-  if (xQueueSend(_dataOutSD, &(sddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
-  {
-    printf("Failed to post thermistor data\n");
-  }
+
+    if (xQueueSend(_dataOutSD, &(sddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+    {
+        printf("Failed to post GPS data to SD\n");
+    }
+
+    if (xQueueSend(_dataOutIridium, &(iriddata), 10/portTICK_PERIOD_MS) != pdTRUE)
+    {
+        printf("Failed to post GPS data to Iridium\n");
+    }
+
+    if (xQueueSend(_dataOutLoRa, &(loradata), 10/portTICK_PERIOD_MS) != pdTRUE)
+    {
+        printf("Failed to post GPS data to LoRa\n");
+    }
 
 }
 
 void GPSComponent::get_data(){
-  std::string gps1_msg = getGPS_MSG(ADDRESS_1);
-  vTaskDelay(100/portTICK_PERIOD_MS);
-  std::string gps2_msg = getGPS_MSG(ADDRESS_2);
+  std::string msg1 = getGPS_MSG(1);
+  std::string msg2 = getGPS_MSG(2);
 
-  sendData(1, gps1_msg);
-  sendData(2,gps2_msg);
+    sendData(msg1);
+    sendData(msg2);
 }

@@ -21,7 +21,7 @@ void BME280Component::vMainLoop_Task(void *bme_280_component){
 void BME280Component::setup(){
   device = Adafruit_BME280();
 #ifdef BME_ATTACHED
-  device.begin();
+  device.begin((uint8_t)BME280_ADDRESS, &Wire);
 #endif
   printf("BME280 setup complete\n");
 }

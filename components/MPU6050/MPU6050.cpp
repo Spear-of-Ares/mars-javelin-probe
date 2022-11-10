@@ -29,12 +29,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <MPU6050.h>
 
-bool MPU6050::begin(mpu6050_dps_t scale, mpu6050_range_t range, int mpua)
+bool MPU6050::begin(mpu6050_dps_t scale, mpu6050_range_t range, int mpua, TwoWire *the_wire)
 {
     // Set Address
     mpuAddress = mpua;
-
-    Wire.begin();
+    _wire = the_wire;
+    _wire->begin();
 
     // Reset calibrate values
     dg.XAxis = 0;
@@ -344,32 +344,32 @@ Activites MPU6050::readActivites(void)
 
 Vector MPU6050::readRawAccel(void)
 {
-    Wire.beginTransmission(mpuAddress);
+    _wire->beginTransmission(mpuAddress);
     #if ARDUINO >= 100
-	Wire.write(MPU6050_REG_ACCEL_XOUT_H);
+	_wire->write(MPU6050_REG_ACCEL_XOUT_H);
     #else
-	Wire.send(MPU6050_REG_ACCEL_XOUT_H);
+	_wire->send(MPU6050_REG_ACCEL_XOUT_H);
     #endif
-    Wire.endTransmission();
+    _wire->endTransmission();
 
-    Wire.requestFrom(mpuAddress, 6);
+    _wire->requestFrom(mpuAddress, 6);
 
-    while (Wire.available() < 6){}
+    while (_wire->available() < 6){}
 
     #if ARDUINO >= 100
-	uint8_t xha = Wire.read();
-	uint8_t xla = Wire.read();
-        uint8_t yha = Wire.read();
-	uint8_t yla = Wire.read();
-	uint8_t zha = Wire.read();
-	uint8_t zla = Wire.read();
+	uint8_t xha = _wire->read();
+	uint8_t xla = _wire->read();
+        uint8_t yha = _wire->read();
+	uint8_t yla = _wire->read();
+	uint8_t zha = _wire->read();
+	uint8_t zla = _wire->read();
     #else
-	uint8_t xha = Wire.receive();
-	uint8_t xla = Wire.receive();
-	uint8_t yha = Wire.receive();
-	uint8_t yla = Wire.receive();
-	uint8_t zha = Wire.receive();
-	uint8_t zla = Wire.receive();
+	uint8_t xha = _wire->receive();
+	uint8_t xla = _wire->receive();
+	uint8_t yha = _wire->receive();
+	uint8_t yla = _wire->receive();
+	uint8_t zha = _wire->receive();
+	uint8_t zla = _wire->receive();
     #endif
 
     ra.XAxis = xha << 8 | xla;
@@ -404,32 +404,32 @@ Vector MPU6050::readScaledAccel(void)
 
 Vector MPU6050::readRawGyro(void)
 {
-    Wire.beginTransmission(mpuAddress);
+    _wire->beginTransmission(mpuAddress);
     #if ARDUINO >= 100
-	Wire.write(MPU6050_REG_GYRO_XOUT_H);
+	_wire->write(MPU6050_REG_GYRO_XOUT_H);
     #else
-	Wire.send(MPU6050_REG_GYRO_XOUT_H);
+	_wire->send(MPU6050_REG_GYRO_XOUT_H);
     #endif
-    Wire.endTransmission();
+    _wire->endTransmission();
 
-    Wire.requestFrom(mpuAddress, 6);
+    _wire->requestFrom(mpuAddress, 6);
 
-    while (Wire.available() < 6){}
+    while (_wire->available() < 6){}
 
     #if ARDUINO >= 100
-	uint8_t xha = Wire.read();
-	uint8_t xla = Wire.read();
-        uint8_t yha = Wire.read();
-	uint8_t yla = Wire.read();
-	uint8_t zha = Wire.read();
-	uint8_t zla = Wire.read();
+	uint8_t xha = _wire->read();
+	uint8_t xla = _wire->read();
+        uint8_t yha = _wire->read();
+	uint8_t yla = _wire->read();
+	uint8_t zha = _wire->read();
+	uint8_t zla = _wire->read();
     #else
-	uint8_t xha = Wire.receive();
-	uint8_t xla = Wire.receive();
-	uint8_t yha = Wire.receive();
-	uint8_t yla = Wire.receive();
-	uint8_t zha = Wire.receive();
-	uint8_t zla = Wire.receive();
+	uint8_t xha = _wire->receive();
+	uint8_t xla = _wire->receive();
+	uint8_t yha = _wire->receive();
+	uint8_t yla = _wire->receive();
+	uint8_t zha = _wire->receive();
+	uint8_t zla = _wire->receive();
     #endif
 
     rg.XAxis = xha << 8 | xla;
@@ -616,20 +616,20 @@ uint8_t MPU6050::fastRegister8(uint8_t reg)
 {
     uint8_t value;
 
-    Wire.beginTransmission(mpuAddress);
+    _wire->beginTransmission(mpuAddress);
     #if ARDUINO >= 100
-	Wire.write(reg);
+	_wire->write(reg);
     #else
-	Wire.send(reg);
+	_wire->send(reg);
     #endif
-    Wire.endTransmission();
+    _wire->endTransmission();
 
 
-    Wire.requestFrom(mpuAddress, 1, true);
+    _wire->requestFrom(mpuAddress, 1, true);
     #if ARDUINO >= 100
-	value = Wire.read();
+	value = _wire->read();
     #else
-	value = Wire.receive();
+	value = _wire->receive();
     #endif;
 
     return value;
@@ -640,20 +640,20 @@ uint8_t MPU6050::readRegister8(uint8_t reg)
 {
     uint8_t value;
 
-    Wire.beginTransmission(mpuAddress);
+    _wire->beginTransmission(mpuAddress);
     #if ARDUINO >= 100
-	Wire.write(reg);
+	_wire->write(reg);
     #else
-	Wire.send(reg);
+	_wire->send(reg);
     #endif
-    Wire.endTransmission();
+    _wire->endTransmission();
 
-    Wire.requestFrom(mpuAddress, 1, true);
-    while(!Wire.available()) {};
+    _wire->requestFrom(mpuAddress, 1, true);
+    while(!_wire->available()) {};
     #if ARDUINO >= 100
-	value = Wire.read();
+	value = _wire->read();
     #else
-	value = Wire.receive();
+	value = _wire->receive();
     #endif;
 
     return value;
@@ -662,37 +662,37 @@ uint8_t MPU6050::readRegister8(uint8_t reg)
 // Write 8-bit to register
 void MPU6050::writeRegister8(uint8_t reg, uint8_t value)
 {
-    Wire.beginTransmission(mpuAddress);
+    _wire->beginTransmission(mpuAddress);
 
     #if ARDUINO >= 100
-	Wire.write(reg);
-	Wire.write(value);
+	_wire->write(reg);
+	_wire->write(value);
     #else
-	Wire.send(reg);
-	Wire.send(value);
+	_wire->send(reg);
+	_wire->send(value);
     #endif
-    Wire.endTransmission();
+    _wire->endTransmission();
 }
 
 int16_t MPU6050::readRegister16(uint8_t reg)
 {
     int16_t value;
-    Wire.beginTransmission(mpuAddress);
+    _wire->beginTransmission(mpuAddress);
     #if ARDUINO >= 100
-        Wire.write(reg);
+        _wire->write(reg);
     #else
-        Wire.send(reg);
+        _wire->send(reg);
     #endif
-    Wire.endTransmission();
+    _wire->endTransmission();
 
-    Wire.requestFrom(mpuAddress, 2, true);
-    while(!Wire.available()) {};
+    _wire->requestFrom(mpuAddress, 2, true);
+    while(!_wire->available()) {};
     #if ARDUINO >= 100
-        uint8_t vha = Wire.read();
-        uint8_t vla = Wire.read();
+        uint8_t vha = _wire->read();
+        uint8_t vla = _wire->read();
     #else
-        uint8_t vha = Wire.receive();
-        uint8_t vla = Wire.receive();
+        uint8_t vha = _wire->receive();
+        uint8_t vla = _wire->receive();
     #endif;
 
     value = vha << 8 | vla;
@@ -702,18 +702,18 @@ int16_t MPU6050::readRegister16(uint8_t reg)
 
 void MPU6050::writeRegister16(uint8_t reg, int16_t value)
 {
-    Wire.beginTransmission(mpuAddress);
+    _wire->beginTransmission(mpuAddress);
 
     #if ARDUINO >= 100
-	Wire.write(reg);
-	Wire.write((uint8_t)(value >> 8));
-	Wire.write((uint8_t)value);
+	_wire->write(reg);
+	_wire->write((uint8_t)(value >> 8));
+	_wire->write((uint8_t)value);
     #else
-	Wire.send(reg);
-	Wire.send((uint8_t)(value >> 8));
-	Wire.send((uint8_t)value);
+	_wire->send(reg);
+	_wire->send((uint8_t)(value >> 8));
+	_wire->send((uint8_t)value);
     #endif
-    Wire.endTransmission();
+    _wire->endTransmission();
 }
 
 // Read register bit

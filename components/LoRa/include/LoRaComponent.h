@@ -27,6 +27,7 @@ public:
 private:
   void vRX();
   void vTX(std::string msg);
+  void checkQueue();
   bool setup();
   QueueHandle_t _dataOutSD;
   QueueHandle_t _dataOutLoRa;

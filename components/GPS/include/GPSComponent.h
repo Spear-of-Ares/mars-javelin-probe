@@ -15,6 +15,7 @@
 #include "SparkFun_u-blox_GNSS_Arduino_Library.h"
 #include "TinyGPS.h"
 #include "Wire.h"
+#include "driver/gpio.h"
 
 #include "datalogger.h"
 
@@ -23,16 +24,16 @@
 
 class GPSComponent{
 public:
-  GPSComponent(QueueHandle_t dataOutSD){_dataOutSD = dataOutSD; }
-  //GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutIridium);
+  GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium);
   static void vMainLoop_Task(void *arg);
 private:
   void setup();
   void get_data();
-  std::string getGPS_MSG(int addr);
-  void sendData(int gps_num, std::string msg);
+  std::string getGPS_MSG(int gps);
+  void sendData(std::string msg);
   QueueHandle_t _dataOutSD;
   QueueHandle_t _dataOutIridium;
+  QueueHandle_t _dataOutLoRa;
   SFE_UBLOX_GNSS _GNSS_1;
   SFE_UBLOX_GNSS _GNSS_2;
   TinyGPS _tiny_gps;

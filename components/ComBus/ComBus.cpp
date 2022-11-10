@@ -55,8 +55,10 @@ void initSDSPI(){
 void initI2C(){
   Wire.begin(I2C_SDA_GPIO, I2C_SCL_GPIO, 400000);
   Wire.setTimeOut(100);
-}
 
+  // Wire1.begin(GPIO_NUM_0 ,GPIO_NUM_12, 400000);
+  // Wire1.setTimeOut(100);
+}
 
 /**************************
  *
@@ -69,7 +71,7 @@ void initComBus(){
 }
 
 void i2cScan(){
-  printf("i2c scan: \n");
+  printf("i2c scan (num_0): \n");
   for (uint8_t i = 1; i < 127; i++)
     {
       int ret;
@@ -86,4 +88,20 @@ void i2cScan(){
       }
     }
 
+  printf("i2c scan (num_1): \n");
+  for (uint8_t i = 1; i < 127; i++)
+    {
+      int ret;
+      i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+      i2c_master_start(cmd);
+      i2c_master_write_byte(cmd, (i << 1) | I2C_MASTER_WRITE, 1);
+      i2c_master_stop(cmd);
+      ret = i2c_master_cmd_begin(I2C_NUM_1, cmd, 100 / portTICK_RATE_MS);
+      i2c_cmd_link_delete(cmd);
+
+      if (ret == ESP_OK)
+      {
+        printf("Found device at: 0x%2x\n", i);
+      }
+    }
 }

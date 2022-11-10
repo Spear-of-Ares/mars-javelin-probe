@@ -158,7 +158,8 @@ class MPU6050
 {
     public:
 
-	bool begin(mpu6050_dps_t scale = MPU6050_SCALE_2000DPS, mpu6050_range_t range = MPU6050_RANGE_2G, int mpua = MPU6050_ADDRESS);
+	// SD 2022: JonK : Added TwoWire param to allow for using an alternate bus
+	bool begin(mpu6050_dps_t scale = MPU6050_SCALE_2000DPS, mpu6050_range_t range = MPU6050_RANGE_2G, int mpua = MPU6050_ADDRESS, TwoWire *the_wire = &Wire);
 
 	void setClockSource(mpu6050_clockSource_t source);
 	void setScale(mpu6050_dps_t scale);
@@ -231,6 +232,7 @@ class MPU6050
 	Vector readScaledAccel(void);
 
     private:
+	TwoWire *_wire; // The i2c bus this device is on
 	Vector ra, rg; // Raw vectors
 	Vector na, ng; // Normalized vectors
 	Vector tg, dg; // Threshold and Delta for Gyro

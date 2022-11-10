@@ -17,6 +17,7 @@ public:
   IridiumSBDComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutIridium, TaskHandle_t cmd_center);
   static void vMainLoop_Task();
 private:
+  void checkQueue();
   QueueHandle_t _dataOutSD;
   QueueHandle_t _dataOutIridium;
   IridiumSBD _device;

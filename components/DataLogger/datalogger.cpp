@@ -83,7 +83,7 @@ void DataLogger::handleQueueData(){
     //           Use at your own risk!! You have been warned!
     //printf("     Written to SD\n");
     //printf("++++++++++++++++++++++++++\n");
-    printf("%s", _dataOutBuf->c_str());
+    //printf("%s", _dataOutBuf->c_str());
 
     // reset data out buf
     _dataOutBuf->clear();

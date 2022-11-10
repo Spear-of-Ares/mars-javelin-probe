@@ -29,6 +29,7 @@
 #include "IMUComponent.h"
 #include "BME280.h"
 #include "GPSComponent.h"
+#include "IridiumSBDComponent.h"
 
 //#define LoRaTRANSMITTER
 
@@ -84,7 +85,8 @@ extern "C" void app_main(void)
     QueueHandle_t dataOutSD = xQueueCreate(50, sizeof(SDData*));
 
     // TODO:: Change from SDData to LoRaData class
-    QueueHandle_t dataOutLoRa = xQueueCreate(50, sizeof(SDData*));
+    QueueHandle_t dataOutLoRa = xQueueCreate(50, sizeof(std::string*));
+    QueueHandle_t dataOutIridium = xQueueCreate(50, sizeof(std::string*));
 
     /**************************************
      *
@@ -100,7 +102,7 @@ extern "C" void app_main(void)
     xReturned = xTaskCreate(
       DataLogger::vLogLoop_Task, // Function for task
       "Log Loop Task",           // Name of task
-      1024 * 4,                 // Stack size of task
+      1024 * 5,                 // Stack size of task
       (void*)(&data_log),        // task parameters
       9,                        // Task priority
       &xDataLogHandle            // Handle to resulting task
@@ -131,6 +133,32 @@ extern "C" void app_main(void)
     {
       printf("Could not start the Data log loop task\n");
     }
+
+    /**************************************
+     *
+     *  Creating the GPS process
+     *
+     ***************************************/
+    GPSComponent gps_component = GPSComponent(dataOutSD, dataOutLoRa, dataOutIridium);
+
+    TaskHandle_t xGPSComponentHandle = NULL;
+    xReturned = xTaskCreatePinnedToCore(
+      GPSComponent::vMainLoop_Task,    // Function for task
+      "GPS Component Task",   // Name of task
+      1024 * 4,                        // Stack size of task
+      (void*)(&gps_component),         // task parameters
+      8,                              // Task priority
+      &xGPSComponentHandle,             // Handle to resulting task
+      0
+    );
+    if (xReturned != pdPASS)
+    {
+      printf("Could not start the GPS Component task\n");
+    }
+
+    // Allow GPS to configure i2c address
+    printf("Waiting for GPS setup\n");
+    vTaskDelay(10000/portTICK_PERIOD_MS);
 
     /**************************************
      *
@@ -199,15 +227,12 @@ extern "C" void app_main(void)
     }
 
 
- // Don't include these as they are not implemented
-#if false
     /**************************************
      *
      *  Creating the IridiumSBD process
      *
      ***************************************/
     IridiumSBDComponent iridium_component = IridiumSBDComponent(dataOutSD);
-    iridium_component.setup();
 
     TaskHandle_t xIridiumComponentHandle = NULL;
     xReturned = xTaskCreate(
@@ -221,29 +246,6 @@ extern "C" void app_main(void)
     if (xReturned != pdPASS)
     {
       printf("Could not start the IridiumSBD Component task\n");
-    }
-
-#endif
-    /**************************************
-     *
-     *  Creating the GPS process
-     *
-     ***************************************/
-    GPSComponent gps_component = GPSComponent(dataOutSD);
-
-    TaskHandle_t xGPSComponentHandle = NULL;
-    xReturned = xTaskCreatePinnedToCore(
-      GPSComponent::vMainLoop_Task,    // Function for task
-      "GPS Component Task",   // Name of task
-      1024 * 3,                        // Stack size of task
-      (void*)(&gps_component),         // task parameters
-      7,                              // Task priority
-      &xGPSComponentHandle,             // Handle to resulting task
-      1
-    );
-    if (xReturned != pdPASS)
-    {
-      printf("Could not start the GPS Component task\n");
     }
 
     /**************************************

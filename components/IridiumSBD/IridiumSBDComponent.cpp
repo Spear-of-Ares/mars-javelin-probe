@@ -7,3 +7,26 @@
 **********************************************************************************/
 
 #include "IridiumSBDComponent.h"
+
+void IridiumSBDComponent::vMainLoop_Task(void *arg){
+    IridiumSBDComponent irid_comp = *((IridiumSBD*)arg);
+    for(;;){
+        irid_comp.checkQueue();
+        vTaskDelay(10);
+    }
+}
+
+void IridiumSBDComponent::checkQueue(){
+  while (uxQueueMessagesWaiting(_dataOutIridium) != 0)
+  {
+    std::string *msg;
+    if (xQueueReceive(_dataOutIridium, &(msg), 5 / portTICK_PERIOD_MS) != pdTRUE)
+    {
+      printf("Iridium could not receive from queue\n");
+      return;
+    }
+    //vTX(&msg);
+    delete msg;
+  }
+}
+

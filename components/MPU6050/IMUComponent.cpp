@@ -10,10 +10,15 @@
 
 void IMUComponent::vMainLoop_Task(void *arg){
   IMUComponent imu_component = *((IMUComponent*)arg);
+#ifdef IMU_ATTACHED
   imu_component.setup();
+#endif
   const TickType_t xDelay = (1000 / SAMPLE_RATE_HZ) / portTICK_PERIOD_MS;
   for(;;){
+
+#ifdef IMU_ATTACHED
     imu_component.logIMU();    
+#endif
     vTaskDelay(xDelay);
   }
 }
@@ -51,7 +56,7 @@ void IMUComponent::logIMU(){
 
 void IMUComponent::setup(){
   _device = MPU6050();
-  while(!_device.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_16G))
+  while(!_device.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_16G, 104, &Wire))
   {
       printf("Could not find a valid MPU6050 Sensor, check wiring!\n");
       vTaskDelay(500/portTICK_PERIOD_MS);
@@ -66,5 +71,6 @@ void IMUComponent::setup(){
 
   _device.calibrateGyro();
   _device.setThreshold(3);
+  vTaskDelay(500/portTICK_PERIOD_MS);
   printf("IMU setup complete\n");
 }
