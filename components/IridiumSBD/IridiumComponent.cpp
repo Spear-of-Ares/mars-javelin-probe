@@ -63,9 +63,13 @@ void IridiumComponent::vRX(){
     if(rx_buf[0] == 0x01){
       xTaskNotify(_cmd_center, rx_buf[1], eSetBits);
     }
+    std::ostringstream response;
+    response << "[" << xTaskGetTickCount() << "] Message Received";
 
-
-    Iridium.sendSBDBinary(rx_buf, rx_size);
+    err = Iridium.sendSBDText(response.str().c_str());
+    if (err != ISBD_SUCCESS){
+      sd_msg << " | Failed to send response";
+    }
   }
 
   SDData *sdOut = new SDData();

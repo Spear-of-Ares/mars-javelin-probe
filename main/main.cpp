@@ -30,12 +30,35 @@
 #include "GPSComponent.h"
 #include "IridiumComponent.h"
 
-//#define LoRaTRANSMITTER
+#define LoRaTRANSMITTER
 
 // Alternate main task for an outside LoRa transmitter to test receive and transmit of probe
 #ifdef LoRaTRANSMITTER
 #include "SPI.h"
 #include "LoRa.h"
+void RX(){
+  int packetSize = LoRa.parsePacket();
+  if(packetSize){
+    std::string received("");
+    SDData *sdOut = new SDData();
+    sdOut->file_name = new std::string("comms");
+
+    while (LoRa.available())
+    {
+      received += (char)LoRa.read();
+    }
+    printf("Received: %s", received.c_str);
+    printf(" | RSSI: %d | SNR: %f", LoRa.packetRssi(), LoRa.packetSnr());
+  }
+}
+
+void TX(){
+    LoRa.beginPacket();
+    LoRa.write(0x01);
+    LoRa.write(0x01);
+    LoRa.endPacket();
+    printf("Packet %d sent...\n", count++);
+}
 extern "C" void app_main(void){
   initArduino();
 
@@ -48,16 +71,24 @@ extern "C" void app_main(void){
     printf("Starting LoRa failed\n");
     return;
   }
+  Serial.begin(115200);
 
   std::string cut_down = "0x0101";
   int count = 0;
   for(;;){
-    vTaskDelay(10000/portTICK_PERIOD_MS);
-    LoRa.beginPacket();
-    LoRa.write(0x01);
-    LoRa.write(0x01);
-    LoRa.endPacket();
-    printf("Packet %d sent. \n", count++);
+    RX();
+    // Check if something was sent on serial
+    std::string msg = "";
+    while(Serial.available()){
+      msg += char(Serial.read());
+    }
+
+    // if something was sent, then send the TX packet
+    if (msg != ""){
+      TX();
+    }
+
+    vTaskDelay(10/portTICK_PERIOD_MS);
   }
 }
 #else
