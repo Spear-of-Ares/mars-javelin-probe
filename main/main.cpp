@@ -30,13 +30,13 @@
 #include "GPSComponent.h"
 #include "IridiumComponent.h"
 
-#define LoRaTRANSMITTER
+//#define LoRaTRANSMITTER
 
 // Alternate main task for an outside LoRa transmitter to test receive and transmit of probe
 #ifdef LoRaTRANSMITTER
 #include "SPI.h"
 #include "LoRa.h"
-void RX(){
+void vRX(){
   int packetSize = LoRa.parsePacket();
   if(packetSize){
     std::string received("");
@@ -47,12 +47,13 @@ void RX(){
     {
       received += (char)LoRa.read();
     }
-    printf("Received: %s", received.c_str);
-    printf(" | RSSI: %d | SNR: %f", LoRa.packetRssi(), LoRa.packetSnr());
+    printf("Received: %s", received.c_str());
+    printf(" || RSSI: %d | SNR: %f\n", LoRa.packetRssi(), LoRa.packetSnr());
   }
 }
 
-void TX(){
+void vTX(){
+  static int count = 0;
     LoRa.beginPacket();
     LoRa.write(0x01);
     LoRa.write(0x01);
@@ -76,7 +77,7 @@ extern "C" void app_main(void){
   std::string cut_down = "0x0101";
   int count = 0;
   for(;;){
-    RX();
+    vRX();
     // Check if something was sent on serial
     std::string msg = "";
     while(Serial.available()){
@@ -85,7 +86,7 @@ extern "C" void app_main(void){
 
     // if something was sent, then send the TX packet
     if (msg != ""){
-      TX();
+      vTX();
     }
 
     vTaskDelay(10/portTICK_PERIOD_MS);
@@ -114,7 +115,6 @@ extern "C" void app_main(void)
 
     QueueHandle_t dataOutSD = xQueueCreate(50, sizeof(SDData*));
 
-    // TODO:: Change from SDData to LoRaData class
     QueueHandle_t dataOutLoRa = xQueueCreate(50, sizeof(std::string*));
     QueueHandle_t dataOutIridium = xQueueCreate(50, sizeof(std::string*));
 
@@ -322,7 +322,7 @@ extern "C" void app_main(void)
 
     // Main task must stay alive as it has references to classes that will be deleted otherwise
     for(;;){
-      vTaskDelay(1000);
+      vTaskDelay(10000);
     }
 }
 #endif

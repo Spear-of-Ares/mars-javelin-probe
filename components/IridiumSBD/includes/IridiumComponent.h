@@ -19,6 +19,10 @@
 
 #define IRID_TASK_ID "IRID_TASK "
 
+#ifdef false
+#define IRIDIUM_ATTACHED
+#endif
+
 extern HardwareSerial SerialPort;
 extern IridiumSBD Iridium;
 
@@ -29,11 +33,14 @@ public:
     _dataOutSD = dataOutSD;
     _dataOutIridium = dataOutIridium;
     _cmd_center = cmd_center;
-    SerialPort.begin(19200,SERIAL_8N1, GPIO_NUM_1, GPIO_NUM_3);
+#ifdef IRIDIUM_ATTACHED
+    SerialPort.begin(19200, SERIAL_8N1, GPIO_NUM_1, GPIO_NUM_3);
     Iridium.setPowerProfile(IridiumSBD::USB_POWER_PROFILE);
-    if (Iridium.begin() != ISBD_SUCCESS){
+    if (Iridium.begin() != ISBD_SUCCESS)
+    {
       printf("Failed to init iridium\n");
     }
+#endif
   }
   static void vMainLoop_Task(void *arg);
 

@@ -56,7 +56,7 @@ void ThermistorComponent::logThermistors(){
 
   std::ostringstream data;
 
-  data << xTaskGetTickCount() << " || " THERM_TASK_ID << " || T1: " << therm1_c << " C | T2: " << therm2_c << " C\n";
+  data << xTaskGetTickCount() << " || " THERM_TASK_ID << " || Internal: " << therm1_c << " C | External: " << therm2_c << " C";
   SDData *sddata = new SDData();                    
   sddata->file_name = new std::string("measure");     
   sddata->message = new std::string(data.str());        

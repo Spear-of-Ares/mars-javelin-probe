@@ -40,6 +40,7 @@ void DataLogger::handleQueueData(){
   //printf("%d || Data Logger Start || %s || %d\n", xTaskGetTickCount(), sd_data->file_name->c_str(), xPortGetFreeHeapSize());
 
   std::string sd_data_msg = *(sd_data->message);
+  sd_data_msg += "\n";
   int msg_len = sd_data_msg.length();
 
   // Can change number of setors to write (*20, or *40 or something) to increase write efficiency
@@ -56,7 +57,6 @@ void DataLogger::handleQueueData(){
     // TODO:: Don't clear bufer if appendFile fails
     // if not connected, attemp to remount
     if (!_sd1_connected){
-      printf("Mount\n");
       mountSDFileSystem(_onboard_sd_conf, MOUNT1, 1);
     }
     else{
@@ -235,6 +235,7 @@ void DataLogger::mountSDFileSystem(sdspi_device_config_t sd_conf, const char* mo
       return;
   }
 
+  printf("(%d)Memory: %d\n", card_num, esp_get_free_heap_size());
   esp_err_t ret = esp_vfs_fat_sdspi_mount(mount_point, &_host, &sd_conf, &_mount_config, &card);
 
   *connected = true;

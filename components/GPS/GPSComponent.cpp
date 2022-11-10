@@ -80,20 +80,20 @@ std::string GPSComponent::getGPS_MSG(int gps)
         long altitude = myGNSS->getAltitude();
         data << " Alt: " << altitude << " (mm) |";
 
-        byte SIV = myGNSS->getSIV();
+        int SIV = myGNSS->getSIV();
         data << " SIV: " << SIV << " |";
 
         int PDOP = myGNSS->getPDOP();
         data << " PDOP: " << PDOP << " (10^-2)";
 
-        uint16_t year = myGNSS->getYear();
-        uint8_t month = myGNSS->getMonth();
-        uint8_t day = myGNSS->getDay();
-        uint8_t hour = myGNSS->getHour();
-        uint8_t minute = myGNSS->getMinute();
-        uint8_t second = myGNSS->getSecond();
-        uint16_t msec = myGNSS->getMillisecond();
-        data << " | Time: " << year << "-" << month << "-" << day << " " << minute << ":" << second << ":" << msec;
+        int year = myGNSS->getYear();
+        int month = myGNSS->getMonth();
+        int day = myGNSS->getDay();
+        int hour = myGNSS->getHour();
+        int minute = myGNSS->getMinute();
+        int second = myGNSS->getSecond();
+        int msec = myGNSS->getMillisecond();
+        data << " | Time: " << year << "-" << month << "-" << day << " " << hour << ":" << minute << ":" << second << ":" << msec;
 
         data << " | Time is ";
         if (myGNSS->getTimeValid() == false)

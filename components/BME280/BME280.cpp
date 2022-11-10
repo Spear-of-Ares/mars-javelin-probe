@@ -25,9 +25,9 @@ void BME280Component::setup(){
     printf("BME280 could not be connected\n");
   }
 #endif
-  _startup_pressure = device.readPressure();
-  _startup_alt = device.readAltitude(_startup_pressure);
-  _startup_sealevel_pressure = device.seaLevelForAltitude(_startup_alt, _startup_pressure);
+  _startup_pressure = device.readPressure(); // pressue in Pa
+  _startup_pressure = _startup_pressure / 100.0; // Convert to hPa
+  _startup_alt = device.readAltitude(1013.25);
   printf("BME280 setup complete\n");
 }
 
@@ -40,7 +40,7 @@ void BME280Component::logBME(){
   // Could be pressure at launch site to estimate hight above ground
   
   float altitude_from_start = device.readAltitude(_startup_pressure);
-  float altitude_asl = device.readAltitude(_startup_sealevel_pressure);
+  float altitude_asl = device.readAltitude(1013.25);
 #else
   float temp = 0;
   float pressure = 0;
@@ -50,7 +50,7 @@ void BME280Component::logBME(){
 
   std::ostringstream data;
   data << xTaskGetTickCount() << " || " << BME_TASK_ID << " || ";
-  data << "Temp: " << temp << " C | Pressure: " << pressure << " Pa | humidity: " << humidity << " % | altitude: " << altitude_from_start << " m | altitude (asl): " << altitude_asl << " m\n";
+  data << "Temp: " << temp << " C | Pressure: " << pressure << " Pa | humidity: " << humidity << " % | altitude (asl): " << altitude_asl << " m | altitude (relative): " << altitude_from_start << " m";
   SDData *sddata = new SDData();
   sddata->file_name = new std::string("measure");
   sddata->message = new std::string(data.str());

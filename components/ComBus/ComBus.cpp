@@ -87,21 +87,4 @@ void i2cScan(){
         printf("Found device at: 0x%2x\n", i);
       }
     }
-
-  printf("i2c scan (num_1): \n");
-  for (uint8_t i = 1; i < 127; i++)
-    {
-      int ret;
-      i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-      i2c_master_start(cmd);
-      i2c_master_write_byte(cmd, (i << 1) | I2C_MASTER_WRITE, 1);
-      i2c_master_stop(cmd);
-      ret = i2c_master_cmd_begin(I2C_NUM_1, cmd, 100 / portTICK_RATE_MS);
-      i2c_cmd_link_delete(cmd);
-
-      if (ret == ESP_OK)
-      {
-        printf("Found device at: 0x%2x\n", i);
-      }
-    }
 }
