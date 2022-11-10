@@ -53,9 +53,14 @@
 #define THERM2_ATTACHED
 #endif 
 
+#ifdef false
+#define THERM_LOG_IRIDIUM
+#endif
+#define THERM_LOG_LoRa
+
 class ThermistorComponent{
 public:
-  ThermistorComponent(QueueHandle_t dataOutSD);
+  ThermistorComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium);
   static void vMainLoop_Task(void* arg);
 
 private:
@@ -68,6 +73,11 @@ private:
   float _therm1_vo;
   float _therm2_vo;
   QueueHandle_t _dataOutSD;
+  QueueHandle_t _dataOutLoRa;
+  QueueHandle_t _dataOutIridium;
+
+  TickType_t _lastUpdateLoRa;
+  TickType_t _lastUpdateIridium;
 };
 
 #endif // !__THERMISTOR_H__

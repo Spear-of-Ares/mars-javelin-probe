@@ -21,8 +21,13 @@ void BME280Component::vMainLoop_Task(void *bme_280_component){
 void BME280Component::setup(){
   device = Adafruit_BME280();
 #ifdef BME_ATTACHED
-  device.begin((uint8_t)BME280_ADDRESS, &Wire);
+  while(device.begin((uint8_t)BME280_ADDRESS, &Wire) == false){
+    printf("BME280 could not be connected\n");
+  }
 #endif
+  _startup_pressure = device.readPressure();
+  _startup_alt = device.readAltitude(_startup_pressure);
+  _startup_sealevel_pressure = device.seaLevelForAltitude(_startup_alt, _startup_pressure);
   printf("BME280 setup complete\n");
 }
 
@@ -33,7 +38,9 @@ void BME280Component::logBME(){
   float humidity = device.readHumidity();
   // Standard pressure of sea level: 1013.25
   // Could be pressure at launch site to estimate hight above ground
-  float altitude = device.readAltitude(1013.25);
+  
+  float altitude_from_start = device.readAltitude(_startup_pressure);
+  float altitude_asl = device.readAltitude(_startup_sealevel_pressure);
 #else
   float temp = 0;
   float pressure = 0;
@@ -43,7 +50,7 @@ void BME280Component::logBME(){
 
   std::ostringstream data;
   data << xTaskGetTickCount() << " || " << BME_TASK_ID << " || ";
-  data << "Temp: " << temp << " C | Pressure: " << pressure << " Pa | humidity: " << humidity << " % | altitude: " << altitude << " m\n";
+  data << "Temp: " << temp << " C | Pressure: " << pressure << " Pa | humidity: " << humidity << " % | altitude: " << altitude_from_start << " m | altitude (asl): " << altitude_asl << " m\n";
   SDData *sddata = new SDData();
   sddata->file_name = new std::string("measure");
   sddata->message = new std::string(data.str());
@@ -51,4 +58,31 @@ void BME280Component::logBME(){
   if(xQueueSend(_dataOutSD, &(sddata), 10/portTICK_PERIOD_MS) != pdTRUE){
     printf("Failed to post IMU data\n");
   }
+
+  TickType_t curr_tick = xTaskGetTickCount();
+#ifdef BME_LOG_IRIDIUM
+  // Update iridium once every 60 seconds
+  if (curr_tick - _lastUpdateIridium > 60000 / portTICK_PERIOD_MS)
+  {
+    std::string *iriddata = new std::string(data.str());
+    _lastUpdateIridium = curr_tick;
+    if (xQueueSend(_dataOutIridium, &(iriddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+    {
+      printf("Failed to post GPS data to Iridium\n");
+    }
+  }
+#endif
+
+#ifdef BME_LOG_LoRa
+  // Update LoRa every 10 seconds
+  if (curr_tick - _lastUpdateLoRa > 10000 / portTICK_PERIOD_MS)
+  {
+    std::string *loradata = new std::string(data.str());
+    _lastUpdateLoRa = curr_tick;
+    if (xQueueSend(_dataOutLoRa, &(loradata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+    {
+      printf("Failed to post GPS data to LoRa\n");
+    }
+  }
+#endif
 }

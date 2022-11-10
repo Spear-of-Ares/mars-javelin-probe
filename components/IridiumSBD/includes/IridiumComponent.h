@@ -9,19 +9,40 @@
 #ifndef __IRIDIUMSBD_COMPONENT_H__
 #define __IRIDIUMSBD_COMPONENT_H__
 
-#include <stdio>
+#include <stdio.h>
+#include <sstream>
+#include <string>
+#include <time.h>
+#include <HardwareSerial.h>
 #include "IridiumSBD.h"
+#include "datalogger.h"
 
-class IridiumSBDComponent{
+#define IRID_TASK_ID "IRID_TASK "
+
+extern HardwareSerial SerialPort;
+extern IridiumSBD Iridium;
+
+class IridiumComponent{
 public:
-  IridiumSBDComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutIridium, TaskHandle_t cmd_center);
-  static void vMainLoop_Task();
+  IridiumComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutIridium, TaskHandle_t cmd_center)
+  {
+    _dataOutSD = dataOutSD;
+    _dataOutIridium = dataOutIridium;
+    _cmd_center = cmd_center;
+    SerialPort.begin(19200,SERIAL_8N1, GPIO_NUM_1, GPIO_NUM_3);
+    Iridium.setPowerProfile(IridiumSBD::USB_POWER_PROFILE);
+    if (Iridium.begin() != ISBD_SUCCESS){
+      printf("Failed to init iridium\n");
+    }
+  }
+  static void vMainLoop_Task(void *arg);
+
 private:
+  void vRX();
   void checkQueue();
   QueueHandle_t _dataOutSD;
   QueueHandle_t _dataOutIridium;
-  IridiumSBD _device;
   TaskHandle_t _cmd_center;
-}
+};
 
 #endif /* __IRIDIUMSBD_COMPONENT_H__ */

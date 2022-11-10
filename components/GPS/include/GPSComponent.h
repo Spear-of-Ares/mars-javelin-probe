@@ -22,6 +22,10 @@
 #define ADDRESS 0x42
 #define GPS_COMP_ID "GPS_COMP  "
 
+#ifdef false
+#define DUAL_GPS
+#endif
+
 class GPSComponent{
 public:
   GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium);
@@ -36,7 +40,8 @@ private:
   QueueHandle_t _dataOutLoRa;
   SFE_UBLOX_GNSS _GNSS_1;
   SFE_UBLOX_GNSS _GNSS_2;
-  TinyGPS _tiny_gps;
+  TickType_t _lastUpdateIridium;
+  TickType_t _lastUpdateLoRa;
 };
 
 #endif /* __GPS_COMPONENT_H__ */

@@ -19,17 +19,38 @@
 #if CONFIG_BME_ATTACHED == true
 #define BME_ATTACHED
 #endif
+
+#ifdef false
+#define BME_LOG_IRIDIUM
+#endif
+
+#define BME_LOG_LoRa
 class BME280Component{
 public:
-  BME280Component(QueueHandle_t dataOutSD){
+  BME280Component(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium){
     _dataOutSD = dataOutSD;
+    _dataOutLoRa = dataOutLoRa;
+    _dataOutIridium = dataOutIridium;
+
+    _lastUpdateIridium = 0x0000;
+    _lastUpdateLoRa = 0x0000;
   }
   static void vMainLoop_Task(void *bme_280_component);
 private:
   void setup();
   void logBME();
   QueueHandle_t _dataOutSD;
+  QueueHandle_t _dataOutLoRa;
+  QueueHandle_t _dataOutIridium;
+
+  TickType_t _lastUpdateLoRa;
+  TickType_t _lastUpdateIridium;
+
   Adafruit_BME280 device;
+
+  float _startup_pressure;
+  float _startup_alt;
+  float _startup_sealevel_pressure;
 
 };
 #endif /* __BME280_COMPONENT_H__ */

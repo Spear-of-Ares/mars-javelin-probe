@@ -19,7 +19,6 @@
 #include "esp_freertos_hooks.h"
 
 #include "Arduino.h"
-#include "IridiumSBD.h"
 #include "datalogger.h"
 #include "LoRaComponent.h"
 #include "Stats.h"
@@ -29,7 +28,7 @@
 #include "IMUComponent.h"
 #include "BME280.h"
 #include "GPSComponent.h"
-#include "IridiumSBDComponent.h"
+#include "IridiumComponent.h"
 
 //#define LoRaTRANSMITTER
 
@@ -118,7 +117,7 @@ extern "C" void app_main(void)
      *
      ***************************************/
     // Init before other tasks that need dataOutSD Queue
-    CommandComponent cmd_center = CommandComponent(dataOutSD);
+    CommandComponent cmd_center = CommandComponent(dataOutSD, dataOutLoRa, dataOutIridium);
 
     TaskHandle_t xCmdCenter = NULL;
     xReturned = xTaskCreate(
@@ -187,7 +186,7 @@ extern "C" void app_main(void)
      *  Creating the IMU process
      *
      ***************************************/
-    IMUComponent imu_component = IMUComponent(dataOutSD);
+    IMUComponent imu_component = IMUComponent(dataOutSD, dataOutLoRa, dataOutIridium);
 
     TaskHandle_t xIMUComponentHandle= NULL;
     xReturned = xTaskCreatePinnedToCore(
@@ -209,7 +208,7 @@ extern "C" void app_main(void)
      *  Creating the BME280 process
      *
      ***************************************/
-    BME280Component bme_component = BME280Component(dataOutSD);
+    BME280Component bme_component = BME280Component(dataOutSD, dataOutLoRa, dataOutIridium);
 
     TaskHandle_t xBMEComponentHandle = NULL;
     xReturned = xTaskCreatePinnedToCore(
@@ -232,12 +231,12 @@ extern "C" void app_main(void)
      *  Creating the IridiumSBD process
      *
      ***************************************/
-    IridiumSBDComponent iridium_component = IridiumSBDComponent(dataOutSD);
+    IridiumComponent iridium_component = IridiumComponent(dataOutSD, dataOutIridium, xCmdCenter);
 
     TaskHandle_t xIridiumComponentHandle = NULL;
     xReturned = xTaskCreate(
-      IridiumSBDComponent::vMainLoop_Task,    // Function for task
-      "IridiumSBD Component Task",   // Name of task
+      IridiumComponent::vMainLoop_Task,    // Function for task
+      "Iridium Component Task",   // Name of task
       1024 * 2,                      // Stack size of task
       (void*)(&iridium_component),   // task parameters
       15,                            // Task priority
@@ -253,7 +252,7 @@ extern "C" void app_main(void)
      *  Creating the Thermistor process
      *
      ***************************************/
-    ThermistorComponent thermistor_component = ThermistorComponent(dataOutSD);
+    ThermistorComponent thermistor_component = ThermistorComponent(dataOutSD, dataOutLoRa, dataOutIridium);
 
     TaskHandle_t xThermistorComponentHandle = NULL;
     xReturned = xTaskCreate(

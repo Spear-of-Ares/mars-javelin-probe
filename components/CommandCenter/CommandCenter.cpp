@@ -50,8 +50,21 @@ void CommandComponent::cutdown(){
   vTaskDelay(CUT_DWN_DUR/portTICK_PERIOD_MS);
   gpio_set_level(CUT_DWN_GPIO, 0);
 
+
   if(xQueueSend(_dataOutSD, &(sd_data), 10/portTICK_PERIOD_MS) != pdTRUE){
     printf("Failed to post thermistor data\n");
+  }
+
+  std::string *iriddata = new std::string("Cutting down");
+  if (xQueueSend(_dataOutIridium, &(iriddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+  {
+    printf("Failed to post GPS data to Iridium\n");
+  }
+
+  std::string *loradata = new std::string("Cutting down");
+  if (xQueueSend(_dataOutLoRa, &(loradata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+  {
+    printf("Failed to post GPS data to LoRa\n");
   }
 }
 

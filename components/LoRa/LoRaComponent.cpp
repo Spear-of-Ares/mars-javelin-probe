@@ -41,7 +41,7 @@ void LoRaComponent::checkQueue(){
       printf("LoRa could not receive from queue\n");
       return;
     }
-    vTX(&msg);
+    vTX(*msg);
     delete msg;
   }
 }
@@ -63,7 +63,7 @@ void LoRaComponent::vRX()
   {
     std::string received("");
     SDData *sdOut = new SDData();
-    sdOut->file_name = new std::string("LoRa Component");
+    sdOut->file_name = new std::string("comms");
 
     
     while(LoRa.available())

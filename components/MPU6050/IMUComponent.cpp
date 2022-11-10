@@ -23,8 +23,13 @@ void IMUComponent::vMainLoop_Task(void *arg){
   }
 }
 
-IMUComponent::IMUComponent(QueueHandle_t dataOutSD){
+IMUComponent::IMUComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium){
   _dataOutSD = dataOutSD;
+  _dataOutLoRa = dataOutLoRa;
+  _dataOutIridium = dataOutIridium;
+
+  _lastUpdateIridium = 0x0000;
+  _lastUpdateLoRa = 0x0000;
 }
 
 void IMUComponent::logIMU(){
@@ -52,6 +57,34 @@ void IMUComponent::logIMU(){
   if(xQueueSend(_dataOutSD, &(sddata), 10/portTICK_PERIOD_MS) != pdTRUE){
     printf("Failed to post IMU data\n");
   }
+
+  TickType_t curr_tick = xTaskGetTickCount();
+  #ifdef IMU_LOG_IRIDIUM
+  // Can't initialize data unless we send it. Otherwise memory leak
+  // Update iridium once every 20 seconds
+  if (curr_tick - _lastUpdateIridium > 20000 / portTICK_PERIOD_MS)
+  {
+    std::string *iriddata = new std::string(data.str());
+    _lastUpdateIridium = curr_tick;
+    if (xQueueSend(_dataOutIridium, &(iriddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+    {
+      printf("Failed to post Thermistor data to Iridium\n");
+    }
+  }
+  #endif
+
+  #ifdef IMU_LOG_LoRa
+  // Update LoRa every 5 seconds
+  if (curr_tick - _lastUpdateLoRa > 5000 / portTICK_PERIOD_MS)
+  {
+    std::string *loradata = new std::string(data.str());
+    _lastUpdateLoRa = curr_tick;
+    if (xQueueSend(_dataOutLoRa, &(loradata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+    {
+      printf("Failed to post Thermistor data to LoRa\n");
+    }
+  }
+  #endif
 }
 
 void IMUComponent::setup(){

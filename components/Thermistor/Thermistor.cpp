@@ -7,9 +7,13 @@
 **********************************************************************************/
 #include "Thermistor.h"
 
-ThermistorComponent::ThermistorComponent(QueueHandle_t dataOutSD){
+ThermistorComponent::ThermistorComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium){
   _dataOutSD = dataOutSD; 
+  _dataOutLoRa = dataOutLoRa;
+  _dataOutIridium = dataOutIridium; 
 
+  _lastUpdateLoRa = 0x0000;
+  _lastUpdateIridium = 0x0000;
   adc1_config_width(ADC_WIDTH_BIT_12);
   adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_DB_11);
 
@@ -61,6 +65,34 @@ void ThermistorComponent::logThermistors(){
   if(xQueueSend(_dataOutSD, &(sddata), 10/portTICK_PERIOD_MS) != pdTRUE){
     printf("Failed to post thermistor data\n");
   }
+
+  TickType_t curr_tick = xTaskGetTickCount();
+  #ifdef THERM_LOG_IRIDIUM
+  // Update iridium once every two minutes
+  if (curr_tick - _lastUpdateIridium > 120000 / portTICK_PERIOD_MS)
+  {
+    // Can't initialize data unless we send it. Otherwise memory leak
+    std::string *iriddata = new std::string(data.str());
+    _lastUpdateIridium = curr_tick;
+    if (xQueueSend(_dataOutIridium, &(iriddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+    {
+      printf("Failed to post Thermistor data to Iridium\n");
+    }
+  }
+#endif
+
+#ifdef THERM_LOG_LoRa
+  // Update LoRa every 30 seconds
+  if (curr_tick - _lastUpdateLoRa > 30000 / portTICK_PERIOD_MS)
+  {
+    std::string *loradata = new std::string(data.str());
+    _lastUpdateLoRa = curr_tick;
+    if (xQueueSend(_dataOutLoRa, &(loradata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+    {
+      printf("Failed to post Thermistor data to LoRa\n");
+    }
+  }
+#endif
 }
 
 void ThermistorComponent::readThermistors(){

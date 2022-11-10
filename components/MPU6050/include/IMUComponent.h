@@ -18,18 +18,28 @@
 #define IMU_TASK_ID "IMU TASK  "
 //#define IMU_ATTACHED
 
+#ifdef false
+#define IMU_LOG_IRIDIUM
+#endif
+
+#define IMU_LOG_LoRa
+
 #define SAMPLE_RATE_HZ 10
 
 class IMUComponent{
 public:
-  IMUComponent(QueueHandle_t dataOutSD);
+  IMUComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium);
   static void vMainLoop_Task(void *arg);
 private:
   void setup();
   void logIMU();
   QueueHandle_t _dataOutSD;
+  QueueHandle_t _dataOutLoRa;
+  QueueHandle_t _dataOutIridium;
   MPU6050 _device;
 
+  TickType_t _lastUpdateLoRa;
+  TickType_t _lastUpdateIridium;
   float _pitch, _roll, _yaw;
 };
 

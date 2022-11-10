@@ -22,8 +22,10 @@
 
 class CommandComponent{
 public:
-  CommandComponent(QueueHandle_t dataOutSD){
+  CommandComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium){
     _dataOutSD = dataOutSD;
+    _dataOutLoRa = dataOutLoRa;
+    _dataOutIridium = dataOutIridium;
     gpio_set_direction(CUT_DWN_GPIO, GPIO_MODE_OUTPUT);
   }
   static void vMainLoop_Task(void* arg);
@@ -34,6 +36,8 @@ private:
   void selftest();
 
   QueueHandle_t _dataOutSD;
+  QueueHandle_t _dataOutLoRa;
+  QueueHandle_t _dataOutIridium;
   uint32_t _ulNotifiedValue;
 };
 
