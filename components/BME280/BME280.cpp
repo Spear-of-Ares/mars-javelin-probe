@@ -41,12 +41,13 @@ void BME280Component::logBME(){
   
   float altitude_from_start = device.readAltitude(_startup_pressure);
   float altitude_asl = device.readAltitude(1013.25);
-#else
+  #else
+
   float temp = 0;
   float pressure = 0;
   float humidity = 0;
   float altitude = 0;
-#endif
+  #endif
 
   std::ostringstream data;
   data << xTaskGetTickCount() << " || " << BME_TASK_ID << " || ";

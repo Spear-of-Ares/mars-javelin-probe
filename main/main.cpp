@@ -96,6 +96,8 @@ extern "C" void app_main(void){
 
 extern "C" void app_main(void)
 {
+    gpio_set_level(GPIO_NUM_4, 0);
+
     // Initialize artuidno library
     initArduino();
 
@@ -188,7 +190,7 @@ extern "C" void app_main(void)
 
     // Allow GPS to configure i2c address
     printf("Waiting for GPS setup\n");
-    vTaskDelay(10000/portTICK_PERIOD_MS);
+    vTaskDelay(1000/portTICK_PERIOD_MS);
 
     /**************************************
      *
@@ -212,12 +214,12 @@ extern "C" void app_main(void)
     }
 
 
-    /**************************************
-     *
-     *  Creating the IMU process
-     *
-     ***************************************/
-    IMUComponent imu_component = IMUComponent(dataOutSD, dataOutLoRa, dataOutIridium);
+    // /**************************************
+    //  *
+    //  *  Creating the IMU process
+    //  *
+    //  ***************************************/
+     IMUComponent imu_component = IMUComponent(dataOutSD, dataOutLoRa, dataOutIridium);
 
     TaskHandle_t xIMUComponentHandle= NULL;
     xReturned = xTaskCreatePinnedToCore(

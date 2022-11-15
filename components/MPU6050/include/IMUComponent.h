@@ -16,7 +16,7 @@
 #include "ComBus.h"
 
 #define IMU_TASK_ID "IMU TASK  "
-//#define IMU_ATTACHED
+#define IMU_ATTACHED
 
 #ifdef false
 #define IMU_LOG_IRIDIUM

@@ -48,6 +48,7 @@ void LoRaComponent::checkQueue(){
 
 void LoRaComponent::vTX(std::string msg)
 {
+  
   log_i("Sending LoRa packet\n");
   LoRa.beginPacket();
   LoRa.print(msg.c_str());

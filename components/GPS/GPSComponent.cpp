@@ -78,13 +78,10 @@ std::string GPSComponent::getGPS_MSG(int gps)
         data << " Long: " << longitude << " (degrees * 10^-7) |";
 
         long altitude = myGNSS->getAltitude();
-        data << " Alt: " << altitude << " (mm) |";
+        data << " Alt: " << altitude/1000.0 << " (m) |";
 
         int SIV = myGNSS->getSIV();
         data << " SIV: " << SIV << " |";
-
-        int PDOP = myGNSS->getPDOP();
-        data << " PDOP: " << PDOP << " (10^-2)";
 
         int year = myGNSS->getYear();
         int month = myGNSS->getMonth();
@@ -106,6 +103,36 @@ std::string GPSComponent::getGPS_MSG(int gps)
             data << "not ";
         }
         data << "valid";
+
+
+        int PDOP = myGNSS->getPDOP();
+        data << " PDOP: " << PDOP << " (10^-2) |";
+
+        float ATTroll = myGNSS->getATTroll();
+        data << " ATTroll: " << ATTroll << " |";
+        float ATTpitch = myGNSS->getATTpitch();
+        data << " ATTpitch: " << ATTpitch << " |";
+        float ATTheading = myGNSS->getATTheading();
+        data << " ATTheading: " << ATTheading << " |";
+
+        int32_t horizAccEst = myGNSS->getHorizontalAccEst();
+        data << " horizAccEst: " << horizAccEst << " |";
+        int32_t verAccEst = myGNSS->getVerticalAccEst();
+        data << " verAccEst: " << verAccEst << " |";
+        int32_t nedNorthVel = myGNSS->getNedNorthVel();
+        data << " nedNorthVel: " << nedNorthVel << " |";
+        int32_t nedEastVel = myGNSS->getNedEastVel();
+        data << " nedEastVel: " << nedEastVel << " |";
+        int32_t nedDownVel = myGNSS->getNedDownVel();
+        data << " nedDownVel: " << nedDownVel << " |";
+        int32_t gndSpeed = myGNSS->getGroundSpeed(); // Returns speed in mm/s
+        data << "gndSpeed" << gndSpeed << " |";
+        int32_t heading = myGNSS->getHeading();     // Returns heading in degrees * 10^-5
+        data << " heading: " << heading << " |";
+        uint32_t speedAccEst = myGNSS->getSpeedAccEst();
+        data << " speedAccEst: " << speedAccEst << " |";
+        uint32_t headingAccEst = myGNSS->getHeadingAccEst();
+        data << " headingAccEst: " << headingAccEst << " |";
 
     }
     else{

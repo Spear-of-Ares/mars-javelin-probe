@@ -33,7 +33,7 @@ IMUComponent::IMUComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, Q
 }
 
 void IMUComponent::logIMU(){
-  Vector accel_norm = _device.readNormalizeAccel();
+  Vector accel_norm = _device.readScaledAccel();
   Vector gyro_norm = _device.readNormalizeGyro();
   float temp = _device.readTemperature();
 
@@ -42,11 +42,21 @@ void IMUComponent::logIMU(){
   _pitch = _pitch + gyro_norm.YAxis * time_step;
   _roll = _roll + gyro_norm.XAxis * time_step;
   _yaw = _yaw + gyro_norm.ZAxis * time_step;
+
+  while(_pitch > 360){
+    _pitch = _pitch - 360;
+  }
+  while(_roll > 360){
+    _roll = _roll - 360;
+  }
+  while(_yaw > 360){
+    _yaw = _yaw - 360;
+  }
   
   std::ostringstream data;
   data << xTaskGetTickCount() << " || " << IMU_TASK_ID << " || ";
   int header_len = data.str().length();
-  data << "Ax: " << accel_norm.XAxis << " m/s^2 | Ay: " << accel_norm.YAxis << " m/s^2 | Az: " << accel_norm.ZAxis << " m/s^2 | Temp: " << temp << " C\n";
+  data << "Ax: " << accel_norm.XAxis << " g | Ay: " << accel_norm.YAxis << " g | Az: " << accel_norm.ZAxis << " g | Temp: " << temp << " C\n";
   data << std::string(header_len-3, ' ') << "|| Gx: " << gyro_norm.XAxis << " d/s | Gy: " << gyro_norm.YAxis << " d/s | Gz: " << gyro_norm.ZAxis << " d/s\n";
   data << std::string(header_len-3, ' ') << "|| Pitch: " << _pitch << " | Roll: " << _roll << " | Yaw: " << _yaw << "\n";
 
@@ -95,8 +105,6 @@ void IMUComponent::setup(){
       vTaskDelay(500/portTICK_PERIOD_MS);
   }
 
-  _device.setAccelPowerOnDelay(MPU6050_DELAY_3MS);
-  
   // Disable interupts
   _device.setIntFreeFallEnabled(false);
   _device.setIntZeroMotionEnabled(false);
@@ -104,6 +112,8 @@ void IMUComponent::setup(){
 
   _device.calibrateGyro();
   _device.setThreshold(3);
+  _device.setRange(MPU6050_RANGE_2G);
+  _device.setScale(MPU6050_SCALE_2000DPS);
   vTaskDelay(500/portTICK_PERIOD_MS);
   printf("IMU setup complete\n");
 }

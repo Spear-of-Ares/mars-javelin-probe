@@ -16,7 +16,7 @@
 
 #define BME_TASK_ID "BME TASK  "
 #define BME_SAMPLE_RATE_HZ  10
-#if CONFIG_BME_ATTACHED == true
+#if true
 #define BME_ATTACHED
 #endif
 
