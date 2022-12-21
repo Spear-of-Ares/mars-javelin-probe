@@ -529,6 +529,13 @@ CONFIG_ESP_PHY_REDUCE_TX_POWER=y
 # end of Power Management
 
 #
+# ESP Ringbuf
+#
+# CONFIG_RINGBUF_PLACE_FUNCTIONS_INTO_FLASH is not set
+# CONFIG_RINGBUF_PLACE_ISR_FUNCTIONS_INTO_FLASH is not set
+# end of ESP Ringbuf
+
+#
 # ESP System Settings
 #
 # CONFIG_ESP_SYSTEM_PANIC_PRINT_HALT is not set
@@ -609,6 +616,7 @@ CONFIG_ESP32_WIFI_MGMT_SBUF_NUM=32
 # CONFIG_ESP_WIFI_STA_DISCONNECTED_PM_ENABLE is not set
 # CONFIG_ESP_WIFI_GMAC_SUPPORT is not set
 CONFIG_ESP_WIFI_SOFTAP_SUPPORT=y
+# CONFIG_ESP_WIFI_SLP_BEACON_LOST_OPT is not set
 # end of Wi-Fi
 
 #
@@ -1336,11 +1344,7 @@ CONFIG_SD2_MOUNT="/sd2"
 #
 
 #
-# IMUConfiguration
-#
-
-#
-# Thermistor Configuration
+# Sensors Configuration
 #
 CONFIG_THERM1_GPIO=36
 CONFIG_THERM2_GPIO=39
@@ -1352,7 +1356,7 @@ CONFIG_THERM1_B=3575
 CONFIG_THERM2_B=3575
 CONFIG_THERM2_ATTACHED=y
 CONFIG_THERM_SAMPLE_HZ=5
-# end of Thermistor Configuration
+# end of Sensors Configuration
 # end of Component config
 
 #

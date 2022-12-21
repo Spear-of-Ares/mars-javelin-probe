@@ -28,7 +28,7 @@
 
 class GPSComponent{
 public:
-  GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium);
+  GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium, TaskHandle_t xCmdCenter);
   static void vMainLoop_Task(void *arg);
 private:
   void setup();
@@ -42,6 +42,7 @@ private:
   SFE_UBLOX_GNSS _GNSS_2;
   TickType_t _lastUpdateIridium;
   TickType_t _lastUpdateLoRa;
+  TaskHandle_t _cmd_center;
 };
 
 #endif /* __GPS_COMPONENT_H__ */

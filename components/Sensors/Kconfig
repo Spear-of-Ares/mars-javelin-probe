@@ -1,4 +1,4 @@
-menu "Thermistor Configuration"
+menu "Sensors Configuration"
 config THERM1_GPIO
   int "Thermistor 1 GPIO"
   range 0 39
