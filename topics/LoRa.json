@@ -1,0 +1,77 @@
+{
+    "enums": [
+        {
+            "name": "LoRa_state",
+            "enumerators": [
+                "LoRa_ok",
+                "LoRa_sleeping",
+                "LoRa_off",
+                "LoRa_disconnected"
+            ]
+        },
+        {
+            "name": "msg_type",
+            "enumerators": [
+                "msg_sensor_data",
+                "msg_gps_data",
+                "msg_response",
+                "msg_command",
+                "msg_other"
+            ]
+        }
+    ],
+    "msgs": [
+        {
+            "name": "received_msg",
+            "fields": [
+                {
+                    "name": "receive_tick",
+                    "type": "uint32"
+                },
+                {
+                    "name": "recv_msg_type",
+                    "type": "msg_type"
+                },
+                {
+                    "name": "RSSI",
+                    "type": "int32"
+                },
+                {
+                    "name": "Signal To Noise",
+                    "type": "float"
+                },
+                {
+                    "name": "Frequency Error",
+                    "type": "int64"
+                },
+                {
+                    "name": "msg_data",
+                    "type": "uint8",
+                    "length": 10
+                }
+            ]
+        },
+        {
+            "name": "sent_msg",
+            "fields": [
+                {
+                    "name": "send_tick",
+                    "type": "uint32"
+                },
+                {
+                    "name": "sent_msg_type",
+                    "type": "msg_type"
+                }
+            ]
+        },
+        {
+            "name": "LoRa_state",
+            "fields": [
+                {
+                    "name": "state",
+                    "type": "LoRa_state"
+                }
+            ]
+        }
+    ]
+}

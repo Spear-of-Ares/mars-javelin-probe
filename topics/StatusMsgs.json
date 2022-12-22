@@ -1,0 +1,36 @@
+{
+    "enums": [
+        {
+            "name": "msg_type",
+            "enumerators": [
+                "error",
+                "info"
+            ]
+        }
+    ],
+    "msgs": [
+        {
+            "name": "msg",
+            "fields": [
+                {
+                    "name": "task_name",
+                    "type": "char",
+                    "length": 8
+                },
+                {
+                    "name": "msg_type",
+                    "type": "msg_type"
+                },
+                {
+                    "name": "tick_time",
+                    "type": "uint32"
+                },
+                {
+                    "name": "msg",
+                    "type": "char",
+                    "length": 256
+                }
+            ]
+        }
+    ]
+}
