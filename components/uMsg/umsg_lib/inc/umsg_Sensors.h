@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-12-21
+// Generated with umsg_gen on 2022-12-22
 #pragma once
 #include <umsg_types.h>
 
@@ -21,18 +21,18 @@ typedef enum
 
 typedef enum
 {
-    16G,
-    8G,
-    4G,
-    2G
+    G_16,
+    G_8,
+    G_4,
+    G_2
 } umsg_Sensors_imu_accelerometer_range_t;
 
 typedef enum
 {
-    2000DPS,
-    1000DPS,
-    500DPS,
-    250DPS
+    DPS_2000,
+    DPS_1000,
+    DPS_500,
+    DPS_250
 } umsg_Sensors_imu_gyroscope_scale_t;
 
 typedef struct

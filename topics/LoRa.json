@@ -1,7 +1,7 @@
 {
     "enums": [
         {
-            "name": "LoRa_state",
+            "name": "lora_state",
             "enumerators": [
                 "LoRa_ok",
                 "LoRa_sleeping",
@@ -37,11 +37,11 @@
                     "type": "int32"
                 },
                 {
-                    "name": "Signal To Noise",
+                    "name": "signal_to_noise",
                     "type": "float"
                 },
                 {
-                    "name": "Frequency Error",
+                    "name": "frequency_error",
                     "type": "int64"
                 },
                 {
@@ -65,11 +65,11 @@
             ]
         },
         {
-            "name": "LoRa_state",
+            "name": "state_msg",
             "fields": [
                 {
                     "name": "state",
-                    "type": "LoRa_state"
+                    "type": "lora_state"
                 }
             ]
         }

@@ -9,6 +9,8 @@ idf_component_register(SRCS "main.cpp"
                     REQUIRES Stats
                     REQUIRES ComBus
                     REQUIRES CommandCenter
+                    REQUIRES uMsg
                     )
+
 
 

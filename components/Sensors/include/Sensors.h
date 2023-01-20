@@ -10,6 +10,9 @@
 #include "MPU6050.h"
 #include "Adafruit_BME280.h"
 
+#include "umsg_Sensors.h"
+#include "umsg_CommandCenter.h"
+
 class Sensors
 {
 public:
@@ -44,6 +47,8 @@ private:
     float _external_thermistor_c;
 
     int sample_rate_hz;
+
+    umsg_sub_handle_t cmd_sub_handle;
 };
 
 #endif /* __SENSORS_H__*/

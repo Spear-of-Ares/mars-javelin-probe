@@ -1,0 +1,13 @@
+# Everytime topics are updated with umsg-gen, this needs to be copied into the CMakeLists.txt
+# esp-idf will not be able to import this otherwise
+
+idf_component_register(SRCS "./src/CommandCenter.c" "./src/GPS.c" "./src/Iridium.c" "./src/LoRa.c" "./src/Sensors.c" "./src/Stats.c" "./src/StatusMsgs.c" "./core/src/umsg.c" "./core/src/port_freertos.c"
+                    INCLUDE_DIRS "./core/inc" "./inc"
+                    REQUIRES freertos
+                    )
+
+
+# In poer_freertos.c change imports to 
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/queue.h"

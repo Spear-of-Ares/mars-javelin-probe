@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-12-21
+// Generated with umsg_gen on 2022-12-22
 #pragma once
 #include <umsg_types.h>
 
@@ -10,7 +10,7 @@ typedef enum
     LORA_SLEEPING,
     LORA_OFF,
     LORA_DISCONNECTED
-} umsg_LoRa_LoRa_state_t;
+} umsg_LoRa_lora_state_t;
 
 typedef enum
 {
@@ -26,8 +26,8 @@ typedef struct
     uint32_t receive_tick;
     umsg_LoRa_msg_type_t recv_msg_type;
     int32_t RSSI;
-    float Signal To Noise;
-    int64_t Frequency Error;
+    float signal_to_noise;
+    int64_t frequency_error;
     uint8_t msg_data[10];
 } umsg_LoRa_received_msg_t;
 
@@ -40,7 +40,7 @@ typedef struct
 typedef struct
 {
     umsg_LoRa_lora_state_t state;
-} umsg_LoRa_LoRa_state_t;
+} umsg_LoRa_state_msg_t;
 
 // api function headers
 umsg_sub_handle_t umsg_LoRa_received_msg_subscribe(uint32_t prescaler, uint8_t length);
@@ -57,10 +57,10 @@ void umsg_LoRa_sent_msg_publish_ch(umsg_LoRa_sent_msg_t* data, uint8_t channel);
 uint8_t umsg_LoRa_sent_msg_receive(umsg_sub_handle_t queue, umsg_LoRa_sent_msg_t* data, uint32_t timeout);
 uint8_t umsg_LoRa_sent_msg_peek(umsg_LoRa_sent_msg_t* data);
 
-umsg_sub_handle_t umsg_LoRa_LoRa_state_subscribe(uint32_t prescaler, uint8_t length);
-umsg_sub_handle_t umsg_LoRa_LoRa_state_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
-void umsg_LoRa_LoRa_state_publish(umsg_LoRa_LoRa_state_t* data);
-void umsg_LoRa_LoRa_state_publish_ch(umsg_LoRa_LoRa_state_t* data, uint8_t channel);
-uint8_t umsg_LoRa_LoRa_state_receive(umsg_sub_handle_t queue, umsg_LoRa_LoRa_state_t* data, uint32_t timeout);
-uint8_t umsg_LoRa_LoRa_state_peek(umsg_LoRa_LoRa_state_t* data);
+umsg_sub_handle_t umsg_LoRa_state_msg_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_LoRa_state_msg_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
+void umsg_LoRa_state_msg_publish(umsg_LoRa_state_msg_t* data);
+void umsg_LoRa_state_msg_publish_ch(umsg_LoRa_state_msg_t* data, uint8_t channel);
+uint8_t umsg_LoRa_state_msg_receive(umsg_sub_handle_t queue, umsg_LoRa_state_msg_t* data, uint32_t timeout);
+uint8_t umsg_LoRa_state_msg_peek(umsg_LoRa_state_msg_t* data);
 

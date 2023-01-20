@@ -32,6 +32,8 @@ void Sensors::set_sample_rate_hz(int hz)
 void Sensors::setup()
 {
     sample_rate_hz = 10;
+    cmd_sub_handle = umsg_CommandCenter_command_subscribe(1, 2);
+
     ESP_ERROR_CHECK(setup_imu());
     ESP_ERROR_CHECK(setup_bme());
     ESP_ERROR_CHECK(setup_therm());
@@ -66,12 +68,10 @@ esp_err_t Sensors::setup_imu()
 esp_err_t Sensors::setup_bme()
 {
     _bme = Adafruit_BME280();
-#ifdef BME_ATTACHED
     while (_bme.begin((uint8_t)BME280_ADDRESS, &Wire) == false)
     {
         printf("BME280 could not be connected\n");
     }
-#endif
     float start_press_pa = _bme.readPressure(); // pressue in Pa
     _start_press_hpa = start_press_pa / 100.0;  // Convert to hPa
     _start_alt_m = _bme.readAltitude(1013.25);
@@ -149,10 +149,10 @@ void Sensors::log_bme()
     // Standard pressure of sea level: 1013.25
     // Could be pressure at launch site to estimate hight above ground
 
-    float alt_inc_m = _bme.readAltitude(_start_press_hpa);
-    float alt_asl_m = _bme.readAltitude(1013.25);
+    float gained_alt_m = _bme.readAltitude(_start_press_hpa);
+    float alt_above_sea_m = _bme.readAltitude(1013.25);
 
-    if (alt_asl_m > 12000)
+    if (alt_above_sea_m > 12000)
     {
         // xTaskNotify(_cmd_center, 0x01, eSetBits);
     }

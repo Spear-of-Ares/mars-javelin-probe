@@ -3,4 +3,5 @@ idf_component_register(SRCS "Sensors.cpp" "MPU6050.cpp" "Thermistor.cpp"
                     REQUIRES arduino
                     REQUIRES adafruit
                     REQUIRES ComBus
+                    REQUIRES uMsg
                     )

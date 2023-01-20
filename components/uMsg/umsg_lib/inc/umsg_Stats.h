@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-12-21
+// Generated with umsg_gen on 2022-12-22
 #pragma once
 #include <umsg_types.h>
 
@@ -13,7 +13,7 @@ typedef struct
 
 typedef struct
 {
-    uint32_t Free Heap Size;
+    uint32_t free_heap_size;
 } umsg_Stats_system_run_time_stats_t;
 
 // api function headers

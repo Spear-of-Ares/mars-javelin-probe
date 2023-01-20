@@ -20,19 +20,19 @@
         {
             "name": "imu_accelerometer_range",
             "enumerators": [
-                "16G",
-                "8G",
-                "4G",
-                "2G"
+                "G_16",
+                "G_8",
+                "G_4",
+                "G_2"
             ]
         },
         {
             "name": "imu_gyroscope_scale",
             "enumerators": [
-                "2000DPS",
-                "1000DPS",
-                "500DPS",
-                "250DPS"
+                "DPS_2000",
+                "DPS_1000",
+                "DPS_500",
+                "DPS_250"
             ]
         }
     ],

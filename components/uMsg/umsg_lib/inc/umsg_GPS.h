@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-12-21
+// Generated with umsg_gen on 2022-12-22
 #pragma once
 #include <umsg_types.h>
 
@@ -30,7 +30,7 @@ typedef struct
 {
     umsg_GPS_gps_state_t state;
     uint8_t initializing : 1, not_enough_sats : 1, receiving_data : 1, reconnecting : 1, not_present : 1;
-} umsg_GPS_gps_state_t;
+} umsg_GPS_state_t;
 
 // api function headers
 umsg_sub_handle_t umsg_GPS_gps_configuration_subscribe(uint32_t prescaler, uint8_t length);
@@ -47,10 +47,10 @@ void umsg_GPS_gps_data_publish_ch(umsg_GPS_gps_data_t* data, uint8_t channel);
 uint8_t umsg_GPS_gps_data_receive(umsg_sub_handle_t queue, umsg_GPS_gps_data_t* data, uint32_t timeout);
 uint8_t umsg_GPS_gps_data_peek(umsg_GPS_gps_data_t* data);
 
-umsg_sub_handle_t umsg_GPS_gps_state_subscribe(uint32_t prescaler, uint8_t length);
-umsg_sub_handle_t umsg_GPS_gps_state_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
-void umsg_GPS_gps_state_publish(umsg_GPS_gps_state_t* data);
-void umsg_GPS_gps_state_publish_ch(umsg_GPS_gps_state_t* data, uint8_t channel);
-uint8_t umsg_GPS_gps_state_receive(umsg_sub_handle_t queue, umsg_GPS_gps_state_t* data, uint32_t timeout);
-uint8_t umsg_GPS_gps_state_peek(umsg_GPS_gps_state_t* data);
+umsg_sub_handle_t umsg_GPS_state_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_GPS_state_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
+void umsg_GPS_state_publish(umsg_GPS_state_t* data);
+void umsg_GPS_state_publish_ch(umsg_GPS_state_t* data, uint8_t channel);
+uint8_t umsg_GPS_state_receive(umsg_sub_handle_t queue, umsg_GPS_state_t* data, uint32_t timeout);
+uint8_t umsg_GPS_state_peek(umsg_GPS_state_t* data);
 

@@ -51,7 +51,7 @@ bool MPU6050::begin(mpu6050_dps_t scale, mpu6050_range_t range, int mpua, TwoWir
     // Check MPU6050 Who Am I Register
     if (fastRegister8(MPU6050_REG_WHO_AM_I) != 0x68)
     {
-	return false;
+        return false;
     }
 
     // Set Clock Source
@@ -73,20 +73,20 @@ void MPU6050::setScale(mpu6050_dps_t scale)
 
     switch (scale)
     {
-	case MPU6050_SCALE_250DPS:
-	    dpsPerDigit = .007633f;
-	    break;
-	case MPU6050_SCALE_500DPS:
-	    dpsPerDigit = .015267f;
-	    break;
-	case MPU6050_SCALE_1000DPS:
-	    dpsPerDigit = .030487f;
-	    break;
-	case MPU6050_SCALE_2000DPS:
-	    dpsPerDigit = .060975f;
-	    break;
-	default:
-	    break;
+    case MPU6050_SCALE_250DPS:
+        dpsPerDigit = .007633f;
+        break;
+    case MPU6050_SCALE_500DPS:
+        dpsPerDigit = .015267f;
+        break;
+    case MPU6050_SCALE_1000DPS:
+        dpsPerDigit = .030487f;
+        break;
+    case MPU6050_SCALE_2000DPS:
+        dpsPerDigit = .060975f;
+        break;
+    default:
+        break;
     }
 
     value = readRegister8(MPU6050_REG_GYRO_CONFIG);
@@ -110,20 +110,20 @@ void MPU6050::setRange(mpu6050_range_t range)
 
     switch (range)
     {
-	case MPU6050_RANGE_2G:
-	    rangePerDigit = .000061f;
-	    break;
-	case MPU6050_RANGE_4G:
-	    rangePerDigit = .000122f;
-	    break;
-	case MPU6050_RANGE_8G:
-	    rangePerDigit = .000244f;
-	    break;
-	case MPU6050_RANGE_16G:
-	    rangePerDigit = .0004882f;
-	    break;
-	default:
-	    break;
+    case MPU6050_RANGE_2G:
+        rangePerDigit = .000061f;
+        break;
+    case MPU6050_RANGE_4G:
+        rangePerDigit = .000122f;
+        break;
+    case MPU6050_RANGE_8G:
+        rangePerDigit = .000244f;
+        break;
+    case MPU6050_RANGE_16G:
+        rangePerDigit = .0004882f;
+        break;
+    default:
+        break;
     }
 
     value = readRegister8(MPU6050_REG_ACCEL_CONFIG);
@@ -345,32 +345,34 @@ Activites MPU6050::readActivites(void)
 Vector MPU6050::readRawAccel(void)
 {
     _wire->beginTransmission(mpuAddress);
-    #if ARDUINO >= 100
-	_wire->write(MPU6050_REG_ACCEL_XOUT_H);
-    #else
-	_wire->send(MPU6050_REG_ACCEL_XOUT_H);
-    #endif
+#if ARDUINO >= 100
+    _wire->write(MPU6050_REG_ACCEL_XOUT_H);
+#else
+    _wire->send(MPU6050_REG_ACCEL_XOUT_H);
+#endif
     _wire->endTransmission();
 
     _wire->requestFrom(mpuAddress, 6);
 
-    while (_wire->available() < 6){}
+    while (_wire->available() < 6)
+    {
+    }
 
-    #if ARDUINO >= 100
-	uint8_t xha = _wire->read();
-	uint8_t xla = _wire->read();
-        uint8_t yha = _wire->read();
-	uint8_t yla = _wire->read();
-	uint8_t zha = _wire->read();
-	uint8_t zla = _wire->read();
-    #else
-	uint8_t xha = _wire->receive();
-	uint8_t xla = _wire->receive();
-	uint8_t yha = _wire->receive();
-	uint8_t yla = _wire->receive();
-	uint8_t zha = _wire->receive();
-	uint8_t zla = _wire->receive();
-    #endif
+#if ARDUINO >= 100
+    uint8_t xha = _wire->read();
+    uint8_t xla = _wire->read();
+    uint8_t yha = _wire->read();
+    uint8_t yla = _wire->read();
+    uint8_t zha = _wire->read();
+    uint8_t zla = _wire->read();
+#else
+    uint8_t xha = _wire->receive();
+    uint8_t xla = _wire->receive();
+    uint8_t yha = _wire->receive();
+    uint8_t yla = _wire->receive();
+    uint8_t zha = _wire->receive();
+    uint8_t zla = _wire->receive();
+#endif
 
     ra.XAxis = xha << 8 | xla;
     ra.YAxis = yha << 8 | yla;
@@ -401,36 +403,37 @@ Vector MPU6050::readScaledAccel(void)
     return na;
 }
 
-
 Vector MPU6050::readRawGyro(void)
 {
     _wire->beginTransmission(mpuAddress);
-    #if ARDUINO >= 100
-	_wire->write(MPU6050_REG_GYRO_XOUT_H);
-    #else
-	_wire->send(MPU6050_REG_GYRO_XOUT_H);
-    #endif
+#if ARDUINO >= 100
+    _wire->write(MPU6050_REG_GYRO_XOUT_H);
+#else
+    _wire->send(MPU6050_REG_GYRO_XOUT_H);
+#endif
     _wire->endTransmission();
 
     _wire->requestFrom(mpuAddress, 6);
 
-    while (_wire->available() < 6){}
+    while (_wire->available() < 6)
+    {
+    }
 
-    #if ARDUINO >= 100
-	uint8_t xha = _wire->read();
-	uint8_t xla = _wire->read();
-        uint8_t yha = _wire->read();
-	uint8_t yla = _wire->read();
-	uint8_t zha = _wire->read();
-	uint8_t zla = _wire->read();
-    #else
-	uint8_t xha = _wire->receive();
-	uint8_t xla = _wire->receive();
-	uint8_t yha = _wire->receive();
-	uint8_t yla = _wire->receive();
-	uint8_t zha = _wire->receive();
-	uint8_t zla = _wire->receive();
-    #endif
+#if ARDUINO >= 100
+    uint8_t xha = _wire->read();
+    uint8_t xla = _wire->read();
+    uint8_t yha = _wire->read();
+    uint8_t yla = _wire->read();
+    uint8_t zha = _wire->read();
+    uint8_t zla = _wire->read();
+#else
+    uint8_t xha = _wire->receive();
+    uint8_t xla = _wire->receive();
+    uint8_t yha = _wire->receive();
+    uint8_t yla = _wire->receive();
+    uint8_t zha = _wire->receive();
+    uint8_t zla = _wire->receive();
+#endif
 
     rg.XAxis = xha << 8 | xla;
     rg.YAxis = yha << 8 | yla;
@@ -445,21 +448,25 @@ Vector MPU6050::readNormalizeGyro(void)
 
     if (useCalibrate)
     {
-	ng.XAxis = (rg.XAxis - dg.XAxis) * dpsPerDigit;
-	ng.YAxis = (rg.YAxis - dg.YAxis) * dpsPerDigit;
-	ng.ZAxis = (rg.ZAxis - dg.ZAxis) * dpsPerDigit;
-    } else
+        ng.XAxis = (rg.XAxis - dg.XAxis) * dpsPerDigit;
+        ng.YAxis = (rg.YAxis - dg.YAxis) * dpsPerDigit;
+        ng.ZAxis = (rg.ZAxis - dg.ZAxis) * dpsPerDigit;
+    }
+    else
     {
-	ng.XAxis = rg.XAxis * dpsPerDigit;
-	ng.YAxis = rg.YAxis * dpsPerDigit;
-	ng.ZAxis = rg.ZAxis * dpsPerDigit;
+        ng.XAxis = rg.XAxis * dpsPerDigit;
+        ng.YAxis = rg.YAxis * dpsPerDigit;
+        ng.ZAxis = rg.ZAxis * dpsPerDigit;
     }
 
     if (actualThreshold)
     {
-	if (abs(ng.XAxis) < tg.XAxis) ng.XAxis = 0;
-	if (abs(ng.YAxis) < tg.YAxis) ng.YAxis = 0;
-	if (abs(ng.ZAxis) < tg.ZAxis) ng.ZAxis = 0;
+        if (abs(ng.XAxis) < tg.XAxis)
+            ng.XAxis = 0;
+        if (abs(ng.YAxis) < tg.YAxis)
+            ng.YAxis = 0;
+        if (abs(ng.ZAxis) < tg.ZAxis)
+            ng.ZAxis = 0;
     }
 
     return ng;
@@ -469,7 +476,7 @@ float MPU6050::readTemperature(void)
 {
     int16_t T;
     T = readRegister16(MPU6050_REG_TEMP_OUT_H);
-    return (float)T/340 + 36.53;
+    return (float)T / 340 + 36.53;
 }
 
 int16_t MPU6050::getGyroOffsetX(void)
@@ -549,16 +556,16 @@ void MPU6050::calibrateGyro(uint8_t samples)
     // Read n-samples
     for (uint8_t i = 0; i < samples; ++i)
     {
-	readRawGyro();
-	sumX += rg.XAxis;
-	sumY += rg.YAxis;
-	sumZ += rg.ZAxis;
+        readRawGyro();
+        sumX += rg.XAxis;
+        sumY += rg.YAxis;
+        sumZ += rg.ZAxis;
 
-	sigmaX += rg.XAxis * rg.XAxis;
-	sigmaY += rg.YAxis * rg.YAxis;
-	sigmaZ += rg.ZAxis * rg.ZAxis;
+        sigmaX += rg.XAxis * rg.XAxis;
+        sigmaY += rg.YAxis * rg.YAxis;
+        sigmaZ += rg.ZAxis * rg.ZAxis;
 
-	delay(5);
+        delay(5);
     }
 
     // Calculate delta vectors
@@ -574,7 +581,7 @@ void MPU6050::calibrateGyro(uint8_t samples)
     // If already set threshold, recalculate threshold vectors
     if (actualThreshold > 0)
     {
-	setThreshold(actualThreshold);
+        setThreshold(actualThreshold);
     }
 }
 
@@ -589,22 +596,23 @@ void MPU6050::setThreshold(uint8_t multiple)
 {
     if (multiple > 0)
     {
-	// If not calibrated, need calibrate
-	if (!useCalibrate)
-	{
-	    calibrateGyro();
-	}
+        // If not calibrated, need calibrate
+        if (!useCalibrate)
+        {
+            calibrateGyro();
+        }
 
-	// Calculate threshold vectors
-	tg.XAxis = th.XAxis * multiple;
-	tg.YAxis = th.YAxis * multiple;
-	tg.ZAxis = th.ZAxis * multiple;
-    } else
+        // Calculate threshold vectors
+        tg.XAxis = th.XAxis * multiple;
+        tg.YAxis = th.YAxis * multiple;
+        tg.ZAxis = th.ZAxis * multiple;
+    }
+    else
     {
-	// No threshold
-	tg.XAxis = 0;
-	tg.YAxis = 0;
-	tg.ZAxis = 0;
+        // No threshold
+        tg.XAxis = 0;
+        tg.YAxis = 0;
+        tg.ZAxis = 0;
     }
 
     // Remember old threshold value
@@ -617,20 +625,19 @@ uint8_t MPU6050::fastRegister8(uint8_t reg)
     uint8_t value;
 
     _wire->beginTransmission(mpuAddress);
-    #if ARDUINO >= 100
-	_wire->write(reg);
-    #else
-	_wire->send(reg);
-    #endif
+#if ARDUINO >= 100
+    _wire->write(reg);
+#else
+    _wire->send(reg);
+#endif
     _wire->endTransmission();
 
-
     _wire->requestFrom(mpuAddress, 1, true);
-    #if ARDUINO >= 100
-	value = _wire->read();
-    #else
-	value = _wire->receive();
-    #endif;
+#if ARDUINO >= 100
+    value = _wire->read();
+#else
+    value = _wire->receive();
+#endif
 
     return value;
 }
@@ -641,20 +648,22 @@ uint8_t MPU6050::readRegister8(uint8_t reg)
     uint8_t value;
 
     _wire->beginTransmission(mpuAddress);
-    #if ARDUINO >= 100
-	_wire->write(reg);
-    #else
-	_wire->send(reg);
-    #endif
+#if ARDUINO >= 100
+    _wire->write(reg);
+#else
+    _wire->send(reg);
+#endif
     _wire->endTransmission();
 
     _wire->requestFrom(mpuAddress, 1, true);
-    while(!_wire->available()) {};
-    #if ARDUINO >= 100
-	value = _wire->read();
-    #else
-	value = _wire->receive();
-    #endif;
+    while (!_wire->available())
+    {
+    };
+#if ARDUINO >= 100
+    value = _wire->read();
+#else
+    value = _wire->receive();
+#endif
 
     return value;
 }
@@ -664,13 +673,13 @@ void MPU6050::writeRegister8(uint8_t reg, uint8_t value)
 {
     _wire->beginTransmission(mpuAddress);
 
-    #if ARDUINO >= 100
-	_wire->write(reg);
-	_wire->write(value);
-    #else
-	_wire->send(reg);
-	_wire->send(value);
-    #endif
+#if ARDUINO >= 100
+    _wire->write(reg);
+    _wire->write(value);
+#else
+    _wire->send(reg);
+    _wire->send(value);
+#endif
     _wire->endTransmission();
 }
 
@@ -678,22 +687,24 @@ int16_t MPU6050::readRegister16(uint8_t reg)
 {
     int16_t value;
     _wire->beginTransmission(mpuAddress);
-    #if ARDUINO >= 100
-        _wire->write(reg);
-    #else
-        _wire->send(reg);
-    #endif
+#if ARDUINO >= 100
+    _wire->write(reg);
+#else
+    _wire->send(reg);
+#endif
     _wire->endTransmission();
 
     _wire->requestFrom(mpuAddress, 2, true);
-    while(!_wire->available()) {};
-    #if ARDUINO >= 100
-        uint8_t vha = _wire->read();
-        uint8_t vla = _wire->read();
-    #else
-        uint8_t vha = _wire->receive();
-        uint8_t vla = _wire->receive();
-    #endif;
+    while (!_wire->available())
+    {
+    };
+#if ARDUINO >= 100
+    uint8_t vha = _wire->read();
+    uint8_t vla = _wire->read();
+#else
+    uint8_t vha = _wire->receive();
+    uint8_t vla = _wire->receive();
+#endif
 
     value = vha << 8 | vla;
 
@@ -704,15 +715,15 @@ void MPU6050::writeRegister16(uint8_t reg, int16_t value)
 {
     _wire->beginTransmission(mpuAddress);
 
-    #if ARDUINO >= 100
-	_wire->write(reg);
-	_wire->write((uint8_t)(value >> 8));
-	_wire->write((uint8_t)value);
-    #else
-	_wire->send(reg);
-	_wire->send((uint8_t)(value >> 8));
-	_wire->send((uint8_t)value);
-    #endif
+#if ARDUINO >= 100
+    _wire->write(reg);
+    _wire->write((uint8_t)(value >> 8));
+    _wire->write((uint8_t)value);
+#else
+    _wire->send(reg);
+    _wire->send((uint8_t)(value >> 8));
+    _wire->send((uint8_t)value);
+#endif
     _wire->endTransmission();
 }
 
@@ -733,7 +744,8 @@ void MPU6050::writeRegisterBit(uint8_t reg, uint8_t pos, bool state)
     if (state)
     {
         value |= (1 << pos);
-    } else 
+    }
+    else
     {
         value &= ~(1 << pos);
     }

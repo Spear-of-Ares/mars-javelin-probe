@@ -26,6 +26,9 @@
 #include "GPSComponent.h"
 #include "IridiumComponent.h"
 
+#include <umsg_StatusMsgs.h>
+#include <umsg_GPS.h>
+
 // #define LoRaTRANSMITTER
 
 // Alternate main task for an outside LoRa transmitter to test receive and transmit of probe
@@ -292,7 +295,6 @@ extern "C" void app_main(void)
   {
     printf("Could not start the Run Time stats Component task\n");
   }
-
   // Main task must stay alive as it has references to classes that will be deleted otherwise
   for (;;)
   {

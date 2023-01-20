@@ -48,7 +48,7 @@
             ]
         },
         {
-            "name": "gps_state",
+            "name": "state",
             "fields": [
                 {
                     "name": "state",

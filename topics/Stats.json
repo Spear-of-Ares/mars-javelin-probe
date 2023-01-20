@@ -27,7 +27,7 @@
             "name": "system_run_time_stats",
             "fields": [
                 {
-                    "name": "Free Heap Size",
+                    "name": "free_heap_size",
                     "type": "uint32"
                 }
             ]
