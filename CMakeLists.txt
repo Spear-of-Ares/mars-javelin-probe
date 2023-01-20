@@ -7,3 +7,8 @@ cmake_minimum_required(VERSION 3.5)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(mars-javelin-probe)
 
+set(UMSG_PORT "FREERTOS")
+add_subdirectory(umsg_lib)
+
+target_link_libraries(uMsgLib freertos_kernel)
+target_link_libraries(mars-javelin-probe uMsgLib)
