@@ -2,8 +2,8 @@
 // Created by alexp on 9/6/2022.
 //
 #include <umsg.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/queue.h"
+#include <freertos/FreeRTOS.h>
+#include <freertos/queue.h>
 #include <stdint.h>
 
 // obtained from cmsis core.h. All cortex M processors have this register at this address

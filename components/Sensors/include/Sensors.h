@@ -10,8 +10,11 @@
 #include "MPU6050.h"
 #include "Adafruit_BME280.h"
 
+extern "C"
+{
 #include "umsg_Sensors.h"
 #include "umsg_CommandCenter.h"
+}
 
 class Sensors
 {
@@ -34,6 +37,15 @@ private:
     void log_bme();
     void log_therm();
 
+    Vector past_gyro;
+    Vector fuzed_imu_data;
+    Vector accel_filter;
+    Vector gyro_filter;
+
+    Vector low_pass_filter(Vector accel, Vector accel_filtered);
+    Vector high_pass_filter(Vector gyro, Vector past_gyro, Vector gyro_filtered);
+    Vector fuze_imu_data(Vector accel_filter, Vector gyro_filter, Vector past_fuze);
+
     MPU6050 _imu;
     float _pitch;
     float _roll;
@@ -47,6 +59,8 @@ private:
     float _external_thermistor_c;
 
     int sample_rate_hz;
+
+    float fusion_boundary;
 
     umsg_sub_handle_t cmd_sub_handle;
 };

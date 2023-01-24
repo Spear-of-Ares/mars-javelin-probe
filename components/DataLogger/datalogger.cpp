@@ -1,43 +1,84 @@
 #include "datalogger.h"
 
-/**
-* @brief Handles the unqueueing of data from other tasks and writing that data to SD card
-*
-* @param data_logger Data logger class, giving access to other functions and fields
-*/
-void DataLogger::vLogLoop_Task(void* data_logger)
+void DataLogger::initSubs()
 {
-  DataLogger *data_log = (DataLogger*)data_logger; data_log->_dataOutBuf = new std::string();
-  for(;;)
+  _subscriptions.push_back(umsg_CommandCenter_command_subscribe(1, 1));
+
+  _subscriptions.push_back(umsg_Iridium_received_msg_subscribe(1, 1));
+  _subscriptions.push_back(umsg_Iridium_sent_msg_subscribe(1, 1));
+  _subscriptions.push_back(umsg_Iridium_state_subscribe(1, 1));
+
+  _subscriptions.push_back(umsg_GPS_gps_data_subscribe(1, 1));
+  _subscriptions.push_back(umsg_GPS_gps_configuration_subscribe(1, 1));
+
+  _subscriptions.push_back(umsg_LoRa_received_msg_subscribe(1, 1));
+  _subscriptions.push_back(umsg_LoRa_sent_msg_subscribe(1, 1));
+  _subscriptions.push_back(umsg_LoRa_state_msg_subscribe(1, 1));
+
+  _subscriptions.push_back(umsg_Sensors_imu_configuration_subscribe(1, 1));
+  _subscriptions.push_back(umsg_Sensors_imu_data_subscribe(1, 5));
+  _subscriptions.push_back(umsg_Sensors_imu_state_subscribe(1, 1));
+
+  _subscriptions.push_back(umsg_Sensors_baro_configuration_subscribe(1, 1));
+  _subscriptions.push_back(umsg_Sensors_baro_data_subscribe(1, 5));
+  _subscriptions.push_back(umsg_Sensors_baro_state_subscribe(1, 1));
+
+  _subscriptions.push_back(umsg_Sensors_thermistor_configuration_subscribe_ch(1, 4, 0));
+  _subscriptions.push_back(umsg_Sensors_thermistor_configuration_subscribe_ch(1, 1, 1));
+  _subscriptions.push_back(umsg_Sensors_thermistor_data_subscribe_ch(1, 5, 0));
+  _subscriptions.push_back(umsg_Sensors_thermistor_data_subscribe_ch(1, 5, 1));
+  _subscriptions.push_back(umsg_Sensors_thermistor_state_subscribe_ch(1, 1, 0));
+  _subscriptions.push_back(umsg_Sensors_thermistor_state_subscribe_ch(1, 1, 1));
+
+  _subscriptions.push_back(umsg_Stats_system_run_time_stats_subscribe(1, 1));
+  _subscriptions.push_back(umsg_Stats_task_run_time_stats_subscribe(1, 1));
+
+  _subscriptions.push_back(umsg_StatusMsgs_msg_subscribe(1, 1));
+}
+
+/**
+ * @brief Handles the unqueueing of data from other tasks and writing that data to SD card
+ *
+ * @param data_logger Data logger class, giving access to other functions and fields
+ */
+void DataLogger::vLogLoop_Task(void *data_logger)
+{
+  DataLogger *data_log = (DataLogger *)data_logger;
+  data_log->_dataOutBuf = new std::string();
+  initSubs();
+  for (;;)
+  {
+    if (data_log->_data_out == NULL)
     {
-      if(data_log->_data_out == NULL){
-        printf("This is null rn dude\n");
-        vTaskDelay(1);
-      }
-      
-      while (uxQueueMessagesWaiting(data_log->_data_out) != 0){
-        data_log->handleQueueData();
-      }
-      // Delay so watchdog does not freak out
-      vTaskDelay(50);
+      printf("This is null rn dude\n");
+      vTaskDelay(1);
     }
+
+    while (uxQueueMessagesWaiting(data_log->_data_out) != 0)
+    {
+      data_log->handleQueueData();
+    }
+    // Delay so watchdog does not freak out
+    vTaskDelay(50);
+  }
 
   vTaskDelete(NULL);
 }
 
-
 /**
-* @brief Gets SDData from the dataOut queue and writes to both SD1 and SD2 if data if larger than
-*        the internal buffer size.
-*/
-void DataLogger::handleQueueData(){
+ * @brief Gets SDData from the dataOut queue and writes to both SD1 and SD2 if data if larger than
+ *        the internal buffer size.
+ */
+void DataLogger::handleQueueData()
+{
 
   SDData *sd_data;
-  if( xQueueReceive(_data_out, &(sd_data), 5/portTICK_PERIOD_MS) != pdTRUE){
+  if (xQueueReceive(_data_out, &(sd_data), 5 / portTICK_PERIOD_MS) != pdTRUE)
+  {
     printf("Could not receive from queue\n");
-    return; 
+    return;
   }
-  //printf("%d || Data Logger Start || %s || %d\n", xTaskGetTickCount(), sd_data->file_name->c_str(), xPortGetFreeHeapSize());
+  // printf("%d || Data Logger Start || %s || %d\n", xTaskGetTickCount(), sd_data->file_name->c_str(), xPortGetFreeHeapSize());
 
   std::string sd_data_msg = *(sd_data->message);
   sd_data_msg += "\n";
@@ -52,56 +93,63 @@ void DataLogger::handleQueueData(){
     _dataOutBuf->append(sd_data_msg, 0, size_left);
 
     // Fill sd_data_msg with remaining bytes
-    sd_data_msg = sd_data_msg.substr(size_left, msg_len-size_left);
+    sd_data_msg = sd_data_msg.substr(size_left, msg_len - size_left);
 
     // TODO:: Don't clear bufer if appendFile fails
     // if not connected, attemp to remount
-    if (!_sd1_connected){
+    if (!_sd1_connected)
+    {
       mountSDFileSystem(_onboard_sd_conf, MOUNT1, 1);
     }
-    else{
+    else
+    {
       esp_err_t ret = appendFile(_path1, *_dataOutBuf);
-      if (ret == ESP_FAIL){
+      if (ret == ESP_FAIL)
+      {
         _sd1_connected = false;
       }
     }
 
     // Delay to allow other tasks to run after long operation
-    vTaskDelay(10/portTICK_PERIOD_MS);
+    vTaskDelay(10 / portTICK_PERIOD_MS);
 #ifdef SD2_ATTACHED
-    if ( !_sd2_connected ){
+    if (!_sd2_connected)
+    {
       mountSDFileSystem(_external_sd_conf, MOUNT2, 2);
     }
-  else{
+    else
+    {
       esp_err_t ret = appendFile(_path2, *_dataOutBuf);
-      if (ret == ESP_FAIL){
+      if (ret == ESP_FAIL)
+      {
         _sd2_connected = false;
       }
     }
 #endif
     // WARNING:: These print statements cause Data logger to use many may clock cycles
     //           Use at your own risk!! You have been warned!
-    //printf("     Written to SD\n");
-    //printf("++++++++++++++++++++++++++\n");
-    //printf("%s", _dataOutBuf->c_str());
+    // printf("     Written to SD\n");
+    // printf("++++++++++++++++++++++++++\n");
+    // printf("%s", _dataOutBuf->c_str());
 
     // reset data out buf
     _dataOutBuf->clear();
   }
-  if (sd_data_msg.length() != 0){
+  if (sd_data_msg.length() != 0)
+  {
     _dataOutBuf->append(sd_data_msg);
   }
   delete sd_data;
-}                                                   
-
+}
 
 /**
-* @brief Appends message to file at path
-*
-* @param path       Path of file to append to
-* @param message    Message to append
-*/
-esp_err_t DataLogger::appendFile(std::string path, std::string message){
+ * @brief Appends message to file at path
+ *
+ * @param path       Path of file to append to
+ * @param message    Message to append
+ */
+esp_err_t DataLogger::appendFile(std::string path, std::string message)
+{
 #ifdef SPEED_LOG
   uint32_t start = millis();
 #endif
@@ -112,41 +160,43 @@ esp_err_t DataLogger::appendFile(std::string path, std::string message){
   return ret;
 }
 
-
 /**
-* @brief Writes message to file at path
-*
-* @param path       Path of file to write
-* @param message    Message to write
-*/
-esp_err_t DataLogger::writeFile(std::string path, std::string message){
+ * @brief Writes message to file at path
+ *
+ * @param path       Path of file to write
+ * @param message    Message to write
+ */
+esp_err_t DataLogger::writeFile(std::string path, std::string message)
+{
 #ifdef SPEED_LOG
   uint32_t start = millis();
 #endif
-  esp_err_t ret =modifyFile(path, message, "w");
+  esp_err_t ret = modifyFile(path, message, "w");
 #ifdef SPEED_LOG
   printf("Took %lu ms to write %u B\n", millis() - start, message.length());
 #endif
   return ret;
 }
 
-
 /**
-* @brief Modifys a file by either writing or appending
-*
-* @param path       Path of file to modify
-* @param message    Message to add to file
-* @param open_mode  Mode to open file in. Accepted values are "w" and "a"
-*/
-esp_err_t DataLogger::modifyFile(std::string path, std::string message, std::string open_mode){
+ * @brief Modifys a file by either writing or appending
+ *
+ * @param path       Path of file to modify
+ * @param message    Message to add to file
+ * @param open_mode  Mode to open file in. Accepted values are "w" and "a"
+ */
+esp_err_t DataLogger::modifyFile(std::string path, std::string message, std::string open_mode)
+{
 
   FILE *file = fopen(path.c_str(), open_mode.c_str());
-  if (!file){
+  if (!file)
+  {
     printf("Failed to open file for writing\n");
     return ESP_FAIL;
   }
 
-  if(fprintf(file, "%s", message.c_str()) < 0){
+  if (fprintf(file, "%s", message.c_str()) < 0)
+  {
     printf("Append failed\n");
   }
   fclose(file);
@@ -155,35 +205,32 @@ esp_err_t DataLogger::modifyFile(std::string path, std::string message, std::str
 }
 
 /**
-* @brief Setup of the various things needed for SD card writing
-*        
-*        Initializes an SPI bus using SPI3_HOST and custom SPI ports defined in the
-*        Kconfig file.
-*
-*        Mounts both SD1 and SD2 at MOUNT1 and MOUNT2 locations. 
-*/
+ * @brief Setup of the various things needed for SD card writing
+ *
+ *        Initializes an SPI bus using SPI3_HOST and custom SPI ports defined in the
+ *        Kconfig file.
+ *
+ *        Mounts both SD1 and SD2 at MOUNT1 and MOUNT2 locations.
+ */
 void DataLogger::setup()
 {
   // Init mount points
   _mount_config = {
-    .format_if_mount_failed = false,
-    .max_files = 5,
-    .allocation_unit_size = 16 * 1024
-  };
+      .format_if_mount_failed = false,
+      .max_files = 5,
+      .allocation_unit_size = 16 * 1024};
   const char mount_point1[] = MOUNT1;
   const char mount_point2[] = MOUNT2;
 
   _host = SDHost; // defined in ComBus.h
-  
+
   // Configure SD1 device and mount its filesystem
   _onboard_sd_conf = SDSPI_DEVICE_CONFIG_DEFAULT();
   _onboard_sd_conf.host_id = (spi_host_device_t)_host.slot;
   _onboard_sd_conf.gpio_cs = (gpio_num_t)SD1_CS_GPIO;
 
-
   printf("Mounting Filesystem 1\n");
   mountSDFileSystem(_onboard_sd_conf, mount_point1, 1);
-
 
   // Clear the log file
   _path1 = MOUNT1;
@@ -196,7 +243,6 @@ void DataLogger::setup()
   _external_sd_conf = SDSPI_DEVICE_CONFIG_DEFAULT();
   _external_sd_conf.host_id = (spi_host_device_t)_host.slot;
   _external_sd_conf.gpio_cs = (gpio_num_t)SD2_CS_GPIO;
-
 
   printf("Mounting Filesystem 2\n");
   mountSDFileSystem(_external_sd_conf, mount_point2, 2);
@@ -211,39 +257,43 @@ void DataLogger::setup()
 #endif /* SD2_ATTACHED */
 }
 
-
 /**
-  * @brief Mounts the file system of an SD card
-  *
-  * @param mount_point place to mount the SD card at
-  */
-void DataLogger::mountSDFileSystem(sdspi_device_config_t sd_conf, const char* mount_point, uint8_t card_num){
+ * @brief Mounts the file system of an SD card
+ *
+ * @param mount_point place to mount the SD card at
+ */
+void DataLogger::mountSDFileSystem(sdspi_device_config_t sd_conf, const char *mount_point, uint8_t card_num)
+{
   sdmmc_card_t *card;
   bool *connected;
-   
-  switch(card_num){
-    case 1:
-      card = _card1;
-      connected = &_sd1_connected;
-      break;
-    case 2:
-      card = _card2;
-      connected = &_sd2_connected;
-      break;
-    default:
-      printf("Not a valid card number. card in range [0, 1]\n");
-      return;
+
+  switch (card_num)
+  {
+  case 1:
+    card = _card1;
+    connected = &_sd1_connected;
+    break;
+  case 2:
+    card = _card2;
+    connected = &_sd2_connected;
+    break;
+  default:
+    printf("Not a valid card number. card in range [0, 1]\n");
+    return;
   }
 
   printf("(%d)Memory: %d\n", card_num, esp_get_free_heap_size());
   esp_err_t ret = esp_vfs_fat_sdspi_mount(mount_point, &_host, &sd_conf, &_mount_config, &card);
 
   *connected = true;
-  if (ret != ESP_OK){
-    if (ret == ESP_FAIL){
+  if (ret != ESP_OK)
+  {
+    if (ret == ESP_FAIL)
+    {
       printf("Failed to mount filesystem.\n");
     }
-  else{
+    else
+    {
       printf("Failed to initialize the card: %s\n", esp_err_to_name(ret));
       *connected = false;
     }
@@ -254,4 +304,3 @@ void DataLogger::mountSDFileSystem(sdspi_device_config_t sd_conf, const char* mo
   sdmmc_card_print_info(stdout, card);
   printf("\n");
 }
-
