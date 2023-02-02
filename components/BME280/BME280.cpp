@@ -41,6 +41,10 @@ void BME280Component::logBME(){
   
   float altitude_from_start = device.readAltitude(_startup_pressure);
   float altitude_asl = device.readAltitude(1013.25);
+
+  if( altitude_asl > 12000){
+      //xTaskNotify(_cmd_center, 0x01, eSetBits);
+  }
   #else
 
   float temp = 0;
@@ -75,8 +79,8 @@ void BME280Component::logBME(){
 #endif
 
 #ifdef BME_LOG_LoRa
-  // Update LoRa every 10 seconds
-  if (curr_tick - _lastUpdateLoRa > 10000 / portTICK_PERIOD_MS)
+  // Update LoRa every 15 seconds
+  if (curr_tick - _lastUpdateLoRa > 15000 / portTICK_PERIOD_MS)
   {
     std::string *loradata = new std::string(data.str());
     _lastUpdateLoRa = curr_tick;

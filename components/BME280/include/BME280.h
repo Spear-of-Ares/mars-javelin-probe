@@ -27,10 +27,11 @@
 #define BME_LOG_LoRa
 class BME280Component{
 public:
-  BME280Component(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium){
+  BME280Component(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium, TaskHandle_t xCmdCenter){
     _dataOutSD = dataOutSD;
     _dataOutLoRa = dataOutLoRa;
     _dataOutIridium = dataOutIridium;
+    _cmd_center = xCmdCenter;
 
     _lastUpdateIridium = 0x0000;
     _lastUpdateLoRa = 0x0000;
@@ -46,6 +47,8 @@ private:
   TickType_t _lastUpdateLoRa;
   TickType_t _lastUpdateIridium;
 
+
+  TaskHandle_t _cmd_center;
   Adafruit_BME280 device;
 
   float _startup_pressure;

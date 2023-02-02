@@ -9,7 +9,7 @@ config CUT_DWN_GPIO
 
 config CUT_DWN_DUR
   int "Cut Down Duration"
-  range 0 10000
+  range 0 100000
   default 1000 
   help
   The duration (ms) cut down gpio needs to be high for cut down. Measured in ms

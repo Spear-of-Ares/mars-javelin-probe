@@ -29,7 +29,7 @@ void ThermistorComponent::vMainLoop_Task(void *arg){
   const TickType_t xDelay = (1000 / THERM_SAMPLE_HZ) / portTICK_PERIOD_MS;
 
   for(;;){
-    //therm_component.logThermistors();
+    therm_component.logThermistors();
     vTaskDelay(xDelay);
   }
   vTaskDelete(NULL);

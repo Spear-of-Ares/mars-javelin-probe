@@ -1974,3 +1974,139 @@ Received: 2391939 || IMU TASK   || Ax: 3.69392 g | Ay: 0.621956 g | Az: 0.669536
                       || Gx: 0 d/s | Gy: 0 d/s | Gz: 0 d/s
                       || Pitch: -2.87352e-16 | Roll: -2.87352e-16 | Yaw: -2.87352e-16
  || RSSI: -55 | SNR: 10.500000
+Received: 2396695 || GPS_COMP   || Lat: 470521790 Long: -1175179488 (degrees * 10^-7) | Alt: 611.074 (m) | SIV: 27 | | Time: 2022-11-12 18:34:28:0 | Time is valid  Date is valid PDOP: 98 (10^-2) | ATTroll: 15993 | ATTpitch: 13472.4 | ATTheading: 20824.8 | horizAccE || RSSI: -56 | SNR: 9.500000
+Received: 2402014 || IMU TASK   || Ax: 0.49288 g | Ay: 0.068076 g | Az: 0.92842 g | Temp: 17.8476 C
+                      || Gx: 0 d/s | Gy: 0 d/s | Gz: 0 d/s
+                      || Pitch: -2.87352e-16 | Roll: -2.87352e-16 | Yaw: -2.87352e-16
+ || RSSI: -48 | SNR: 9.500000
+Received: 2409106 || IMU TASK   || Ax: 2.83247 g | Ay: 0.016043 g | Az: 1.43667 g | Temp: 36.53 C
+                      || Gx: 0 d/s | Gy: 0 d/s | Gz: 0 d/s
+                      || Pitch: -2.87352e-16 | Roll: -2.87352e-16 | Yaw: -2.87352e-16
+ || RSSI: -48 | SNR: 9.000000
+Received: 2410498 || GPS_COMP   || No Data || RSSI: -49 | SNR: 10.000000
+Received: 2411577 || BME TASK   || Temp: 183.69 C | Pressure: -13752.5 Pa | humidity: 100 % | altitude (asl): -nan m | altitude (relative): -nan m || RSSI: -47 | SNR: 9.250000
+Received: 2415742 || IMU TASK   || Ax: 0.845948 g | Ay: 0.784155 g | Az: 0.690154 g | Temp: 79.4859 C
+                      || Gx: 0 d/s | Gy: 0 d/s | Gz: 0 d/s
+                      || Pitch: -2.87352e-16 | Roll: -2.87352e-16 | Yaw: -2.87352e-16
+ || RSSI: -50 | SNR: 10.000000
+ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 188777542, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6664
+load:0x40078000,len:14848
+load:0x40080400,len:3792
+0x40080400: _init at ??:?
+entry 0x40080694
+[0;32mI (28) boot: ESP-IDF v4.4.2-dirty 2nd stage bootloader[0m
+[0;32mI (28) boot: compile time 02:08:39[0m
+[0;32mI (28) boot: chip revision: 1[0m
+[0;32mI (31) boot_comm: chip revision: 1, min. bootloader chip revision: 0[0m
+[0;32mI (38) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (43) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (47) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (52) boot: Enabling RNG early entropy source...[0m
+[0;32mI (57) boot: Partition Table:[0m
+[0;32mI (61) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (68) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (76) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (83) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (91) boot: End of partition table[0m
+[0;32mI (95) boot_comm: chip revision: 1, min. application chip revision: 0[0m
+[0;32mI (102) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=0cc3ch ( 52284) map[0m
+[0;32mI (129) esp_image: segment 1: paddr=0001cc64 vaddr=3ffb0000 size=023d4h (  9172) load[0m
+[0;32mI (133) esp_image: segment 2: paddr=0001f040 vaddr=40080000 size=00fd8h (  4056) load[0m
+[0;32mI (137) esp_image: segment 3: paddr=00020020 vaddr=400d0020 size=1e5c8h (124360) map[0m
+[0;32mI (189) esp_image: segment 4: paddr=0003e5f0 vaddr=40080fd8 size=0bc78h ( 48248) load[0m
+[0;32mI (209) esp_image: segment 5: paddr=0004a270 vaddr=50000000 size=00010h (    16) load[0m
+[0;32mI (215) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (215) boot: Disabling RNG early entropy source...[0m
+[0;32mI (229) cpu_start: Pro cpu up.[0m
+[0;32mI (229) cpu_start: Starting app cpu, entry point is 0x40081208[0m
+[0;32mI (0) cpu_start: App cpu up.[0m
+[0;32mI (243) cpu_start: Pro cpu start user code[0m
+[0;32mI (243) cpu_start: cpu freq: 160000000[0m
+[0;32mI (243) cpu_start: Application information:[0m
+[0;32mI (248) cpu_start: Project name:     mars-javelin-probe[0m
+[0;32mI (254) cpu_start: App version:      9aad07c-dirty[0m
+[0;32mI (259) cpu_start: Compile time:     Nov 12 2022 05:32:54[0m
+[0;32mI (265) cpu_start: ELF file SHA256:  57b9bdd65f7aeb2a...[0m
+[0;32mI (271) cpu_start: ESP-IDF:          v4.4.2-dirty[0m
+[0;32mI (277) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (284) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (290) heap_init: At 3FFB2EC8 len 0002D138 (180 KiB): DRAM[0m
+[0;32mI (296) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (302) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (309) heap_init: At 4008CC50 len 000133B0 (76 KiB): IRAM[0m
+[0;32mI (316) spi_flash: detected chip: gd[0m
+[0;32mI (319) spi_flash: flash io: dio[0m
+[0;32mI (325) cpu_start: Starting scheduler on PRO CPU.[0m
+[0;32mI (0) cpu_start: Starting scheduler on APP CPU.[0m
+[0;32mI (376) gpio: GPIO[5]| InputEn: 1| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (377) gpio: GPIO[19]| InputEn: 1| OutputEn: 0| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (385) gpio: GPIO[27]| InputEn: 1| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (394) gpio: GPIO[18]| InputEn: 1| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (403) gpio: GPIO[23]| InputEn: 1| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (4ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 188777542, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6664
+load:0x40078000,len:14848
+load:0x40080400,len:3792
+0x40080400: _init at ??:?
+entry 0x40080694
+[0;32mI (28) boot: ESP-IDF v4.4.2-dirty 2nd stage bootloader[0m
+[0;32mI (28) boot: compile time 02:08:39[0m
+[0;32mI (28) boot: chip revision: 1[0m
+[0;32mI (31) boot_comm: chip revision: 1, min. bootloader chip revision: 0[0m
+[0;32mI (38) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (43) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (47) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (52) boot: Enabling RNG early entropy source...[0m
+[0;32mI (57) boot: Partition Table:[0m
+[0;32mI (61) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (68) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (76) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (83) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (91) boot: End of partition table[0m
+[0;32mI (95) boot_comm: chip revision: 1, min. application chip revision: 0[0m
+[0;32mI (102) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=0cc3ch ( 52284) map[0m
+[0;32mI (129) esp_image: segment 1: paddr=0001cc64 vaddr=3ffb0000 size=023d4h (  9172) load[0m
+[0;32mI (133) esp_image: segment 2: paddr=0001f040 vaddr=40080000 size=00fd8h (  4056) load[0m
+[0;32mI (137) esp_image: segment 3: paddr=00020020 vaddr=400d0020 size=1e5c8h (124360) map[0m
+[0;32mI (189) esp_image: segment 4: paddr=0003e5f0 vaddr=40080fd8 size=0bc78h ( 48248) load[0m
+[0;32mI (209) esp_image: segment 5: paddr=0004a270 vaddr=50000000 size=00010h (    16) load[0m
+[0;32mI (215) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (215) boot: Disabling RNG early entropy source...[0m
+[0;32mI (229) cpu_start: Pro cpu up.[0m
+[0;32mI (229) cpu_start: Starting app cpu, entry point is 0x40081208[0m
+[0;32mI (0) cpu_start: App cpu up.[0m
+[0;32mI (243) cpu_start: Pro cpu start user code[0m
+[0;32mI (243) cpu_start: cpu freq: 160000000[0m
+[0;32mI (243) cpu_start: Application information:[0m
+[0;32mI (248) cpu_start: Project name:     mars-javelin-probe[0m
+[0;32mI (254) cpu_start: App version:      9aad07c-dirty[0m
+[0;32mI (259) cpu_start: Compile time:     Nov 12 2022 05:32:54[0m
+[0;32mI (265) cpu_start: ELF file SHA256:  57b9bdd65f7aeb2a...[0m
+[0;32mI (271) cpu_start: ESP-IDF:          v4.4.2-dirty[0m
+[0;32mI (277) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (284) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (290) heap_init: At 3FFB2EC8 len 0002D138 (180 KiB): DRAM[0m
+[0;32mI (296) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (302) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (309) heap_init: At 4008CC50 len 000133B0 (76 KiB): IRAM[0m
+[0;32mI (316) spi_flash: detected chip: gd[0m
+[0;32mI (319) spi_flash: flash io: dio[0m
+[0;32mI (325) cpu_start: Starting scheduler on PRO CPU.[0m
+[0;32mI (0) cpu_start: Starting scheduler on APP CPU.[0m
+[0;32mI (376) gpio: GPIO[5]| InputEn: 1| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (377) gpio: GPIO[19]| InputEn: 1| OutputEn: 0| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (385) gpio: GPIO[27]| InputEn: 1| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (394) gpio: GPIO[18]| InputEn: 1| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (403) gpio: GPIO[23]| InputEn: 1| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (4
