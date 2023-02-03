@@ -47,12 +47,12 @@ void CommandComponent::cutdown(){
   sd_data->message = new std::string(sd_msg.str());
 
   gpio_set_level(CUT_DWN_GPIO, 1);
-  vTaskDelay(CUT_DWN_DUR/portTICK_PERIOD_MS);
+  vTaskDelay(5000/portTICK_PERIOD_MS);
   gpio_set_level(CUT_DWN_GPIO, 0);
 
 
   if(xQueueSend(_dataOutSD, &(sd_data), 10/portTICK_PERIOD_MS) != pdTRUE){
-    printf("Failed to post thermistor data\n");
+    printf("Failed to post data\n");
   }
 
   std::string *iriddata = new std::string("Cutting down");

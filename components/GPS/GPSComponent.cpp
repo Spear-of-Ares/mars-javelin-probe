@@ -11,10 +11,11 @@
 #define ADDRESS_1 0x42
 #define ADDRESS_2 0x43
 
-GPSComponent::GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium){
+GPSComponent::GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium, TaskHandle_t xCmdCenter){
     _dataOutSD = dataOutSD;
     _dataOutLoRa = dataOutLoRa;
     _dataOutIridium = dataOutIridium;
+    _cmd_center = xCmdCenter;
 }
 
 void GPSComponent::vMainLoop_Task(void *arg){
@@ -79,6 +80,11 @@ std::string GPSComponent::getGPS_MSG(int gps)
 
         long altitude = myGNSS->getAltitude();
         data << " Alt: " << altitude/1000.0 << " (m) |";
+
+        if(altitude > 11000){
+            // Cutdown center command: 0x01
+            //xTaskNotify(_cmd_center, 0x01, eSetBits);
+        }
 
         int SIV = myGNSS->getSIV();
         data << " SIV: " << SIV << " |";
@@ -169,8 +175,8 @@ void GPSComponent::sendData(std::string msg){
     }
     
 
-    // Update LoRa every 2500
-    if (curr_tick - _lastUpdateLoRa > 2500 / portTICK_PERIOD_MS)
+    // Update LoRa every 30 seconds
+    if (curr_tick - _lastUpdateLoRa > 30000 / portTICK_PERIOD_MS)
     {
         std::string *loradata = new std::string(data.str());
         _lastUpdateLoRa = curr_tick;

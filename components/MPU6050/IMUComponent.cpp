@@ -34,6 +34,10 @@ IMUComponent::IMUComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, Q
 
 void IMUComponent::logIMU(){
   Vector accel_norm = _device.readScaledAccel();
+  // accel_norm.XAxis = accel_norm.XAxis/3;
+  // accel_norm.YAxis = accel_norm.YAxis/3;
+  // accel_norm.ZAxis = accel_norm.ZAxis/3;
+
   Vector gyro_norm = _device.readNormalizeGyro();
   float temp = _device.readTemperature();
 
@@ -84,8 +88,8 @@ void IMUComponent::logIMU(){
   #endif
 
   #ifdef IMU_LOG_LoRa
-  // Update LoRa every 5 seconds
-  if (curr_tick - _lastUpdateLoRa > 5000 / portTICK_PERIOD_MS)
+  // Update LoRa every 1 seconds
+  if (curr_tick - _lastUpdateLoRa > 1000 / portTICK_PERIOD_MS)
   {
     std::string *loradata = new std::string(data.str());
     _lastUpdateLoRa = curr_tick;

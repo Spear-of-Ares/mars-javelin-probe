@@ -75,20 +75,34 @@ extern "C" void app_main(void){
   Serial.begin(115200);
 
   std::string cut_down = "0x0101";
-  int count = 0;
+  // Check if something was sent on serial
+  std::string msg = "";
+  int time = 0;
   for(;;){
     vRX();
-    // Check if something was sent on serial
-    std::string msg = "";
     while(Serial.available()){
-      msg += char(Serial.read());
+      char new_char = char(Serial.read());
+      if (new_char == 'c')
+      {
+        msg = "";
+      }
+      else{
+        msg += new_char;
+      }
     }
 
     // if something was sent, then send the TX packet
-    if (msg != ""){
+    if (msg == "fire"){
       vTX();
+      msg = "";
     }
-
+    if (time % 300 == 0 && msg != ""){
+      printf("%s\n", msg.c_str());
+      time = 0;
+    }
+    else{
+      time += 1;
+    }
     vTaskDelay(10/portTICK_PERIOD_MS);
   }
 }
@@ -171,7 +185,7 @@ extern "C" void app_main(void)
      *  Creating the GPS process
      *
      ***************************************/
-    GPSComponent gps_component = GPSComponent(dataOutSD, dataOutLoRa, dataOutIridium);
+    GPSComponent gps_component = GPSComponent(dataOutSD, dataOutLoRa, dataOutIridium, xCmdCenter);
 
     TaskHandle_t xGPSComponentHandle = NULL;
     xReturned = xTaskCreatePinnedToCore(
@@ -241,7 +255,7 @@ extern "C" void app_main(void)
      *  Creating the BME280 process
      *
      ***************************************/
-    BME280Component bme_component = BME280Component(dataOutSD, dataOutLoRa, dataOutIridium);
+    BME280Component bme_component = BME280Component(dataOutSD, dataOutLoRa, dataOutIridium, xCmdCenter);
 
     TaskHandle_t xBMEComponentHandle = NULL;
     xReturned = xTaskCreatePinnedToCore(
