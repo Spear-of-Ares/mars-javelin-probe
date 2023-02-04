@@ -81,7 +81,7 @@ std::string GPSComponent::getGPS_MSG(int gps)
         long altitude = myGNSS->getAltitude();
         data << " Alt: " << altitude/1000.0 << " (m) |";
 
-        if(altitude > 11000){
+        if(altitude > 15000){
             // Cutdown center command: 0x01
             //xTaskNotify(_cmd_center, 0x01, eSetBits);
         }

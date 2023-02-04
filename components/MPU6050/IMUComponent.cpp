@@ -33,12 +33,24 @@ IMUComponent::IMUComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, Q
 }
 
 void IMUComponent::logIMU(){
-  Vector accel_norm = _device.readScaledAccel();
+  Activites a = _device.readActivites();
+  if(!a.isDataReady) return;
+  Vector accel_scaled = _device.readScaledAccel();
+
+  // Hardcoded numbers come from the range and scale of accelerometer and gyroscope
+  if(accel_scaled.XAxis > 8){accel_scaled.XAxis = accel_scaled.XAxis - 16;}
+  if(accel_scaled.YAxis > 8){accel_scaled.YAxis = accel_scaled.YAxis - 16;}
+  if(accel_scaled.ZAxis > 8){accel_scaled.ZAxis = accel_scaled.ZAxis - 16;}
+
   // accel_norm.XAxis = accel_norm.XAxis/3;
   // accel_norm.YAxis = accel_norm.YAxis/3;
   // accel_norm.ZAxis = accel_norm.ZAxis/3;
 
   Vector gyro_norm = _device.readNormalizeGyro();
+
+  if(gyro_norm.XAxis > 500){gyro_norm.XAxis = gyro_norm.XAxis - 1000;}
+  if(gyro_norm.YAxis > 500){gyro_norm.YAxis = gyro_norm.YAxis - 1000;}
+  if(gyro_norm.ZAxis > 500){gyro_norm.ZAxis = gyro_norm.ZAxis - 1000;}
   float temp = _device.readTemperature();
 
   // Time 
@@ -60,8 +72,8 @@ void IMUComponent::logIMU(){
   std::ostringstream data;
   data << xTaskGetTickCount() << " || " << IMU_TASK_ID << " || ";
   int header_len = data.str().length();
-  data << "Ax: " << accel_norm.XAxis << " g | Ay: " << accel_norm.YAxis << " g | Az: " << accel_norm.ZAxis << " g | Temp: " << temp << " C\n";
-  data << std::string(header_len-3, ' ') << "|| Gx: " << gyro_norm.XAxis << " d/s | Gy: " << gyro_norm.YAxis << " d/s | Gz: " << gyro_norm.ZAxis << " d/s\n";
+  data << "Ax: " << accel_scaled.XAxis << " Ay: " << accel_scaled.YAxis << " Az: " << accel_scaled.ZAxis << " g | Temp: " << temp << " C\n";
+  data << std::string(header_len-3, ' ') << "|| Gx: " << gyro_norm.XAxis << " Gy: " << gyro_norm.YAxis << " Gz: " << gyro_norm.ZAxis << " deg/s\n";
   data << std::string(header_len-3, ' ') << "|| Pitch: " << _pitch << " | Roll: " << _roll << " | Yaw: " << _yaw << "\n";
 
   SDData *sddata = new SDData();
@@ -103,7 +115,7 @@ void IMUComponent::logIMU(){
 
 void IMUComponent::setup(){
   _device = MPU6050();
-  while(!_device.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_16G, 104, &Wire))
+  while(!_device.begin(MPU6050_SCALE_500DPS, MPU6050_RANGE_8G, 104, &Wire))
   {
       printf("Could not find a valid MPU6050 Sensor, check wiring!\n");
       vTaskDelay(500/portTICK_PERIOD_MS);
@@ -114,10 +126,33 @@ void IMUComponent::setup(){
   _device.setIntZeroMotionEnabled(false);
   _device.setIntMotionEnabled(false);
 
-  _device.calibrateGyro();
-  _device.setThreshold(3);
-  _device.setRange(MPU6050_RANGE_2G);
-  _device.setScale(MPU6050_SCALE_2000DPS);
-  vTaskDelay(500/portTICK_PERIOD_MS);
+  // Calculated by seeing value off norm and the following conversion
+  // y = (x*1000) / 2.5
+  
+  int16_t accel_x_off = (int)-2380;
+  int16_t accel_y_off = (int)800;
+  int16_t accel_z_off = (int)-880;
+
+  _device.setAccelOffsetX(accel_x_off);
+  _device.setAccelOffsetY(accel_y_off);
+  _device.setAccelOffsetZ(accel_z_off);
+
+  // Calculated by seeing vaule off norm and the following conversion
+  // y = (x*36) / 0.8
+  // Fine tuning was done after
+
+  int16_t gyro_x_off = (int)-1080;
+  int16_t gyro_y_off = (int)999;
+  int16_t gyro_z_off = (int)1272;
+
+  _device.setGyroOffsetX(gyro_x_off);
+  _device.setGyroOffsetY(gyro_y_off);
+  _device.setGyroOffsetZ(gyro_z_off);
+
+  _device.setDLPFMode(MPU6050_DLPF_4);
+
+  //_device.calibrateGyro(6);
+  _device.setThreshold(1);
+  vTaskDelay(1000/portTICK_PERIOD_MS);
   printf("IMU setup complete\n");
 }

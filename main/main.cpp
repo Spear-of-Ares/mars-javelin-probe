@@ -96,14 +96,14 @@ extern "C" void app_main(void){
       vTX();
       msg = "";
     }
-    if (time % 300 == 0 && msg != ""){
+    if (time % 3000 == 0 && msg != ""){
       printf("%s\n", msg.c_str());
       time = 0;
     }
     else{
       time += 1;
     }
-    vTaskDelay(10/portTICK_PERIOD_MS);
+    vTaskDelay(1/portTICK_PERIOD_MS);
   }
 }
 #else
