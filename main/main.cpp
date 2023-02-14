@@ -148,8 +148,7 @@ extern "C" void app_main(void)
    *  Creating the DataLogger process
    *
    ***************************************/
-  // Init before other tasks that need dataOutSD Queue
-  DataLogger data_log = DataLogger(dataOutSD);
+  DataLogger data_log = DataLogger();
   data_log.setup();
 
   TaskHandle_t xDataLogHandle = NULL;
@@ -246,7 +245,7 @@ extern "C" void app_main(void)
       "Sensors",                    // Name of task
       1024 * 6,                     // Stack size of task
       (void *)(&sensors_component), // task parameters
-      8,                            // Task priority
+      11,                           // Task priority
       &xSensorsComponentHandle      // Handle to resulting task
   );
   if (xReturned != pdPASS)

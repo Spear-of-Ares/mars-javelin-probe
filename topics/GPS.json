@@ -12,7 +12,7 @@
     ],
     "msgs": [
         {
-            "name": "gps_configuration",
+            "name": "configuration",
             "fields": [
                 {
                     "name": "sample_freq_hz",
@@ -21,7 +21,7 @@
             ]
         },
         {
-            "name": "gps_data",
+            "name": "data",
             "fields": [
                 {
                     "name": "lat_long",

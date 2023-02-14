@@ -12,11 +12,11 @@
         {
             "name": "msg_type",
             "enumerators": [
-                "msg_sensor_data",
-                "msg_gps_data",
-                "msg_response",
-                "msg_command",
-                "msg_other"
+                "LoRa_msg_sensor_data",
+                "LoRa_msg_gps_data",
+                "LoRa_msg_response",
+                "LoRa_msg_command",
+                "LoRa_msg_other"
             ]
         }
     ],

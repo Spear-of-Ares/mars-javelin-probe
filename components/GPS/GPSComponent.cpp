@@ -1,72 +1,78 @@
 /*********************************************************************************
-*     File Name           :     /components/GPS/GPSComponent.cpp
-*     Created By          :     jon
-*     Creation Date       :     [2022-10-21 00:39]
-*     Last Modified       :     [2022-11-06 03:46]
-*     Description         :     Component for handling both GPS modules and their data 
-**********************************************************************************/
+ *     File Name           :     /components/GPS/GPSComponent.cpp
+ *     Created By          :     jon
+ *     Creation Date       :     [2022-10-21 00:39]
+ *     Last Modified       :     [2022-11-06 03:46]
+ *     Description         :     Component for handling both GPS modules and their data
+ **********************************************************************************/
 
 #include "GPSComponent.h"
 
 #define ADDRESS_1 0x42
 #define ADDRESS_2 0x43
 
-GPSComponent::GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium, TaskHandle_t xCmdCenter){
+GPSComponent::GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium, TaskHandle_t xCmdCenter)
+{
     _dataOutSD = dataOutSD;
     _dataOutLoRa = dataOutLoRa;
     _dataOutIridium = dataOutIridium;
     _cmd_center = xCmdCenter;
 }
 
-void GPSComponent::vMainLoop_Task(void *arg){
-    GPSComponent gps_component = *((GPSComponent*)(arg));
+void GPSComponent::vMainLoop_Task(void *arg)
+{
+    GPSComponent gps_component = *((GPSComponent *)(arg));
     gps_component.setup();
-    
-    for(;;){
+
+    for (;;)
+    {
         gps_component.get_data();
-        vTaskDelay(1000/portTICK_PERIOD_MS);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
-void GPSComponent::setup(){
+void GPSComponent::setup()
+{
     // set to min value so we get immidiate update
     _lastUpdateIridium = 0x0000;
     _lastUpdateLoRa = 0x0000;
-  while(_GNSS_1.begin(Wire) == false){
-    printf("Could not start _GNSS_1\n");
-    vTaskDelay(500/portTICK_PERIOD_MS);
-  }
-  printf("GNSS 1 setup successfully\n");
-  _GNSS_1.setNavigationFrequency(1); // Produce two solutions per second
-  _GNSS_1.setAutoPVT(true);
+    while (_GNSS_1.begin(Wire) == false)
+    {
+        printf("Could not start _GNSS_1\n");
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+    }
+    printf("GNSS 1 setup successfully\n");
+    _GNSS_1.setNavigationFrequency(1); // Produce two solutions per second
+    _GNSS_1.setAutoPVT(true);
 #ifdef DUAL_GPS
-  while(_GNSS_2.begin(Wire1) == false){
-    printf("Could not start _GNSS_2\n");
-    vTaskDelay(500/portTICK_PERIOD_MS);
-  }
-  printf("GNSS 2 setup successfully\n");
-  _GNSS_2.setNavigationFrequency(1); // Produce two solutions per second
-  _GNSS_2.setAutoPVT(true);
+    while (_GNSS_2.begin(Wire1) == false)
+    {
+        printf("Could not start _GNSS_2\n");
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+    }
+    printf("GNSS 2 setup successfully\n");
+    _GNSS_2.setNavigationFrequency(1); // Produce two solutions per second
+    _GNSS_2.setAutoPVT(true);
 #endif
-  printf("Finished GPS startup\n");
+    printf("Finished GPS startup\n");
 }
 
 std::string GPSComponent::getGPS_MSG(int gps)
 {
     std::ostringstream data;
 
-
     printf("Getting GPS data: %d\n", gps);
     SFE_UBLOX_GNSS *myGNSS;
-    switch(gps){
-        case 1:
-            myGNSS = &_GNSS_1;
-            break;
-        case 2:
-            myGNSS = &_GNSS_2;
-            break;
-        default:
-            myGNSS = &_GNSS_1;
+    switch (gps)
+    {
+    case 1:
+        myGNSS = &_GNSS_1;
+        break;
+    case 2:
+        myGNSS = &_GNSS_2;
+        break;
+    default:
+        myGNSS = &_GNSS_1;
     }
     // Calling getPVT returns true if there actually is a fresh navigation solution available.
     // Start the reading only when valid LLH is available
@@ -81,9 +87,10 @@ std::string GPSComponent::getGPS_MSG(int gps)
         long altitude = myGNSS->getAltitude();
         data << " Alt: " << altitude << " (mm) |";
 
-        if(altitude > 11000){
+        if (altitude > 11000)
+        {
             // Cutdown center command: 0x01
-            //xTaskNotify(_cmd_center, 0x01, eSetBits);
+            // xTaskNotify(_cmd_center, 0x01, eSetBits);
         }
 
         int SIV = myGNSS->getSIV();
@@ -112,15 +119,16 @@ std::string GPSComponent::getGPS_MSG(int gps)
             data << "not ";
         }
         data << "valid";
-
     }
-    else{
+    else
+    {
         data << "No Data";
     }
     return data.str();
 }
 
-void GPSComponent::sendData(std::string msg){
+void GPSComponent::sendData(std::string msg)
+{
     std::ostringstream data;
     data << xTaskGetTickCount() << " || " << GPS_COMP_ID << " || ";
     data << msg;
@@ -129,38 +137,37 @@ void GPSComponent::sendData(std::string msg){
     sddata->file_name = new std::string("measure");
     sddata->message = new std::string(data.str());
 
+    // if (xQueueSend(_dataOutSD, &(sddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+    // {
+    //     printf("Failed to post GPS data to SD\n");
+    // }
 
+    // TickType_t curr_tick = xTaskGetTickCount();
+    // // Update iridium once every 10 seconds
+    // if (curr_tick - _lastUpdateIridium > 10000/portTICK_PERIOD_MS){
+    //     std::string *iriddata = new std::string(data.str());
+    //     _lastUpdateIridium = curr_tick;
+    //     if (xQueueSend(_dataOutIridium, &(iriddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+    //     {
+    //         printf("Failed to post GPS data to Iridium\n");
+    //     }
+    // }
 
-    if (xQueueSend(_dataOutSD, &(sddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
-    {
-        printf("Failed to post GPS data to SD\n");
-    }
-
-    TickType_t curr_tick = xTaskGetTickCount();
-    // Update iridium once every 10 seconds
-    if (curr_tick - _lastUpdateIridium > 10000/portTICK_PERIOD_MS){
-        std::string *iriddata = new std::string(data.str());
-        _lastUpdateIridium = curr_tick;
-        if (xQueueSend(_dataOutIridium, &(iriddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
-        {
-            printf("Failed to post GPS data to Iridium\n");
-        }
-    }
-    
-
-    // Update LoRa every 30 seconds
-    if (curr_tick - _lastUpdateLoRa > 30000 / portTICK_PERIOD_MS)
-    {
-        std::string *loradata = new std::string(data.str());
-        _lastUpdateLoRa = curr_tick;
-        if (xQueueSend(_dataOutLoRa, &(loradata), 10 / portTICK_PERIOD_MS) != pdTRUE)
-        {
-            printf("Failed to post GPS data to LoRa\n");
-        }
-    }
+    // // Update LoRa every 30 seconds
+    // if (curr_tick - _lastUpdateLoRa > 30000 / portTICK_PERIOD_MS)
+    // {
+    //     std::string *loradata = new std::string(data.str());
+    //     _lastUpdateLoRa = curr_tick;
+    //     if (xQueueSend(_dataOutLoRa, &(loradata), 10 / portTICK_PERIOD_MS) != pdTRUE)
+    //     {
+    //         printf("Failed to post GPS data to LoRa\n");
+    //     }
+    // }
+    delete sddata;
 }
 
-void GPSComponent::get_data(){
+void GPSComponent::get_data()
+{
     std::string msg1 = getGPS_MSG(1);
     sendData(msg1);
 #ifdef DUAL_GPS

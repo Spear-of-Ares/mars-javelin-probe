@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-01-20
+// Generated with umsg_gen on 2023-02-13
 #pragma once
 #include <umsg_types.h>
 
@@ -14,10 +14,10 @@ typedef enum
 
 typedef enum
 {
-    MSG_GPS_DATA,
-    MSG_RESPONSE,
-    MSG_COMMAND,
-    MSG_OTHER
+    IRIDIUM_MSG_GPS_DATA,
+    IRIDIUM_MSG_RESPONSE,
+    IRIDIUM_MSG_COMMAND,
+    IRIDIUM_MSG_OTHER
 } umsg_Iridium_msg_type_t;
 
 typedef struct

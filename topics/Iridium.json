@@ -12,10 +12,10 @@
         {
             "name": "msg_type",
             "enumerators": [
-                "msg_gps_data",
-                "msg_response",
-                "msg_command",
-                "msg_other"
+                "iridium_msg_gps_data",
+                "iridium_msg_response",
+                "iridium_msg_command",
+                "iridium_msg_other"
             ]
         }
     ],

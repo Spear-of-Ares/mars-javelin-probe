@@ -2,38 +2,147 @@
 
 void DataLogger::initSubs()
 {
-  _subscriptions.push_back(umsg_CommandCenter_command_subscribe(1, 1));
+  _commandCenter_command_sub = umsg_CommandCenter_command_subscribe(1, 1);
 
-  _subscriptions.push_back(umsg_Iridium_received_msg_subscribe(1, 1));
-  _subscriptions.push_back(umsg_Iridium_sent_msg_subscribe(1, 1));
-  _subscriptions.push_back(umsg_Iridium_state_subscribe(1, 1));
+  _gps_data_sub = umsg_GPS_data_subscribe(1, 1);
+  _gps_configuration_sub = umsg_GPS_configuration_subscribe(1, 1);
+  _gps_state_sub = umsg_GPS_state_subscribe(1, 1);
 
-  _subscriptions.push_back(umsg_GPS_gps_data_subscribe(1, 1));
-  _subscriptions.push_back(umsg_GPS_gps_configuration_subscribe(1, 1));
+  _iridium_received_msg_sub = umsg_Iridium_received_msg_subscribe(1, 1);
+  _iridium_sent_msg_sub = umsg_Iridium_sent_msg_subscribe(1, 1);
+  _iridium_state_sub = umsg_Iridium_state_subscribe(1, 1);
 
-  _subscriptions.push_back(umsg_LoRa_received_msg_subscribe(1, 1));
-  _subscriptions.push_back(umsg_LoRa_sent_msg_subscribe(1, 1));
-  _subscriptions.push_back(umsg_LoRa_state_msg_subscribe(1, 1));
+  _LoRa_received_msg_sub = umsg_LoRa_received_msg_subscribe(1, 1);
+  _LoRa_sent_msg_sub = umsg_LoRa_sent_msg_subscribe(1, 1);
+  _LoRa_state_msg_sub = umsg_LoRa_state_msg_subscribe(1, 1);
 
-  _subscriptions.push_back(umsg_Sensors_imu_configuration_subscribe(1, 1));
-  _subscriptions.push_back(umsg_Sensors_imu_data_subscribe(1, 5));
-  _subscriptions.push_back(umsg_Sensors_imu_state_subscribe(1, 1));
+  _imu_configuration_sub = umsg_Sensors_imu_configuration_subscribe(1, 5);
+  _imu_data_sub = umsg_Sensors_imu_data_subscribe(1, 15);
+  _imu_state_sub = umsg_Sensors_imu_state_subscribe(1, 5);
 
-  _subscriptions.push_back(umsg_Sensors_baro_configuration_subscribe(1, 1));
-  _subscriptions.push_back(umsg_Sensors_baro_data_subscribe(1, 5));
-  _subscriptions.push_back(umsg_Sensors_baro_state_subscribe(1, 1));
+  _baro_configuration_sub = umsg_Sensors_baro_configuration_subscribe(1, 3);
+  _baro_data_sub = umsg_Sensors_baro_data_subscribe(1, 15);
+  _baro_state_sub = umsg_Sensors_baro_state_subscribe(1, 3);
 
-  _subscriptions.push_back(umsg_Sensors_thermistor_configuration_subscribe_ch(1, 4, 0));
-  _subscriptions.push_back(umsg_Sensors_thermistor_configuration_subscribe_ch(1, 1, 1));
-  _subscriptions.push_back(umsg_Sensors_thermistor_data_subscribe_ch(1, 5, 0));
-  _subscriptions.push_back(umsg_Sensors_thermistor_data_subscribe_ch(1, 5, 1));
-  _subscriptions.push_back(umsg_Sensors_thermistor_state_subscribe_ch(1, 1, 0));
-  _subscriptions.push_back(umsg_Sensors_thermistor_state_subscribe_ch(1, 1, 1));
+  _therm_0_config_sub = umsg_Sensors_thermistor_configuration_subscribe_ch(1, 3, 0);
+  _therm_1_config_sub = umsg_Sensors_thermistor_configuration_subscribe_ch(1, 3, 1);
+  _therm_0_data_sub = umsg_Sensors_thermistor_data_subscribe_ch(1, 15, 0);
+  _therm_1_data_sub = umsg_Sensors_thermistor_data_subscribe_ch(1, 15, 1);
+  _therm_0_state_sub = umsg_Sensors_thermistor_state_subscribe_ch(1, 3, 0);
+  _therm_1_state_sub = umsg_Sensors_thermistor_state_subscribe_ch(1, 3, 1);
 
-  _subscriptions.push_back(umsg_Stats_system_run_time_stats_subscribe(1, 1));
-  _subscriptions.push_back(umsg_Stats_task_run_time_stats_subscribe(1, 1));
+  _stats_system_run_time_sub = umsg_Stats_system_run_time_stats_subscribe(1, 1);
+  _stats_task_run_time_sub = umsg_Stats_task_run_time_stats_subscribe(1, 1);
 
-  _subscriptions.push_back(umsg_StatusMsgs_msg_subscribe(1, 1));
+  // umsg_StatusMsgs_msg_subscribe(1, 1);
+}
+
+void DataLogger::readSubs()
+{
+  int timeout = 1 / portTICK_PERIOD_MS;
+
+  if (umsg_CommandCenter_command_receive(_commandCenter_command_sub, &_commandCenter_command_data, timeout) == pdPASS)
+  {
+  }
+
+  if (umsg_GPS_data_receive(_gps_data_sub, &_gps_data, timeout) == pdPASS)
+  {
+  }
+
+  umsg_GPS_configuration_receive(_gps_configuration_sub, &_gps_configuration_data, timeout);
+
+  umsg_GPS_state_receive(_gps_state_sub, &_gps_state_data, timeout);
+
+  umsg_Iridium_received_msg_receive(_iridium_received_msg_sub, &_iridium_received_data, timeout);
+
+  //=================
+  // IMU
+  //=================
+  while (umsg_Sensors_imu_data_receive(_imu_data_sub, &_imu_data, timeout) == pdPASS)
+  {
+    _datalines.push_back(imu_data_toDataLine(_imu_data));
+  }
+
+  if (umsg_Sensors_imu_configuration_peek(&_imu_configuration_data))
+  {
+    while (umsg_Sensors_imu_configuration_receive(_imu_configuration_sub, &_imu_configuration_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(imu_configuration_toDataLine(_imu_configuration_data));
+    }
+  }
+
+  if (umsg_Sensors_imu_state_peek(&_imu_state_data))
+  {
+    while (umsg_Sensors_imu_state_receive(_imu_state_sub, &_imu_state_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(imu_state_toDataLine(_imu_state_data));
+    }
+  }
+
+  //=================
+  // BARO
+  //=================
+  while (umsg_Sensors_baro_data_receive(_baro_data_sub, &_baro_data, timeout) == pdPASS)
+  {
+    _datalines.push_back(baro_data_toDataLine(_baro_data));
+  }
+
+  if (umsg_Sensors_baro_configuration_peek(&_baro_configuration_data))
+  {
+    while (umsg_Sensors_baro_configuration_receive(_baro_configuration_sub, &_baro_configuration_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(baro_configuration_toDataLine(_baro_configuration_data));
+    }
+  }
+
+  // Messages need to be removed from subscription queue
+  if (umsg_Sensors_baro_state_peek(&_baro_state_data))
+  {
+    while (umsg_Sensors_baro_state_receive(_baro_state_sub, &_baro_state_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(baro_state_toDataLine(_baro_state_data));
+    }
+  }
+
+  //=================
+  // THERM
+  //=================
+  std::string therm_0_name = "INT";
+  std::string therm_1_name = "EXT";
+  while (umsg_Sensors_thermistor_data_receive(_therm_0_data_sub, &_therm_0_data, timeout) == pdPASS)
+  {
+    _datalines.push_back(therm_data_toDataLine(_therm_0_data, therm_0_name));
+  }
+  while (umsg_Sensors_thermistor_data_receive(_therm_1_data_sub, &_therm_1_data, timeout) == pdPASS)
+  {
+    _datalines.push_back(therm_data_toDataLine(_therm_1_data, therm_1_name));
+  }
+
+  // Don't want to wait for timeout everytime, so peek then we can have possible timeout wait
+  if (umsg_Sensors_thermistor_configuration_peek(&_therm_0_config_data))
+  {
+    if (umsg_Sensors_thermistor_configuration_receive(_therm_0_config_sub, &_therm_0_config_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(therm_configuration_toDataLine(_therm_0_config_data, therm_0_name));
+    }
+    if (umsg_Sensors_thermistor_configuration_receive(_therm_1_config_sub, &_therm_1_config_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(therm_configuration_toDataLine(_therm_1_config_data, therm_1_name));
+    }
+  }
+
+  if (umsg_Sensors_thermistor_state_peek(&_therm_0_state_data))
+  {
+    if (umsg_Sensors_thermistor_state_receive(_therm_0_state_sub, &_therm_0_state_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(therm_state_toDataLine(_therm_0_state_data, therm_0_name));
+    }
+
+    if (umsg_Sensors_thermistor_state_receive(_therm_1_state_sub, &_therm_1_state_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(therm_state_toDataLine(_therm_1_state_data, therm_1_name));
+    }
+  }
 }
 
 /**
@@ -44,22 +153,12 @@ void DataLogger::initSubs()
 void DataLogger::vLogLoop_Task(void *data_logger)
 {
   DataLogger *data_log = (DataLogger *)data_logger;
-  data_log->_dataOutBuf = new std::string();
-  initSubs();
+  data_log->initSubs();
   for (;;)
   {
-    if (data_log->_data_out == NULL)
-    {
-      printf("This is null rn dude\n");
-      vTaskDelay(1);
-    }
-
-    while (uxQueueMessagesWaiting(data_log->_data_out) != 0)
-    {
-      data_log->handleQueueData();
-    }
+    data_log->handleQueueData();
     // Delay so watchdog does not freak out
-    vTaskDelay(50);
+    vTaskDelay(300 / portTICK_PERIOD_MS);
   }
 
   vTaskDelete(NULL);
@@ -72,74 +171,59 @@ void DataLogger::vLogLoop_Task(void *data_logger)
 void DataLogger::handleQueueData()
 {
 
-  SDData *sd_data;
-  if (xQueueReceive(_data_out, &(sd_data), 5 / portTICK_PERIOD_MS) != pdTRUE)
+  // std::string sd_data_msg = *(sd_data->message);
+
+  readSubs();
+
+  // Sort all entries by the time at which they were recorded
+  std::sort(_datalines.begin(), _datalines.end(), [](const DataLine &data1, const DataLine &data2)
+            { return data1.recorded_tick < data2.recorded_tick; });
+
+  if (_datalines.size() > 50)
   {
-    printf("Could not receive from queue\n");
-    return;
+    printf("Time of sd log: %d", xTaskGetTickCount());
+    log_to_sd();
   }
-  // printf("%d || Data Logger Start || %s || %d\n", xTaskGetTickCount(), sd_data->file_name->c_str(), xPortGetFreeHeapSize());
+}
 
-  std::string sd_data_msg = *(sd_data->message);
-  sd_data_msg += "\n";
-  int msg_len = sd_data_msg.length();
-
-  // Can change number of setors to write (*20, or *40 or something) to increase write efficiency
-  // Does take longer for buffer to fill though
-  int size_left = WRITE_BLK_SIZE - (_dataOutBuf->length());
-  if (size_left - msg_len < 0)
+void DataLogger::log_to_sd()
+{
+  std::string sd_data_msg = "";
+  for (DataLine data : _datalines)
   {
-    // Append to sector size
-    _dataOutBuf->append(sd_data_msg, 0, size_left);
+    sd_data_msg += data.toString() + "\n";
+  }
+  // clear all datalines
+  _datalines.clear();
 
-    // Fill sd_data_msg with remaining bytes
-    sd_data_msg = sd_data_msg.substr(size_left, msg_len - size_left);
-
-    // TODO:: Don't clear bufer if appendFile fails
-    // if not connected, attemp to remount
-    if (!_sd1_connected)
+  // TODO:: Don't clear bufer if appendFile fails
+  // if not connected, attemp to remount
+  if (!_sd1_connected)
+  {
+    mountSDFileSystem(_onboard_sd_conf, MOUNT1, 1);
+  }
+  else
+  {
+    esp_err_t ret = appendFile(_path1, sd_data_msg);
+    if (ret == ESP_FAIL)
     {
-      mountSDFileSystem(_onboard_sd_conf, MOUNT1, 1);
+      _sd1_connected = false;
     }
-    else
-    {
-      esp_err_t ret = appendFile(_path1, *_dataOutBuf);
-      if (ret == ESP_FAIL)
-      {
-        _sd1_connected = false;
-      }
-    }
-
-    // Delay to allow other tasks to run after long operation
-    vTaskDelay(10 / portTICK_PERIOD_MS);
+  }
 #ifdef SD2_ATTACHED
-    if (!_sd2_connected)
-    {
-      mountSDFileSystem(_external_sd_conf, MOUNT2, 2);
-    }
-    else
-    {
-      esp_err_t ret = appendFile(_path2, *_dataOutBuf);
-      if (ret == ESP_FAIL)
-      {
-        _sd2_connected = false;
-      }
-    }
-#endif
-    // WARNING:: These print statements cause Data logger to use many may clock cycles
-    //           Use at your own risk!! You have been warned!
-    // printf("     Written to SD\n");
-    // printf("++++++++++++++++++++++++++\n");
-    // printf("%s", _dataOutBuf->c_str());
-
-    // reset data out buf
-    _dataOutBuf->clear();
-  }
-  if (sd_data_msg.length() != 0)
+  if (!_sd2_connected)
   {
-    _dataOutBuf->append(sd_data_msg);
+    mountSDFileSystem(_external_sd_conf, MOUNT2, 2);
   }
-  delete sd_data;
+  else
+  {
+    esp_err_t ret = appendFile(_path2, sd_data_msg);
+    if (ret == ESP_FAIL)
+    {
+      _sd2_connected = false;
+    }
+  }
+#endif
 }
 
 /**

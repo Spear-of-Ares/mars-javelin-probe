@@ -1,32 +1,5 @@
 #include "Sensors.h"
 
-Vector Sensors::low_pass_filter(Vector accel, Vector accel_filtered)
-{
-    Vector filtered = {0, 0, 0};
-    filtered.XAxis = (1 - fusion_boundary) * accel.XAxis + (fusion_boundary * accel_filtered.XAxis);
-    filtered.YAxis = (1 - fusion_boundary) * accel.YAxis + (fusion_boundary * accel_filtered.YAxis);
-    filtered.ZAxis = (1 - fusion_boundary) * accel.ZAxis + (fusion_boundary * accel_filtered.ZAxis);
-    return filtered;
-}
-
-Vector Sensors::high_pass_filter(Vector gyro, Vector past_gyro, Vector gyro_filtered)
-{
-    Vector filtered = {0, 0, 0};
-    filtered.XAxis = (1 - fusion_boundary) * gyro_filtered.XAxis + (1 - fusion_boundary) * (gyro.XAxis - past_gyro.XAxis);
-    filtered.YAxis = (1 - fusion_boundary) * gyro_filtered.YAxis + (1 - fusion_boundary) * (gyro.YAxis - past_gyro.YAxis);
-    filtered.ZAxis = (1 - fusion_boundary) * gyro_filtered.ZAxis + (1 - fusion_boundary) * (gyro.ZAxis - past_gyro.ZAxis);
-    return filtered;
-}
-
-Vector Sensors::fuze_imu_data(Vector accel_filter, Vector gyro_filter, Vector past_fuze)
-{
-    Vector fuzed = {0, 0, 0};
-    fuzed.XAxis = (1 - fusion_boundary) * (past_fuze.XAxis + (gyro_filter.XAxis * (1 / sample_rate_hz))) + fusion_boundary * accel_filter.XAxis;
-    fuzed.YAxis = (1 - fusion_boundary) * (past_fuze.YAxis + (gyro_filter.YAxis * (1 / sample_rate_hz))) + fusion_boundary * accel_filter.YAxis;
-    fuzed.ZAxis = (1 - fusion_boundary) * (past_fuze.ZAxis + (gyro_filter.ZAxis * (1 / sample_rate_hz))) + fusion_boundary * accel_filter.ZAxis;
-    return fuzed;
-}
-
 void Sensors::vMainLoop_Task(void *arg)
 {
     Sensors sensors = *((Sensors *)arg);
@@ -34,7 +7,7 @@ void Sensors::vMainLoop_Task(void *arg)
     for (;;)
     {
         sensors.log_data();
-        sensors.variable_delay(sensors.sample_rate_hz);
+        sensors.variable_delay(1000 / sensors.sample_rate_hz);
     }
 }
 
@@ -67,6 +40,13 @@ void Sensors::setup()
 
 esp_err_t Sensors::setup_imu()
 {
+
+    umsg_Sensors_imu_state_t state_data;
+    state_data.initializing = 1;
+    state_data.state = SENSOR_DISCONNECTED;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_Sensors_imu_state_publish(&state_data);
+
     cmd_sub_handle = umsg_CommandCenter_command_subscribe(1, 2);
     _imu = MPU6050();
     while (!_imu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_16G, 104, &Wire))
@@ -75,27 +55,36 @@ esp_err_t Sensors::setup_imu()
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
 
-    // Disable interupts
+    state_data.state = SENSOR_OK;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_Sensors_imu_state_publish(&state_data);
+
     _imu.setIntFreeFallEnabled(false);
     _imu.setIntZeroMotionEnabled(false);
     _imu.setIntMotionEnabled(false);
 
-    _imu.calibrateGyro();
-    _imu.setThreshold(2);
+    _imu.setDLPFMode(MPU6050_DLPF_4);
+
     _imu.setRange(MPU6050_RANGE_8G);
     _imu.setScale(MPU6050_SCALE_1000DPS);
-    printf("IMU setup complete\n");
 
-    past_gyro = {0, 0, 0};
-    fuzed_imu_data = {0, 0, 0};
-    accel_filter = {0, 0, 0};
-    gyro_filter = {0, 0, 0};
+    umsg_Sensors_imu_configuration_t conf_data;
+    conf_data.sample_rate_hz = sample_rate_hz;
+    conf_data.accelerometer_range = G_8;
+    conf_data.gyroscope_scale = DPS_1000;
+    conf_data.measure_tick = xTaskGetTickCount();
+    umsg_Sensors_imu_configuration_publish(&conf_data);
 
-    fusion_boundary = 0.6;
-
+    _imu.setThreshold(1);
     _pitch = 0;
     _roll = 0;
     _yaw = 0;
+
+    state_data.initializing = 0;
+    state_data.logging_data = 1;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_Sensors_imu_state_publish(&state_data);
+
     return ESP_OK;
 }
 
@@ -123,81 +112,90 @@ esp_err_t Sensors::setup_therm()
  **/
 void Sensors::log_data()
 {
+
     log_imu();
+    // vTaskDelay(1 / portTICK_PERIOD_MS);
     log_bme();
+    // vTaskDelay(1 / portTICK_PERIOD_MS);
     log_therm();
 }
 
 void Sensors::log_imu()
 {
+    Activites a = _imu.readActivites();
+    if (!a.isDataReady)
+        return;
+
     Vector accel_norm = _imu.readScaledAccel();
     Vector gyro_norm = _imu.readNormalizeGyro();
     float temperature_c = _imu.readTemperature();
     uint32_t measure_tick = xTaskGetTickCount();
 
     // Diff between current measure time and prev
-    float time_step = 1.0 / sample_rate_hz;
-    _pitch = _pitch + gyro_norm.YAxis * time_step;
-    _roll = _roll + gyro_norm.XAxis * time_step;
-    _yaw = _yaw + gyro_norm.ZAxis * time_step;
+    _pitch = 0;
+    _roll = 0;
+    _yaw = 0;
 
-    accel_filter = low_pass_filter(accel_norm, accel_filter);
-    gyro_filter = high_pass_filter(gyro_norm, past_gyro, gyro_filter);
-    fuzed_imu_data = fuze_imu_data(accel_filter, gyro_filter, fuzed_imu_data);
-    past_gyro = gyro_norm;
-    // may need to integrate to get the roll pitch yaw
-    umsg_Sensors_imu_data_t *data = new umsg_Sensors_imu_data_t;
+    umsg_Sensors_imu_data_t data;
 
-    *data = {
-        .accelerometer = {accel_filter.XAxis, accel_filter.YAxis, accel_filter.ZAxis},
-        .accelerometer_processing = SCALED,
-        .gyroscope = {gyro_filter.XAxis, gyro_filter.YAxis, gyro_filter.ZAxis},
-        .gyroscope_processing = NORMALIZED,
-        .temperature_c = temperature_c,
-        .measure_tick = measure_tick,
-        .attitude = {fuzed_imu_data.XAxis, fuzed_imu_data.YAxis, fuzed_imu_data.ZAxis}};
+    data.accelerometer[0] = accel_norm.XAxis;
+    data.accelerometer[1] = accel_norm.YAxis;
+    data.accelerometer[2] = accel_norm.ZAxis;
 
-    umsg_Sensors_imu_data_publish(data);
+    data.gyroscope[0] = gyro_norm.XAxis;
+    data.gyroscope[1] = gyro_norm.YAxis;
+    data.gyroscope[2] = gyro_norm.ZAxis;
+
+    data.magnetometer[0] = 0;
+    data.magnetometer[1] = 0;
+    data.magnetometer[2] = 0;
+
+    data.attitude[0] = 0;
+    data.attitude[1] = 0;
+    data.attitude[2] = 0;
+
+    data.temperature_c = temperature_c;
+    data.measure_tick = measure_tick;
+
+    umsg_Sensors_imu_data_publish(&data);
 }
 
 void Sensors::log_bme()
 {
+    umsg_Sensors_baro_data_t data;
     float temp = _bme.readTemperature();
     float pressure = _bme.readPressure();
     float humidity = _bme.readHumidity();
     uint32_t measure_tick = xTaskGetTickCount();
+    data.measure_tick = xTaskGetTickCount();
     // Standard pressure of sea level: 1013.25
     // Could be pressure at launch site to estimate hight above ground
 
     float gained_alt_m = _bme.readAltitude(_start_press_hpa);
     float alt_above_sea_m = _bme.readAltitude(1013.25);
 
-    if (alt_above_sea_m > 12000)
-    {
-        // xTaskNotify(_cmd_center, 0x01, eSetBits);
-    }
+    data.pressure_pa = pressure;
+    data.relative_humidity = humidity;
+    data.temperature_c = temp;
+    data.gained_alt_m = gained_alt_m;
+    data.alt_above_sea_m = alt_above_sea_m;
+    data.measure_tick = measure_tick;
 
-    umsg_Sensors_baro_data_t *data = new umsg_Sensors_baro_data_t;
-    *data = {
-        .pressure_pa = pressure,
-        .relative_humidity = humidity,
-        .temperature_c = temp,
-        .gained_alt_m = gained_alt_m,
-        .alt_above_sea_m = alt_above_sea_m,
-        .measure_tick = measure_tick};
-
-    umsg_Sensors_baro_data_publish(data);
+    umsg_Sensors_baro_data_publish(&data);
 }
 
 void Sensors::log_therm()
 {
     Thermistors::readThermistors(_internal_thermistor_c, _external_thermistor_c);
-    umsg_Sensors_thermistor_data_t *internal_data = new umsg_Sensors_thermistor_data_t;
-    umsg_Sensors_thermistor_data_t *external_data = new umsg_Sensors_thermistor_data_t;
+    uint32_t measure_tick = xTaskGetTickCount();
+    umsg_Sensors_thermistor_data_t internal_data;
+    umsg_Sensors_thermistor_data_t external_data;
 
-    *internal_data = {_internal_thermistor_c};
-    *external_data = {_external_thermistor_c};
+    internal_data.temperature_c = _internal_thermistor_c;
+    internal_data.measure_tick = measure_tick;
+    umsg_Sensors_thermistor_data_publish_ch(&internal_data, 0);
 
-    umsg_Sensors_thermistor_data_publish_ch(internal_data, 0);
-    umsg_Sensors_thermistor_data_publish_ch(external_data, 1);
+    external_data.temperature_c = _external_thermistor_c;
+    external_data.measure_tick = measure_tick;
+    umsg_Sensors_thermistor_data_publish_ch(&external_data, 1);
 }

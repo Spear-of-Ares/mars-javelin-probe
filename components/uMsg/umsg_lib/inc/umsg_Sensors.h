@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-01-20
+// Generated with umsg_gen on 2023-02-13
 #pragma once
 #include <umsg_types.h>
 
@@ -40,29 +40,31 @@ typedef struct
     uint16_t sample_rate_hz;
     umsg_Sensors_imu_accelerometer_range_t accelerometer_range;
     umsg_Sensors_imu_gyroscope_scale_t gyroscope_scale;
+    uint32_t measure_tick;
 } umsg_Sensors_imu_configuration_t;
 
 typedef struct
 {
     float accelerometer[3];
-    umsg_Sensors_imu_processing_level_t accelerometer_processing;
     float gyroscope[3];
-    umsg_Sensors_imu_processing_level_t gyroscope_processing;
+    float magnetometer[3];
+    float attitude[3];
     float temperature_c;
     uint32_t measure_tick;
-    float attitude[3];
 } umsg_Sensors_imu_data_t;
 
 typedef struct
 {
     umsg_Sensors_sensor_state_t state;
     uint8_t initializing : 1, logging_data : 1, reconnecting : 1, not_present : 1;
+    uint32_t measure_tick;
 } umsg_Sensors_imu_state_t;
 
 typedef struct
 {
     float start_pressure_hpa;
     float start_alt_m;
+    uint32_t measure_tick;
 } umsg_Sensors_baro_configuration_t;
 
 typedef struct
@@ -79,6 +81,7 @@ typedef struct
 {
     umsg_Sensors_sensor_state_t state;
     uint8_t initializing : 1, logging_data : 1, reconnecting : 1, not_present : 1;
+    uint32_t measure_tick;
 } umsg_Sensors_baro_state_t;
 
 typedef struct
@@ -88,17 +91,20 @@ typedef struct
     float TO_value;
     float RO_value;
     float B_value;
+    uint32_t measure_tick;
 } umsg_Sensors_thermistor_configuration_t;
 
 typedef struct
 {
     float temperature_c;
+    uint32_t measure_tick;
 } umsg_Sensors_thermistor_data_t;
 
 typedef struct
 {
     umsg_Sensors_sensor_state_t state;
     uint8_t logging_data : 1, not_present : 1;
+    uint32_t measure_tick;
 } umsg_Sensors_thermistor_state_t;
 
 // api function headers

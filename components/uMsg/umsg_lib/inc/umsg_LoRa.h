@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-01-20
+// Generated with umsg_gen on 2023-02-13
 #pragma once
 #include <umsg_types.h>
 
@@ -14,11 +14,11 @@ typedef enum
 
 typedef enum
 {
-    MSG_SENSOR_DATA,
-    MSG_GPS_DATA,
-    MSG_RESPONSE,
-    MSG_COMMAND,
-    MSG_OTHER
+    LORA_MSG_SENSOR_DATA,
+    LORA_MSG_GPS_DATA,
+    LORA_MSG_RESPONSE,
+    LORA_MSG_COMMAND,
+    LORA_MSG_OTHER
 } umsg_LoRa_msg_type_t;
 
 typedef struct
