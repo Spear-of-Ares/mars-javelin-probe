@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-02-13
+// Generated with umsg_gen on 2023-02-14
 #pragma once
 #include <umsg_types.h>
 
@@ -15,6 +15,7 @@ typedef enum
 typedef struct
 {
     uint8_t sample_freq_hz;
+    uint32_t measure_tick;
 } umsg_GPS_configuration_t;
 
 typedef struct
@@ -24,12 +25,14 @@ typedef struct
     int32_t time_ymd_hms[7];
     bool valid_time;
     uint8_t locked_sats;
+    uint32_t measure_tick;
 } umsg_GPS_data_t;
 
 typedef struct
 {
     umsg_GPS_gps_state_t state;
     uint8_t initializing : 1, not_enough_sats : 1, receiving_data : 1, reconnecting : 1, not_present : 1;
+    uint32_t measure_tick;
 } umsg_GPS_state_t;
 
 // api function headers

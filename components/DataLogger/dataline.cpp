@@ -1,4 +1,5 @@
 #include "dataline.h"
+
 std::string DataLine::toString()
 {
     std::string str = name + " " + std::to_string(recorded_tick);

@@ -17,6 +17,10 @@
                 {
                     "name": "sample_freq_hz",
                     "type": "uint8"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
                 }
             ]
         },
@@ -44,6 +48,10 @@
                 {
                     "name": "locked_sats",
                     "type": "uint8"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
                 }
             ]
         },
@@ -78,6 +86,10 @@
                             "bits": 1
                         }
                     ]
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
                 }
             ]
         }

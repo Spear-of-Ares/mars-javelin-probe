@@ -70,6 +70,10 @@
                 {
                     "name": "state",
                     "type": "lora_state"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
                 }
             ]
         }

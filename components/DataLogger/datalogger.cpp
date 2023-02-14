@@ -4,30 +4,30 @@ void DataLogger::initSubs()
 {
   _commandCenter_command_sub = umsg_CommandCenter_command_subscribe(1, 1);
 
-  _gps_data_sub = umsg_GPS_data_subscribe(1, 1);
-  _gps_configuration_sub = umsg_GPS_configuration_subscribe(1, 1);
-  _gps_state_sub = umsg_GPS_state_subscribe(1, 1);
+  _gps_data_sub = umsg_GPS_data_subscribe(1, 2);
+  _gps_configuration_sub = umsg_GPS_configuration_subscribe(1, 2);
+  _gps_state_sub = umsg_GPS_state_subscribe(1, 4);
 
-  _iridium_received_msg_sub = umsg_Iridium_received_msg_subscribe(1, 1);
-  _iridium_sent_msg_sub = umsg_Iridium_sent_msg_subscribe(1, 1);
-  _iridium_state_sub = umsg_Iridium_state_subscribe(1, 1);
+  _iridium_received_msg_sub = umsg_Iridium_received_msg_subscribe(1, 2);
+  _iridium_sent_msg_sub = umsg_Iridium_sent_msg_subscribe(1, 2);
+  _iridium_state_sub = umsg_Iridium_state_subscribe(1, 2);
 
-  _LoRa_received_msg_sub = umsg_LoRa_received_msg_subscribe(1, 1);
-  _LoRa_sent_msg_sub = umsg_LoRa_sent_msg_subscribe(1, 1);
-  _LoRa_state_msg_sub = umsg_LoRa_state_msg_subscribe(1, 1);
+  _LoRa_received_msg_sub = umsg_LoRa_received_msg_subscribe(1, 4);
+  _LoRa_sent_msg_sub = umsg_LoRa_sent_msg_subscribe(1, 10);
+  _LoRa_state_msg_sub = umsg_LoRa_state_msg_subscribe(1, 4);
 
   _imu_configuration_sub = umsg_Sensors_imu_configuration_subscribe(1, 5);
-  _imu_data_sub = umsg_Sensors_imu_data_subscribe(1, 15);
+  _imu_data_sub = umsg_Sensors_imu_data_subscribe(1, 30);
   _imu_state_sub = umsg_Sensors_imu_state_subscribe(1, 5);
 
   _baro_configuration_sub = umsg_Sensors_baro_configuration_subscribe(1, 3);
-  _baro_data_sub = umsg_Sensors_baro_data_subscribe(1, 15);
+  _baro_data_sub = umsg_Sensors_baro_data_subscribe(1, 30);
   _baro_state_sub = umsg_Sensors_baro_state_subscribe(1, 3);
 
   _therm_0_config_sub = umsg_Sensors_thermistor_configuration_subscribe_ch(1, 3, 0);
   _therm_1_config_sub = umsg_Sensors_thermistor_configuration_subscribe_ch(1, 3, 1);
-  _therm_0_data_sub = umsg_Sensors_thermistor_data_subscribe_ch(1, 15, 0);
-  _therm_1_data_sub = umsg_Sensors_thermistor_data_subscribe_ch(1, 15, 1);
+  _therm_0_data_sub = umsg_Sensors_thermistor_data_subscribe_ch(1, 30, 0);
+  _therm_1_data_sub = umsg_Sensors_thermistor_data_subscribe_ch(1, 30, 1);
   _therm_0_state_sub = umsg_Sensors_thermistor_state_subscribe_ch(1, 3, 0);
   _therm_1_state_sub = umsg_Sensors_thermistor_state_subscribe_ch(1, 3, 1);
 
@@ -41,19 +41,72 @@ void DataLogger::readSubs()
 {
   int timeout = 1 / portTICK_PERIOD_MS;
 
+  //=================
+  // Commands
+  //=================
   if (umsg_CommandCenter_command_receive(_commandCenter_command_sub, &_commandCenter_command_data, timeout) == pdPASS)
   {
   }
 
-  if (umsg_GPS_data_receive(_gps_data_sub, &_gps_data, timeout) == pdPASS)
+  //=================
+  // GPS
+  //=================
+  if (umsg_GPS_data_peek(&_gps_data))
   {
+    while (umsg_GPS_data_receive(_gps_data_sub, &_gps_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(GPS_data_toDataLine(_gps_data));
+    }
   }
 
-  umsg_GPS_configuration_receive(_gps_configuration_sub, &_gps_configuration_data, timeout);
+  if (umsg_GPS_configuration_peek(&_gps_configuration_data))
+  {
+    while (umsg_GPS_configuration_receive(_gps_configuration_sub, &_gps_configuration_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(GPS_configuration_toDataLine(_gps_configuration_data));
+    }
+  }
 
-  umsg_GPS_state_receive(_gps_state_sub, &_gps_state_data, timeout);
+  if (umsg_GPS_state_peek(&_gps_state_data))
+  {
+    while (umsg_GPS_state_receive(_gps_state_sub, &_gps_state_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(GPS_state_toDataLine(_gps_state_data));
+    }
+  }
 
+  //=================
+  // Iridium
+  //=================
   umsg_Iridium_received_msg_receive(_iridium_received_msg_sub, &_iridium_received_data, timeout);
+
+  //=================
+  // LoRa
+  //=================
+
+  if (umsg_LoRa_received_msg_peek(&_LoRa_received_data))
+  {
+    while (umsg_LoRa_received_msg_receive(_LoRa_received_msg_sub, &_LoRa_received_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(LoRa_received_toDataLine(_LoRa_received_data));
+    }
+  }
+
+  if (umsg_LoRa_sent_msg_peek(&_LoRa_sent_data))
+  {
+    while (umsg_LoRa_sent_msg_receive(_LoRa_sent_msg_sub, &_LoRa_sent_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(LoRa_sent_toDataLine(_LoRa_sent_data));
+    }
+  }
+
+  if (umsg_LoRa_state_msg_peek(&_LoRa_state_data))
+  {
+    while (umsg_LoRa_state_msg_receive(_LoRa_state_msg_sub, &_LoRa_state_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(LoRa_state_toDataLine(_LoRa_state_data));
+    }
+  }
 
   //=================
   // IMU
@@ -158,7 +211,7 @@ void DataLogger::vLogLoop_Task(void *data_logger)
   {
     data_log->handleQueueData();
     // Delay so watchdog does not freak out
-    vTaskDelay(300 / portTICK_PERIOD_MS);
+    vTaskDelay(150 / portTICK_PERIOD_MS);
   }
 
   vTaskDelete(NULL);
@@ -181,7 +234,7 @@ void DataLogger::handleQueueData()
 
   if (_datalines.size() > 50)
   {
-    printf("Time of sd log: %d", xTaskGetTickCount());
+    printf("Time of sd log: %d\n", xTaskGetTickCount());
     log_to_sd();
   }
 }

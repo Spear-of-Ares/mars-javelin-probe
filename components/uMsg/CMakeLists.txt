@@ -9,6 +9,8 @@ idf_component_register(SRCS     "umsg_lib/core/src/umsg.c"
                                 "umsg_lib/src/Stats.c" 
                                 "umsg_lib/src/StatusMsgs.c" 
                                 "Sensors_toDataLine.cpp"
+                                "LoRa_toDataLine.cpp"
+                                "GPS_toDataLine.cpp"
                         INCLUDE_DIRS "umsg_lib/inc" "umsg_lib/core/inc" "include"
                         PRIV_REQUIRES freertos
                         PRIV_REQUIRES DataLogger

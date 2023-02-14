@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-02-13
+// Generated with umsg_gen on 2023-02-14
 #include <umsg.h>
 #include <umsg_LoRa.h>
 

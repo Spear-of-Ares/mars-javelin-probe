@@ -48,8 +48,8 @@ void vRX()
     {
       received += (char)LoRa.read();
     }
-    printf("Received: %s", received.c_str());
-    printf(" || RSSI: %d | SNR: %f\n", LoRa.packetRssi(), LoRa.packetSnr());
+    printf("RSSI: %4d SNR: %6.2f || ", LoRa.packetRssi(), LoRa.packetSnr());
+    printf("%s\n", received.c_str());
   }
 }
 
@@ -60,7 +60,7 @@ void vTX()
   LoRa.write(0x01);
   LoRa.write(0x01);
   LoRa.endPacket();
-  printf("Packet %d sent...\n", count++);
+  printf("Packet %4d sent...\n", count++);
 }
 extern "C" void app_main(void)
 {
@@ -82,6 +82,9 @@ extern "C" void app_main(void)
   // Check if something was sent on serial
   std::string msg = "";
   int time = 0;
+
+  vTaskDelay(500 / portTICK_PERIOD_MS);
+  printf("\n");
   for (;;)
   {
     vRX();
@@ -101,7 +104,11 @@ extern "C" void app_main(void)
     // if something was sent, then send the TX packet
     if (msg == "fire")
     {
-      vTX();
+      for (int i = 0; i < 20; i++)
+      {
+        vTX();
+        vTaskDelay(5 / portTICK_PERIOD_MS);
+      }
       msg = "";
     }
     if (time % 300 == 0 && msg != "")
@@ -192,7 +199,7 @@ extern "C" void app_main(void)
    *  Creating the GPS process
    *
    ***************************************/
-  GPSComponent gps_component = GPSComponent(dataOutSD, dataOutLoRa, dataOutIridium, xCmdCenter);
+  GPSComponent gps_component = GPSComponent();
 
   TaskHandle_t xGPSComponentHandle = NULL;
   xReturned = xTaskCreatePinnedToCore(
@@ -217,7 +224,7 @@ extern "C" void app_main(void)
    *  Creating the LoRa process
    *
    ***************************************/
-  LoRaComponent lora_component = LoRaComponent(dataOutSD, dataOutLoRa, xCmdCenter);
+  LoRaComponent lora_component = LoRaComponent();
 
   TaskHandle_t xLoraHandle = NULL;
   xReturned = xTaskCreate(

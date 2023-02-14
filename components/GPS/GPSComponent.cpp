@@ -11,14 +11,6 @@
 #define ADDRESS_1 0x42
 #define ADDRESS_2 0x43
 
-GPSComponent::GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium, TaskHandle_t xCmdCenter)
-{
-    _dataOutSD = dataOutSD;
-    _dataOutLoRa = dataOutLoRa;
-    _dataOutIridium = dataOutIridium;
-    _cmd_center = xCmdCenter;
-}
-
 void GPSComponent::vMainLoop_Task(void *arg)
 {
     GPSComponent gps_component = *((GPSComponent *)(arg));
@@ -33,9 +25,7 @@ void GPSComponent::vMainLoop_Task(void *arg)
 
 void GPSComponent::setup()
 {
-    // set to min value so we get immidiate update
-    _lastUpdateIridium = 0x0000;
-    _lastUpdateLoRa = 0x0000;
+
     while (_GNSS_1.begin(Wire) == false)
     {
         printf("Could not start _GNSS_1\n");
@@ -57,11 +47,10 @@ void GPSComponent::setup()
     printf("Finished GPS startup\n");
 }
 
-std::string GPSComponent::getGPS_MSG(int gps)
+void GPSComponent::getGPS_MSG(int gps)
 {
-    std::ostringstream data;
+    umsg_GPS_data_t data;
 
-    printf("Getting GPS data: %d\n", gps);
     SFE_UBLOX_GNSS *myGNSS;
     switch (gps)
     {
@@ -78,100 +67,41 @@ std::string GPSComponent::getGPS_MSG(int gps)
     // Start the reading only when valid LLH is available
     if (myGNSS->getPVT() && (myGNSS->getInvalidLlh() == false))
     {
-        long latitude = myGNSS->getLatitude();
-        data << "Lat: " << latitude;
+        data.measure_tick = xTaskGetTickCount();
+        data.lat_long[0] = myGNSS->getLatitude();
+        data.lat_long[1] = myGNSS->getLongitude();
 
-        long longitude = myGNSS->getLongitude();
-        data << " Long: " << longitude << " (degrees * 10^-7) |";
+        data.altitude = myGNSS->getAltitude();
 
-        long altitude = myGNSS->getAltitude();
-        data << " Alt: " << altitude << " (mm) |";
+        data.locked_sats = myGNSS->getSIV();
 
-        if (altitude > 11000)
-        {
-            // Cutdown center command: 0x01
-            // xTaskNotify(_cmd_center, 0x01, eSetBits);
-        }
+        // int PDOP = myGNSS->getPDOP();
+        // data << " PDOP: " << PDOP << " (10^-2)";
 
-        int SIV = myGNSS->getSIV();
-        data << " SIV: " << SIV << " |";
+        data.time_ymd_hms[0] = myGNSS->getYear();
+        data.time_ymd_hms[1] = myGNSS->getMonth();
+        data.time_ymd_hms[2] = myGNSS->getDay();
+        data.time_ymd_hms[3] = myGNSS->getHour();
+        data.time_ymd_hms[4] = myGNSS->getMinute();
+        data.time_ymd_hms[5] = myGNSS->getSecond();
+        data.time_ymd_hms[6] = myGNSS->getMillisecond();
+        data.valid_time = myGNSS->getTimeValid();
 
-        int PDOP = myGNSS->getPDOP();
-        data << " PDOP: " << PDOP << " (10^-2)";
+        // data << "valid  Date is ";
+        // if (myGNSS->getDateValid() == false)
+        // {
+        //     data << "not ";
+        // }
+        // data << "valid";
 
-        int year = myGNSS->getYear();
-        int month = myGNSS->getMonth();
-        int day = myGNSS->getDay();
-        int hour = myGNSS->getHour();
-        int minute = myGNSS->getMinute();
-        int second = myGNSS->getSecond();
-        int msec = myGNSS->getMillisecond();
-        data << " | Time: " << year << "-" << month << "-" << day << " " << hour << ":" << minute << ":" << second << ":" << msec;
-
-        data << " | Time is ";
-        if (myGNSS->getTimeValid() == false)
-        {
-            data << "not ";
-        }
-        data << "valid  Date is ";
-        if (myGNSS->getDateValid() == false)
-        {
-            data << "not ";
-        }
-        data << "valid";
+        umsg_GPS_data_publish(&data);
     }
-    else
-    {
-        data << "No Data";
-    }
-    return data.str();
-}
-
-void GPSComponent::sendData(std::string msg)
-{
-    std::ostringstream data;
-    data << xTaskGetTickCount() << " || " << GPS_COMP_ID << " || ";
-    data << msg;
-
-    SDData *sddata = new SDData();
-    sddata->file_name = new std::string("measure");
-    sddata->message = new std::string(data.str());
-
-    // if (xQueueSend(_dataOutSD, &(sddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
-    // {
-    //     printf("Failed to post GPS data to SD\n");
-    // }
-
-    // TickType_t curr_tick = xTaskGetTickCount();
-    // // Update iridium once every 10 seconds
-    // if (curr_tick - _lastUpdateIridium > 10000/portTICK_PERIOD_MS){
-    //     std::string *iriddata = new std::string(data.str());
-    //     _lastUpdateIridium = curr_tick;
-    //     if (xQueueSend(_dataOutIridium, &(iriddata), 10 / portTICK_PERIOD_MS) != pdTRUE)
-    //     {
-    //         printf("Failed to post GPS data to Iridium\n");
-    //     }
-    // }
-
-    // // Update LoRa every 30 seconds
-    // if (curr_tick - _lastUpdateLoRa > 30000 / portTICK_PERIOD_MS)
-    // {
-    //     std::string *loradata = new std::string(data.str());
-    //     _lastUpdateLoRa = curr_tick;
-    //     if (xQueueSend(_dataOutLoRa, &(loradata), 10 / portTICK_PERIOD_MS) != pdTRUE)
-    //     {
-    //         printf("Failed to post GPS data to LoRa\n");
-    //     }
-    // }
-    delete sddata;
 }
 
 void GPSComponent::get_data()
 {
-    std::string msg1 = getGPS_MSG(1);
-    sendData(msg1);
+    getGPS_MSG(1);
 #ifdef DUAL_GPS
-    std::string msg2 = getGPS_MSG(2);
-    sendData(msg2);
+    getGPS_MSG(2);
 #endif
 }

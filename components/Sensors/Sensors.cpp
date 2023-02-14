@@ -90,15 +90,37 @@ esp_err_t Sensors::setup_imu()
 
 esp_err_t Sensors::setup_bme()
 {
+    umsg_Sensors_baro_state_t state_data;
+    state_data.initializing = 1;
+    state_data.state = SENSOR_DISCONNECTED;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_Sensors_baro_state_publish(&state_data);
+
     _bme = Adafruit_BME280();
     while (_bme.begin((uint8_t)BME280_ADDRESS, &Wire) == false)
     {
         printf("BME280 could not be connected\n");
     }
+
+    state_data.state = SENSOR_OK;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_Sensors_baro_state_publish(&state_data);
+
     float start_press_pa = _bme.readPressure(); // pressue in Pa
     _start_press_hpa = start_press_pa / 100.0;  // Convert to hPa
     _start_alt_m = _bme.readAltitude(1013.25);
-    printf("BME280 setup complete\n");
+
+    umsg_Sensors_baro_configuration_t conf_data;
+    conf_data.start_pressure_hpa = _start_press_hpa;
+    conf_data.start_alt_m = _start_alt_m;
+    conf_data.measure_tick = xTaskGetTickCount();
+    umsg_Sensors_baro_configuration_publish(&conf_data);
+
+    state_data.initializing = 0;
+    state_data.logging_data = 1;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_Sensors_baro_state_publish(&state_data);
+
     return ESP_OK;
 }
 
@@ -114,9 +136,7 @@ void Sensors::log_data()
 {
 
     log_imu();
-    // vTaskDelay(1 / portTICK_PERIOD_MS);
     log_bme();
-    // vTaskDelay(1 / portTICK_PERIOD_MS);
     log_therm();
 }
 
