@@ -239,9 +239,9 @@ extern "C" void app_main(void)
     xReturned = xTaskCreatePinnedToCore(
       IMUComponent::vMainLoop_Task, // Function for task
       "IMU Component Task",         // Name of task
-      1024 * 3,                     // Stack size of task
+      1024 * 15,                     // Stack size of task
       (void*)(&imu_component),      // task parameters
-      8,                           // Task priority
+      11,                           // Task priority
       &xIMUComponentHandle,          // Handle to resulting task
       1
     );

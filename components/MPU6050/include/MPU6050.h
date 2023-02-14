@@ -81,7 +81,15 @@ struct Vector
     float YAxis;
     float ZAxis;
 };
+
 #endif
+
+struct Vector_int16_t
+{
+	int16_t XAxis;
+	int16_t YAxis;
+	int16_t ZAxis;
+};
 
 struct Activites
 {
@@ -224,16 +232,16 @@ class MPU6050
 	void setThreshold(uint8_t multiple = 1);
 	uint8_t getThreshold(void);
 
-	Vector readRawGyro(void);
+	Vector_int16_t readRawGyro(void);
 	Vector readNormalizeGyro(void);
 
-	Vector readRawAccel(void);
+	Vector_int16_t readRawAccel(void);
 	Vector readNormalizeAccel(void);
 	Vector readScaledAccel(void);
 
     private:
 	TwoWire *_wire; // The i2c bus this device is on
-	Vector ra, rg; // Raw vectors
+	Vector_int16_t ra, rg; // Raw vectors
 	Vector na, ng; // Normalized vectors
 	Vector tg, dg; // Threshold and Delta for Gyro
 	Vector th;     // Threshold

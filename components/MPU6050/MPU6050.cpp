@@ -342,7 +342,7 @@ Activites MPU6050::readActivites(void)
     return a;
 }
 
-Vector MPU6050::readRawAccel(void)
+Vector_int16_t MPU6050::readRawAccel(void)
 {
     _wire->beginTransmission(mpuAddress);
     #if ARDUINO >= 100
@@ -402,7 +402,7 @@ Vector MPU6050::readScaledAccel(void)
 }
 
 
-Vector MPU6050::readRawGyro(void)
+Vector_int16_t MPU6050::readRawGyro(void)
 {
     _wire->beginTransmission(mpuAddress);
     #if ARDUINO >= 100

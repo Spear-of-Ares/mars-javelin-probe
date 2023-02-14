@@ -14,6 +14,7 @@
 #include "datalogger.h"
 #include "MPU6050.h"
 #include "ComBus.h"
+#include "ukf_imu_engl.h"
 
 #define IMU_TASK_ID "IMU TASK  "
 #define IMU_ATTACHED
@@ -24,6 +25,9 @@
 
 #define IMU_LOG_LoRa
 
+#define DEG2RAD(x) ((x) * (3.14159f/180))
+#define RAD2DEG(x) ((x) * (180/3.14159f))
+
 #define SAMPLE_RATE_HZ 10
 
 class IMUComponent{
@@ -33,6 +37,8 @@ public:
 private:
   void setup();
   void logIMU();
+
+
   QueueHandle_t _dataOutSD;
   QueueHandle_t _dataOutLoRa;
   QueueHandle_t _dataOutIridium;
@@ -40,7 +46,8 @@ private:
 
   TickType_t _lastUpdateLoRa;
   TickType_t _lastUpdateIridium;
-  float _pitch, _roll, _yaw;
+
+  float fusion_boundary;
 };
 
 #endif

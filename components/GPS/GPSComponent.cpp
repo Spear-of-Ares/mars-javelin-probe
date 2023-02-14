@@ -175,8 +175,8 @@ void GPSComponent::sendData(std::string msg){
     }
     
 
-    // Update LoRa every 30 seconds
-    if (curr_tick - _lastUpdateLoRa > 30000 / portTICK_PERIOD_MS)
+    // Update LoRa every 2 seconds
+    if (curr_tick - _lastUpdateLoRa > 2000 / portTICK_PERIOD_MS)
     {
         std::string *loradata = new std::string(data.str());
         _lastUpdateLoRa = curr_tick;

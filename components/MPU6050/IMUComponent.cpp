@@ -32,49 +32,28 @@ IMUComponent::IMUComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, Q
   _lastUpdateLoRa = 0x0000;
 }
 
+
 void IMUComponent::logIMU(){
   Activites a = _device.readActivites();
   if(!a.isDataReady) return;
   Vector accel_scaled = _device.readScaledAccel();
-
-  // Hardcoded numbers come from the range and scale of accelerometer and gyroscope
-  if(accel_scaled.XAxis > 8){accel_scaled.XAxis = accel_scaled.XAxis - 16;}
-  if(accel_scaled.YAxis > 8){accel_scaled.YAxis = accel_scaled.YAxis - 16;}
-  if(accel_scaled.ZAxis > 8){accel_scaled.ZAxis = accel_scaled.ZAxis - 16;}
-
-  // accel_norm.XAxis = accel_norm.XAxis/3;
-  // accel_norm.YAxis = accel_norm.YAxis/3;
-  // accel_norm.ZAxis = accel_norm.ZAxis/3;
-
   Vector gyro_norm = _device.readNormalizeGyro();
+  Vector gyro_rad = {gyro_norm.XAxis * (float)DEG_TO_RAD, gyro_norm.YAxis * (float)DEG_TO_RAD, gyro_norm.ZAxis * (float)DEG_TO_RAD };
+  set_sensor_data(accel_scaled, gyro_rad);
+  update_filter();
+  UKF filter = get_UKF();
 
-  if(gyro_norm.XAxis > 500){gyro_norm.XAxis = gyro_norm.XAxis - 1000;}
-  if(gyro_norm.YAxis > 500){gyro_norm.YAxis = gyro_norm.YAxis - 1000;}
-  if(gyro_norm.ZAxis > 500){gyro_norm.ZAxis = gyro_norm.ZAxis - 1000;}
+  Matrix attitude = filter.GetX();
+
   float temp = _device.readTemperature();
 
-  // Time 
-  float time_step = 1.0 / SAMPLE_RATE_HZ;
-  _pitch = _pitch + gyro_norm.YAxis * time_step;
-  _roll = _roll + gyro_norm.XAxis * time_step;
-  _yaw = _yaw + gyro_norm.ZAxis * time_step;
 
-  while(_pitch > 360){
-    _pitch = _pitch - 360;
-  }
-  while(_roll > 360){
-    _roll = _roll - 360;
-  }
-  while(_yaw > 360){
-    _yaw = _yaw - 360;
-  }
-  
   std::ostringstream data;
   data << xTaskGetTickCount() << " || " << IMU_TASK_ID << " || ";
   int header_len = data.str().length();
   data << "Ax: " << accel_scaled.XAxis << " Ay: " << accel_scaled.YAxis << " Az: " << accel_scaled.ZAxis << " g | Temp: " << temp << " C\n";
   data << std::string(header_len-3, ' ') << "|| Gx: " << gyro_norm.XAxis << " Gy: " << gyro_norm.YAxis << " Gz: " << gyro_norm.ZAxis << " deg/s\n";
-  data << std::string(header_len-3, ' ') << "|| Pitch: " << _pitch << " | Roll: " << _roll << " | Yaw: " << _yaw << "\n";
+  data << std::string(header_len-3, ' ') << "|| Pitch: " << attitude[1][0]*RAD_TO_DEG << " Roll: " << attitude[2][0]*RAD_TO_DEG << " Yaw: " << attitude[3][0]*RAD_TO_DEG << " deg\n";
 
   SDData *sddata = new SDData();
   sddata->file_name = new std::string("measure");
@@ -100,8 +79,8 @@ void IMUComponent::logIMU(){
   #endif
 
   #ifdef IMU_LOG_LoRa
-  // Update LoRa every 1 seconds
-  if (curr_tick - _lastUpdateLoRa > 1000 / portTICK_PERIOD_MS)
+  // Update LoRa every .5 seconds
+  if (curr_tick - _lastUpdateLoRa > 500 / portTICK_PERIOD_MS)
   {
     std::string *loradata = new std::string(data.str());
     _lastUpdateLoRa = curr_tick;
@@ -114,6 +93,8 @@ void IMUComponent::logIMU(){
 }
 
 void IMUComponent::setup(){
+
+
   _device = MPU6050();
   while(!_device.begin(MPU6050_SCALE_500DPS, MPU6050_RANGE_8G, 104, &Wire))
   {
@@ -121,34 +102,19 @@ void IMUComponent::setup(){
       vTaskDelay(500/portTICK_PERIOD_MS);
   }
 
+  // Need to set here because message doesn't get sent occasionally
+  while(_device.getScale() != MPU6050_SCALE_1000DPS)
+    _device.setScale(MPU6050_SCALE_1000DPS);
+
+  while(_device.getRange() != MPU6050_RANGE_8G)
+    _device.setRange(MPU6050_RANGE_8G);
+
   // Disable interupts
   _device.setIntFreeFallEnabled(false);
   _device.setIntZeroMotionEnabled(false);
   _device.setIntMotionEnabled(false);
 
-  // Calculated by seeing value off norm and the following conversion
-  // y = (x*1000) / 2.5
   
-  int16_t accel_x_off = (int)-2380;
-  int16_t accel_y_off = (int)800;
-  int16_t accel_z_off = (int)-880;
-
-  _device.setAccelOffsetX(accel_x_off);
-  _device.setAccelOffsetY(accel_y_off);
-  _device.setAccelOffsetZ(accel_z_off);
-
-  // Calculated by seeing vaule off norm and the following conversion
-  // y = (x*36) / 0.8
-  // Fine tuning was done after
-
-  int16_t gyro_x_off = (int)-1080;
-  int16_t gyro_y_off = (int)999;
-  int16_t gyro_z_off = (int)1272;
-
-  _device.setGyroOffsetX(gyro_x_off);
-  _device.setGyroOffsetY(gyro_y_off);
-  _device.setGyroOffsetZ(gyro_z_off);
-
   _device.setDLPFMode(MPU6050_DLPF_4);
 
   //_device.calibrateGyro(6);

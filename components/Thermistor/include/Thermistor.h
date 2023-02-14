@@ -49,9 +49,7 @@
 #define KELVIN_TO_CELSIUS(T_k) ((T_k) - 273.15)
 #define CELSIUS_TO_F(T_c)      (((T_c) * 9 / 5) + 32)
 
-#if CONFIG_THERM2_ATTACHED == true
 #define THERM2_ATTACHED
-#endif 
 
 #ifdef false
 #define THERM_LOG_IRIDIUM

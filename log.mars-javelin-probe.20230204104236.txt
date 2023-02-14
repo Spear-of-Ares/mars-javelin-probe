@@ -1,0 +1,1781 @@
+Received: 481272 || IMU TASK   || Ax: 0.0380859 Ay: -0.0119629 Az: 0.256165 g | Temp: 11.0212 C
+                     || Gx: 0.266874 Gy: 0.147183 Gz: 0 deg/s
+                     || Pitch: -3.83268e-14 | Roll: 3.6529e-15 | Yaw: -3.01095e-13
+ || RSSI: -31 | SNR: 9.750000
+Received: 482321 || IMU TASK   || Ax: 0.0366821 Ay: -0.00939941 Az: 0.255554 g | Temp: 11.0418 C
+                     || Gx: 0.114204 Gy: -0.356628 Gz: 0 deg/s
+                     || Pitch: -3.84207e-14 | Roll: 3.68308e-15 | Yaw: -3.01757e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 482959 || GPS_COMP   || Lat: 466449155 Long: -1171851187 (degrees * 10^-7) | Alt: 771.23 (m) | SIV: 29 | | Time: 2023-2-4 18:42:34:0 | Time is valid  Date is valid PDOP: 91 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccEst || RSSI: -32 | SNR: 9.250000
+Received: 483885 || BME TASK   || Temp: 9.68 C | Pressure: 93029.2 Pa | humidity: 59.8848 % | altitude (asl): 714.774 m | altitude (relative): 1.42963 m || RSSI: -32 | SNR: 9.500000
+Received: 485472 || IMU TASK   || Ax: 0.041687 Ay: -0.0131226 Az: 0.255066 g | Temp: 11.0418 C
+                     || Gx: -0.145335 Gy: 0.31512 Gz: 0 deg/s
+                     || Pitch: -3.87141e-14 | Roll: 3.77341e-15 | Yaw: -3.03822e-13
+ || RSSI: -42 | SNR: 9.750000
+Received: 486520 || IMU TASK   || Ax: 0.0405273 Ay: -0.012085 Az: 0.257996 g | Temp: 11.0653 C
+                     || Gx: 0.755418 Gy: -1.33372 Gz: 1000.08 deg/s
+                     || Pitch: -3.88102e-14 | Roll: 3.79577e-15 | Yaw: -3.04484e-13
+ || RSSI: -46 | SNR: 9.500000
+Received: 487586 || IMU TASK   || Ax: 0.0321045 Ay: -0.012085 Az: 0.256653 g | Temp: 11.0712 C
+                     || Gx: -0.236937 Gy: -0.280293 Gz: 0 deg/s
+                     || Pitch: -3.89122e-14 | Roll: 3.8258e-15 | Yaw: -3.05221e-13
+ || RSSI: -43 | SNR: 9.750000
+Received: 488606 || IMU TASK   || Ax: 0.0363159 Ay: -0.0098877 Az: 0.257751 g | Temp: 11.0771 C
+                     || Gx: -0.0384657 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -3.89834e-14 | Roll: 3.84551e-15 | Yaw: -3.05737e-13
+ || RSSI: -39 | SNR: 10.000000
+Received: 489638 || IMU TASK   || Ax: 0.03302 Ay: -0.0119019 Az: 0.256348 g | Temp: 11.08 C
+                     || Gx: 0.0989373 Gy: -0.249759 Gz: 0 deg/s
+                     || Pitch: -3.90566e-14 | Roll: 3.86654e-15 | Yaw: -3.06252e-13
+ || RSSI: -35 | SNR: 10.000000
+Received: 490700 || IMU TASK   || Ax: 0.0377808 Ay: -0.00976562 Az: 0.255859 g | Temp: 11.1065 C
+                     || Gx: -0.618612 Gy: -0.524565 Gz: 0 deg/s
+                     || Pitch: -3.91623e-14 | Roll: 3.89641e-15 | Yaw: -3.06989e-13
+ || RSSI: -32 | SNR: 9.250000
+Received: 491751 || IMU TASK   || Ax: 0.0345459 Ay: -0.00787354 Az: 0.25647 g | Temp: 11.1271 C
+                     || Gx: 0.0836703 Gy: -0.509298 Gz: 0 deg/s
+                     || Pitch: -3.92556e-14 | Roll: 3.9227e-15 | Yaw: -3.07651e-13
+ || RSSI: -47 | SNR: 9.500000
+Received: 492805 || IMU TASK   || Ax: 0.0390015 Ay: -0.00604248 Az: 0.257141 g | Temp: 11.1065 C
+                     || Gx: 1.09129 Gy: -0.249759 Gz: 997.969 deg/s
+                     || Pitch: -3.9349e-14 | Roll: 3.94788e-15 | Yaw: -3.08312e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 493824 || IMU TASK   || Ax: 0.0372314 Ay: -0.0122681 Az: 0.256165 g | Temp: 11.1271 C
+                     || Gx: 0.526413 Gy: 0.131916 Gz: 999.984 deg/s
+                     || Pitch: -3.94307e-14 | Roll: 3.97219e-15 | Yaw: -3.08901e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 494887 || IMU TASK   || Ax: 0.0357056 Ay: -0.00915527 Az: 0.257202 g | Temp: 11.1212 C
+                     || Gx: 0.23634 Gy: -0.341361 Gz: 0 deg/s
+                     || Pitch: -3.97541e-14 | Roll: 3.79852e-15 | Yaw: -3.09796e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 495936 || IMU TASK   || Ax: 0.0209351 Ay: -0.00256348 Az: 0.255615 g | Temp: 11.1388 C
+                     || Gx: -1.07662 Gy: -2.55508 Gz: 0 deg/s
+                     || Pitch: -3.98499e-14 | Roll: 3.81876e-15 | Yaw: -3.10458e-13
+ || RSSI: -30 | SNR: 9.750000
+Received: 496991 || IMU TASK   || Ax: 0.0361938 Ay: -0.00958252 Az: 0.253418 g | Temp: 11.1359 C
+                     || Gx: 0.0531363 Gy: -0.387162 Gz: 0 deg/s
+                     || Pitch: -3.99588e-14 | Roll: 3.84842e-15 | Yaw: -3.11192e-13
+ || RSSI: -32 | SNR: 9.250000
+Received: 498054 || IMU TASK   || Ax: 0.0379028 Ay: -0.0108032 Az: 0.256226 g | Temp: 11.1418 C
+                     || Gx: 0.114204 Gy: -0.173424 Gz: 0 deg/s
+                     || Pitch: -4.00641e-14 | Roll: 3.87469e-15 | Yaw: -3.11928e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 498979 || BME TASK   || Temp: 9.83 C | Pressure: 93043.8 Pa | humidity: 59.6475 % | altitude (asl): 713.476 m | altitude (relative): 0.110119 m || RSSI: -35 | SNR: 9.750000
+Received: 499246 || IMU TASK   || Ax: 0.0386353 Ay: -0.00817871 Az: 0.256775 g | Temp: 11.1388 C
+                     || Gx: -0.328539 Gy: -0.0818216 Gz: 0 deg/s
+                     || Pitch: -4.01606e-14 | Roll: 3.89451e-15 | Yaw: -3.12591e-13
+ || RSSI: -34 | SNR: 10.250000
+Received: 500267 || IMU TASK   || Ax: 0.036377 Ay: -0.010437 Az: 0.256714 g | Temp: 11.1653 C
+                     || Gx: -0.114801 Gy: 0.0708484 Gz: 0 deg/s
+                     || Pitch: -4.02237e-14 | Roll: 3.91e-15 | Yaw: -3.13034e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 501321 || IMU TASK   || Ax: 0.0368652 Ay: -0.00970459 Az: 0.256836 g | Temp: 11.1594 C
+                     || Gx: 0.175272 Gy: -0.14289 Gz: 0 deg/s
+                     || Pitch: -4.03296e-14 | Roll: 3.93538e-15 | Yaw: -3.13771e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 502370 || IMU TASK   || Ax: 0.0360107 Ay: -0.00939941 Az: 0.254395 g | Temp: 11.1888 C
+                     || Gx: -0.0384657 Gy: 0.116649 Gz: 0 deg/s
+                     || Pitch: -4.04246e-14 | Roll: 3.95818e-15 | Yaw: -3.14433e-13
+ || RSSI: -31 | SNR: 9.500000
+Received: 504492 || IMU TASK   || Ax: 0.0373535 Ay: -0.0088501 Az: 0.255981 g | Temp: 11.1918 C
+                     || Gx: -0.389607 Gy: -0.310827 Gz: 0 deg/s
+                     || Pitch: -4.06361e-14 | Roll: 4.00951e-15 | Yaw: -3.15906e-13
+ || RSSI: -32 | SNR: 9.500000
+Received: 505546 || IMU TASK   || Ax: 0.0367432 Ay: -0.00927734 Az: 0.256775 g | Temp: 11.2006 C
+                     || Gx: -0.160602 Gy: -0.234492 Gz: 0 deg/s
+                     || Pitch: -4.07425e-14 | Roll: 4.03535e-15 | Yaw: -3.16643e-13
+ || RSSI: -31 | SNR: 9.750000
+Received: 506577 || IMU TASK   || Ax: 0.0379639 Ay: -0.00909424 Az: 0.25592 g | Temp: 11.2241 C
+                     || Gx: 0.0836703 Gy: -0.203958 Gz: 0 deg/s
+                     || Pitch: -4.0817e-14 | Roll: 4.05401e-15 | Yaw: -3.17159e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 507601 || IMU TASK   || Ax: 0.0369263 Ay: -0.0119629 Az: 0.256348 g | Temp: 11.2241 C
+                     || Gx: 0.327942 Gy: -0.387162 Gz: 0 deg/s
+                     || Pitch: -4.0891e-14 | Roll: 4.07404e-15 | Yaw: -3.17675e-13
+ || RSSI: -43 | SNR: 10.000000
+Received: 509672 || IMU TASK   || Ax: 0.0371704 Ay: -0.0111694 Az: 0.255615 g | Temp: 11.2565 C
+                     || Gx: 0.312675 Gy: 0.131916 Gz: 0 deg/s
+                     || Pitch: -4.10603e-14 | Roll: 4.11532e-15 | Yaw: -3.18855e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 510729 || IMU TASK   || Ax: 0.0422974 Ay: -0.00476074 Az: 0.254395 g | Temp: 11.2359 C
+                     || Gx: 0.526413 Gy: -1.05891 Gz: 0 deg/s
+                     || Pitch: -4.11673e-14 | Roll: 4.1387e-15 | Yaw: -3.19594e-13
+ || RSSI: -42 | SNR: 9.500000
+Received: 511778 || IMU TASK   || Ax: 0.0379028 Ay: -0.00775146 Az: 0.256714 g | Temp: 11.2418 C
+                     || Gx: 0.0989373 Gy: -999.902 Gz: 1000.12 deg/s
+                     || Pitch: -4.12744e-14 | Roll: 4.16294e-15 | Yaw: -3.2033e-13
+ || RSSI: -41 | SNR: 10.000000
+Received: 512781 || THERM_COMP || Internal: 98.0972 C | External: 6.23824 C || RSSI: -36 | SNR: 9.500000
+Received: 512824 || IMU TASK   || Ax: 0.0361938 Ay: -0.00958252 Az: 0.256348 g | Temp: 11.2506 C
+                     || Gx: -0.00793168 Gy: 0.116649 Gz: 0 deg/s
+                     || Pitch: -4.13676e-14 | Roll: 4.18734e-15 | Yaw: -3.20993e-13
+ || RSSI: -32 | SNR: 10.750000
+Received: 513835 || IMU TASK   || Ax: 0.0356445 Ay: -0.00610352 Az: 0.256897 g | Temp: 11.2476 C
+                     || Gx: 0.602748 Gy: 0.101382 Gz: 0 deg/s
+                     || Pitch: -4.14513e-14 | Roll: 4.20568e-15 | Yaw: -3.21583e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 514652 || GPS_COMP   || Lat: 466449128 Long: -1171851038 (degrees * 10^-7) | Alt: 770.382 (m) | SIV: 27 | | Time: 2023-2-4 18:43:6:0 | Time is valid  Date is valid PDOP: 98 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccEst || RSSI: -32 | SNR: 9.250000
+Received: 515920 || IMU TASK   || Ax: 0.0376587 Ay: -0.00897217 Az: 0.255432 g | Temp: 11.2741 C
+                     || Gx: -0.22167 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -4.16347e-14 | Roll: 4.24942e-15 | Yaw: -3.22835e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 516932 || IMU TASK   || Ax: 0.0349731 Ay: -0.00738525 Az: 0.255554 g | Temp: 11.28 C
+                     || Gx: 0.0378693 Gy: -0.371895 Gz: 0 deg/s
+                     || Pitch: -4.17176e-14 | Roll: 4.27003e-15 | Yaw: -3.23424e-13
+ || RSSI: -34 | SNR: 9.250000
+Received: 517966 || IMU TASK   || Ax: 0.0338745 Ay: -0.00878906 Az: 0.255371 g | Temp: 11.28 C
+                     || Gx: 0.251607 Gy: -0.524565 Gz: 0 deg/s
+                     || Pitch: -4.18017e-14 | Roll: 4.29169e-15 | Yaw: -3.24013e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 519015 || IMU TASK   || Ax: 0.0455322 Ay: -0.0112305 Az: 0.255981 g | Temp: 11.2829 C
+                     || Gx: -0.130068 Gy: -1.15051 Gz: 999.389 deg/s
+                     || Pitch: -4.19012e-14 | Roll: 4.31646e-15 | Yaw: -3.24675e-13
+ || RSSI: -33 | SNR: 10.000000
+Received: 520052 || IMU TASK   || Ax: 0.0390625 Ay: -0.00787354 Az: 0.255981 g | Temp: 11.3006 C
+                     || Gx: -0.160602 Gy: -0.280293 Gz: 0 deg/s
+                     || Pitch: -4.19775e-14 | Roll: 4.32977e-15 | Yaw: -3.25191e-13
+ || RSSI: -35 | SNR: 9.750000
+Received: 521114 || IMU TASK   || Ax: 0.0348511 Ay: -0.00567627 Az: 0.254639 g | Temp: 11.3124 C
+                     || Gx: 0.908088 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -4.20869e-14 | Roll: 4.35425e-15 | Yaw: -3.25927e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 522162 || IMU TASK   || Ax: 0.0374756 Ay: -0.0118408 Az: 0.255554 g | Temp: 11.3241 C
+                     || Gx: 0.0684033 Gy: 0.101382 Gz: 998.977 deg/s
+                     || Pitch: -4.2191e-14 | Roll: 4.38421e-15 | Yaw: -3.26663e-13
+ || RSSI: -32 | SNR: 9.250000
+Received: 523212 || IMU TASK   || Ax: 0.0307617 Ay: -0.0119019 Az: 0.256592 g | Temp: 11.3153 C
+                     || Gx: 0.114204 Gy: -1000.07 Gz: 0 deg/s
+                     || Pitch: -4.22861e-14 | Roll: 4.40818e-15 | Yaw: -3.27327e-13
+ || RSSI: -33 | SNR: 10.000000
+Received: 524269 || IMU TASK   || Ax: 0.0310669 Ay: -0.00299072 Az: 0.258301 g | Temp: 11.3065 C
+                     || Gx: 0.190539 Gy: 0.437256 Gz: 993.679 deg/s
+                     || Pitch: -4.26008e-14 | Roll: 4.23757e-15 | Yaw: -3.28247e-13
+ || RSSI: -32 | SNR: 10.000000
+Received: 525318 || IMU TASK   || Ax: 0.0375977 Ay: -0.00769043 Az: 0.256653 g | Temp: 11.3212 C
+                     || Gx: -0.0995337 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -4.26975e-14 | Roll: 4.26312e-15 | Yaw: -3.28915e-13
+ || RSSI: -29 | SNR: 11.000000
+Received: 526368 || IMU TASK   || Ax: 0.0386963 Ay: -0.00860596 Az: 0.256226 g | Temp: 11.3124 C
+                     || Gx: 0.38901 Gy: -0.14289 Gz: 1000.08 deg/s
+                     || Pitch: -4.28043e-14 | Roll: 4.28764e-15 | Yaw: -3.2965e-13
+ || RSSI: -28 | SNR: 9.750000
+Received: 528481 || IMU TASK   || Ax: 0.0387573 Ay: -0.0107422 Az: 0.253357 g | Temp: 11.3506 C
+                     || Gx: 0.679083 Gy: -1.11998 Gz: 1000.21 deg/s
+                     || Pitch: -4.30254e-14 | Roll: 4.34261e-15 | Yaw: -3.31123e-13
+ || RSSI: -29 | SNR: 9.500000
+Received: 529198 || BME TASK   || Temp: 10.02 C | Pressure: 93036.5 Pa | humidity: 59.2363 % | altitude (asl): 714.128 m | altitude (relative): 0.771865 m || RSSI: -28 | SNR: 9.500000
+Received: ∑yı`Æ(M,£YM’$dQ€*` ¸"Axº ´034y53U A: -3.011>5˜7 A˙>A0&2U5987†g#º T†Ìp9j18(3712 s (  †$ $  )  &  @  @ t| √x:∞0.S8260?3 Ay
+ 0æ7˘∑25> Oz: ê dea/s   #,( % $#¨  ∂      || RSSI: -29 | SNR: 10.500000
+Received: 530590 || IMU TASK   || Ax: 0.0368652 Ay: -0.00543213 Az: 0.256042 g | Temp: 11.3682 C
+                     || Gx: -0.465942 Gy: -999.948 Gz: 999.847 deg/s
+                     || Pitch: -4.32339e-1$ ~ || RSSI: -28 | SNR: -8.750000
+Received: 531609 || IMU TASK   || Ax: 0.0349731 Ay: -0.0020752 Az: 0.2547 g | Temp: 11.3741 C
+                     || Gx: -0.191136 Gy: -1000.07 Gz: 998.824 deg/s
+                     || Pitch: -4.33078e-14 | Roll: 4.40485e-15 | Yaw: -3.33038e-13
+ || RSSI: -28 | SNR: 9.500000
+Received: 532655 || IMU TASK   || Ax: 0.0387573 Ay: -0.00628662 Az: 0.257996 g | Temp: 11.3947 C
+                     || Gx: -0.404874 Gy: 0.299853 Gz: 0 deg/s
+                     || Pitch: -4.34067e-14 | Roll: 4.42428e-15 | Yaw: -3.337e-13
+ || RSSI: -29 | SNR: 10.250000
+Received: 533712 || IMU TASK   || Ax: 0.0360718 Ay: -0.00482178 Az: 0.256836 g | Temp: 11.3888 C
+                     || Gx: -0.0689997 Gy: -0.387162 Gz: 0 deg/s
+                     || Pitch: -4.35126e-14 | Roll: 4.44186e-15 | Yaw: -3.34437e-13
+ || RSSI: -28 | SNR: 11.250000
+Received: 534766 || IMU TASK   || Ax: 0.0358887 Ay: -0.00561523 Az: 0.256226 g | Temp: 11.3947 C
+                     || Gx: 0.419544 Gy: -0.219225 Gz: 0 deg/s
+                     || Pitch: -4.36155e-14 | Roll: 4.45932e-15 | Yaw: -3.35173e-13
+ || RSSI: -29 | SNR: 9.500000
+Received: 535813 || IMU TASK   || Ax: 0.0332031 Ay: -0.0098877 Az: 0.25592 g | Temp: 11.3976 C
+                     || Gx: -0.206403 Gy: -0.326094 Gz: 0 deg/s
+                     || Pitch: -4.37095e-14 | Roll: 4.48504e-15 | Yaw: -3.35838e-13
+ || RSSI: -30 | SNR: 9.500000
+Received: 536879 || IMU TASK   || Ax: 0.0387573 Ay: -0.00518799 Az: 0.257751 g | Temp: 11.3947 C
+                     || Gx: 0.480612 Gy: -0.936774 Gz: 999.038 deg/s
+                     || Pitch: -4.38179e-14 | Roll: 4.50484e-15 | Yaw: -3.36574e-13
+ || RSSI: -35 | SNR: 10.000000
+Received: 537934 || IMU TASK   || Ax: 0.0487671 Ay: -0.00286865 Az: 0.257568 g | Temp: 11.4124 C
+                     || Gx: -0.878151 Gy: -0.173424 Gz: 2.51478 deg/s
+                     || Pitch: -4.39221e-14 | Roll: 4.52608e-15 | Yaw: -3.37312e-13
+ || RSSI: -37 | SNR: 9.250000
+Received: 538993 || IMU TASK   || Ax: 0.0373535 Ay: -0.00671387 Az: 0.256897 g | Temp: 11.4241 C
+                     || Gx: 0.0836703 Gy: -0.234492 Gz: 999.984 deg/s
+                     || Pitch: -4.40285e-14 | Roll: 4.54579e-15 | Yaw: -3.38049e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 540041 || IMU TASK   || Ax: 0.0408325 Ay: -0.00262451 Az: 0.257324 g | Temp: 11.4241 C
+                     || Gx: 0.495879 Gy: 0.116649 Gz: 994.305 deg/s
+                     || Pitch: -4.41281e-14 | Roll: 4.56305e-15 | Yaw: -3.38712e-13
+ || RSSI: -38 | SNR: 10.000000
+Received: 541170 || IMU TASK   || Ax: 0.0394287 Ay: -0.00860596 Az: 0.256714 g | Temp: 11.4418 C
+                     || Gx: 0.175272 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -4.42025e-14 | Roll: 4.5784e-15 | Yaw: -3.39229e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 542224 || IMU TASK   || Ax: 0.0401611 Ay: -0.00799561 Az: 0.255249 g | Temp: 11.4476 C
+                     || Gx: 0.282141 Gy: 0.116649 Gz: 0 deg/s
+                     || Pitch: -4.43158e-14 | Roll: 4.58962e-15 | Yaw: -3.39964e-13
+ || RSSI: -35 | SNR: 9.750000
+Received: 542811 || THERM_COMP || Internal: 99.8092 C | External: 6.23824 C || RSSI: -36 | SNR: 9.750000
+Received: 543280 || IMU TASK   || Ax: 0.0409546 Ay: -0.00982666 Az: 0.25708 g | Temp: 11.4329 C
+                     || Gx: 0.0531363 Gy: 0.16245 Gz: 0 deg/s
+                     || Pitch: -4.44242e-14 | Roll: 4.61277e-15 | Yaw: -3.40701e-13
+ || RSSI: -35 | SNR: 10.000000
+Received: 544294 || BME TASK   || Temp: 10.1 C | Pressure: 93038.4 Pa | humidity: 59.002 % | altitude (asl): 713.953 m | altitude (relative): 0.594859 m || RSSI: -35 | SNR: 9.500000
+Received: 544976 || GPS_COMP   || No Data || RSSI: -35 | SNR: 10.250000
+Received: 545387 || IMU TASK   || Ax: 0.0366211 Ay: -0.0100098 Az: 0.256714 g | Temp: 11.4624 C
+                     || Gx: -0.130068 Gy: 0.299853 Gz: 0 deg/s
+                     || Pitch: -4.46331e-14 | Roll: 4.65642e-15 | Yaw: -3.42175e-13
+ || RSSI: -42 | SNR: 9.750000
+Received: 546449 || IMU TASK   || Ax: 0.0402832 Ay: -0.00866699 Az: 0.255188 g | Temp: 11.4476 C
+                     || Gx: -0.450675 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -4.4733e-14 | Roll: 4.67963e-15 | Yaw: -3.42836e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 547504 || IMU TASK   || Ax: 0.0342407 Ay: -0.0057373 Az: 0.256775 g | Temp: 11.4653 C
+                     || Gx: -1.00029 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -4.50675e-14 | Roll: 4.5047e-15 | Yaw: -3.43688e-13
+ || RSSI: -39 | SNR: 9.500000
+Received: 548556 || IMU TASK   || Ax: 0.0419312 Ay: -0.0165405 Az: 0.257019 g | Temp: 11.4624 C
+                     || Gx: -0.725481 Gy: -1.13524 Gz: 0 deg/s
+                     || Pitch: -4.51786e-14 | Roll: 4.52704e-15 | Yaw: -3.44427e-13
+ || RSSI: -40 | SNR: 10.250000
+Received: 549588 || IMU TASK   || Ax: 0.0386963 Ay: -0.00653076 Az: 0.255859 g | Temp: 11.4741 C
+                     || Gx: -0.542277 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -4.52575e-14 | Roll: 4.54265e-15 | Yaw: -3.44944e-13
+ || RSSI: -35 | SNR: 10.500000
+Received: 550614 || IMU TASK   || Ax: 0.0384521 Ay: -0.0120239 Az: 0.256226 g | Temp: 11.4918 C
+                     || Gx: 0.0531363 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -4.53334e-14 | Roll: 4.56138e-15 | Yaw: -3.4546e-13
+ || RSSI: -36 | SNR: 9.500000
+Received: 551662 || IMU TASK   || Ax: 0.0375366 Ay: -0.00970459 Az: 0.255981 g | Temp: 11.48 C
+                     || Gx: -1.13769 Gy: -2.37187 Gz: 4.8659 deg/s
+                     || Pitch: -4.54285e-14 | Roll: 4.58276e-15 | Yaw: -3.46124e-13
+ || RSSI: -35 | SNR: 10.250000
+Received: 552715 || IMU TASK   || Ax: 0.0386353 Ay: -0.00372314 Az: 0.255554 g | Temp: 11.4918 C
+                     || Gx: 2.46532 Gy: -1.91386 Gz: 21.3695 deg/s
+                     || Pitch: -4.57324e-14 | Roll: 4.34617e-15 | Yaw: -3.46999e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 553764 || IMU TASK   || Ax: 0.0406494 Ay: -0.0088501 Az: 0.256165 g | Temp: 11.5124 C
+                     || Gx: 0.190539 Gy: -999.994 Gz: 999.297 deg/s
+                     || Pitch: -4.58293e-14 | Roll: 4.37249e-15 | Yaw: -3.4766e-13
+ || RSSI: -44 | SNR: 9.750000
+Received: 554812 || IMU TASK   || Ax: 0.0352173 Ay: -0.0144043 Az: 0.254944 g | Temp: 11.5271 C
+                     || Gx: -0.633879 Gy: 0.452523 Gz: 0 deg/s
+                     || Pitch: -4.59318e-14 | Roll: 4.40222e-15 | Yaw: -3.48394e-13
+ || RSSI: -38 | SNR: 9.750000
+Received: 555819 || IMU TASK   || Ax: 0.024231 Ay: 0 Az: 0.256287 g | Temp: 11.5271 C
+                     || Gx: -2.42012 Gy: -999.887 Gz: 0 deg/s
+                     || Pitch: -4.60084e-14 | Roll: 4.42088e-15 | Yaw: -3.4898e-13
+ || RSSI: -42 | SNR: 10.000000
+Received: 556878 || IMU TASK   || Ax: 0.0369873 Ay: -0.0102539 Az: 0.256836 g | Temp: 11.5212 C
+                     || Gx: 0.785952 Gy: -0.784104 Gz: 0 deg/s
+                     || Pitch: -4.61111e-14 | Roll: 4.44959e-15 | Yaw: -3.49717e-13
+ || RSSI: -42 | SNR: 9.750000
+Received: 557890 || IMU TASK   || Ax: 0.0541992 Ay: -0.0161133 Az: 0.257874 g | Temp: 11.5359 C
+                     || Gx: -1.04609 Gy: -1.28791 Gz: 999.45 deg/s
+                     || Pitch: -4.62177e-14 | Roll: 4.47216e-15 | Yaw: -3.50379e-13
+ || RSSI: -39 | SNR: 10.000000
+Received: 558952 || IMU TASK   || Ax: 0.0345459 Ay: -0.0178833 Az: 0.251282 g | Temp: 11.5447 C
+                     || Gx: -1.10716 Gy: -1.83753 Gz: 0 deg/s
+                     || Pitch: -4.63287e-14 | Roll: 4.49391e-15 | Yaw: -3.51113e-13
+ || RSSI: -43 | SNR: 10.000000
+Received: 560022 || IMU TASK   || Ax: 0.0265503 Ay: -0.00457764 Az: 0.257996 g | Temp: 11.5565 C
+                     || Gx: -0.236937 Gy: 0.269319 Gz: 989.114 deg/s
+                     || Pitch: -4.64349e-14 | Roll: 4.51866e-15 | Yaw: -3.5185e-13
+ || RSSI: -33 | SNR: 10.250000
+Received: 561081 || IMU TASK   || Ax: 0.0368652 Ay: -0.00415039 Az: 0.256287 g | Temp: 11.5771 C
+                     || Gx: 0.0989373 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -4.65433e-14 | Roll: 4.53434e-15 | Yaw: -3.52586e-13
+ || RSSI: -32 | SNR: 10.250000
+Received: 562121 || IMU TASK   || Ax: 0.0372925 Ay: -0.00726318 Az: 0.257202 g | Temp: 11.5829 C
+                     || Gx: -0.0995337 Gy: -0.249759 Gz: 0 deg/s
+                     || Pitch: -4.66202e-14 | Roll: 4.54486e-15 | Yaw: -3.53103e-13
+ || RSSI: -33 | SNR: 10.250000
+Received: 564227 || IMU TASK   || Ax: 0.0375977 Ay: -0.00689697 Az: 0.258728 g | Temp: 11.5535 C
+                     || Gx: 0.358476 Gy: 0.0861154 Gz: 0 deg/s
+                     || Pitch: -4.68377e-14 | Roll: 4.56971e-15 | Yaw: -3.54581e-13
+ || RSSI: -35 | SNR: 9.750000
+Received: 565277 || IMU TASK   || Ax: 0.0371704 Ay: -0.00512695 Az: 0.255981 g | Temp: 11.5888 C
+                     || Gx: -0.0231987 Gy: 0.177717 Gz: 0 deg/s
+                     || Pitch: -4.69324e-14 | Roll: 4.58204e-15 | Yaw: -3.55244e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 566345 || IMU TASK   || Ax: 0.0374756 Ay: -0.003479 Az: 0.256104 g | Temp: 11.5918 C
+                     || Gx: 0.23634 Gy: -0.234492 Gz: 0 deg/s
+                     || Pitch: -4.70392e-14 | Roll: 4.59499e-15 | Yaw: -3.55981e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 567410 || IMU TASK   || Ax: 0.0372314 Ay: -0.00378418 Az: 0.25531 g | Temp: 11.6065 C
+                     || Gx: -0.298005 Gy: 0.208251 Gz: 0 deg/s
+                     || Pitch: -4.71486e-14 | Roll: 4.60747e-15 | Yaw: -3.56717e-13
+ || RSSI: -36 | SNR: 9.500000
+Received: 568434 || IMU TASK   || Ax: 0.0379639 Ay: -0.00469971 Az: 0.256348 g | Temp: 72.8065 C
+                     || Gx: 0.114204 Gy: 0.223518 Gz: 1000.2 deg/s
+                     || Pitch: -4.72352e-14 | Roll: 4.61924e-15 | Yaw: -3.57307e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 569470 || IMU TASK   || Ax: 0.0376587 Ay: -0.00317383 Az: 0.256592 g | Temp: 11.6094 C
+                     || Gx: 0.0226023 Gy: -1000.06 Gz: 0 deg/s
+                     || Pitch: -4.73112e-14 | Roll: 4.62785e-15 | Yaw: -3.57823e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 570518 || IMU TASK   || Ax: 0.0405884 Ay: 0.00256348 Az: 0.257324 g | Temp: 11.6124 C
+                     || Gx: 1.06076 Gy: -997.063 Gz: 3.70561 deg/s
+                     || Pitch: -4.74146e-14 | Roll: 4.63794e-15 | Yaw: -3.58485e-13
+ || RSSI: -32 | SNR: 9.500000
+Received: 571536 || IMU TASK   || Ax: 0.0370483 Ay: -0.00500488 Az: 0.25769 g | Temp: 11.6329 C
+                     || Gx: 0.266874 Gy: 0.101382 Gz: 0 deg/s
+                     || Pitch: -4.74887e-14 | Roll: 4.64723e-15 | Yaw: -3.59001e-13
+ || RSSI: -34 | SNR: 10.250000
+Received: 572586 || IMU TASK   || Ax: 0.0527344 Ay: -0.00775146 Az: 0.256409 g | Temp: 11.6271 C
+                     || Gx: -0.37434 Gy: -2.05126 Gz: 52.4684 deg/s
+                     || Pitch: -4.75894e-14 | Roll: 4.66295e-15 | Yaw: -3.59664e-13
+ || RSSI: -62 | SNR: 10.500000
+Received: 573640 || IMU TASK   || Ax: 0.041748 Ay: -0.0180664 Az: 0.254944 g | Temp: 11.6329 C
+                     || Gx: 0.69435 Gy: -1000.01 Gz: 1000.08 deg/s
+                     || Pitch: -4.7655e-14 | Roll: 4.68694e-15 | Yaw: -3.60104e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 574350 || BME TASK   || Temp: 10.28 C | Pressure: 93042.1 Pa | humidity: 58.502 % | altitude (asl): 713.62 m | altitude (relative): 0.256947 m || RSSI: -35 | SNR: 9.500000
+Received: 574687 || IMU TASK   || Ax: 0.0354614 Ay: -0.012085 Az: 0.256531 g | Temp: 11.6565 C
+                     || Gx: -0.145335 Gy: 0.147183 Gz: 999.496 deg/s
+                     || Pitch: -4.77489e-14 | Roll: 4.72261e-15 | Yaw: -3.60767e-13
+ || RSSI: -35 | SNR: 9.250000
+Received: 575736 || IMU TASK   || Ax: 0.0375977 Ay: -0.00823975 Az: 0.255127 g | Temp: 11.6624 C
+                     || Gx: -0.267471 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -4.78417e-14 | Roll: 4.75617e-15 | Yaw: -3.61432e-13
+ || RSSI: -37 | SNR: 10.000000
+Received: 576807 || GPS_COMP   || Lat: 466449136 Long: -1171851078 (degrees * 10^-7) | Alt: 770.261 (m) | SIV: 28 | | Time: 2023-2-4 18:44:8:0 | Time is valid  Date is valid PDOP: 98 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccEst || RSSI: -50 | SNR: 9.750000
+Received: 577813 || IMU TASK   || Ax: 0.0404663 Ay: -0.00323486 Az: 0.25531 g | Temp: 11.6682 C
+                     || Gx: -0.191136 Gy: -0.371895 Gz: 0 deg/s
+                     || Pitch: -4.80036e-14 | Roll: 4.7985e-15 | Yaw: -3.62537e-13
+ || RSSI: -38 | SNR: 9.500000
+Received: 578873 || IMU TASK   || Ax: 0.0384521 Ay: -0.00860596 Az: 0.253784 g | Temp: 11.6888 C
+                     || Gx: -0.343806 Gy: 0.16245 Gz: 983.175 deg/s
+                     || Pitch: -4.81082e-14 | Roll: 4.80596e-15 | Yaw: -3.63273e-13
+ || RSSI: -35 | SNR: 10.500000
+Received: 579946 || IMU TASK   || Ax: 0.0435791 Ay: 0.0134277 Az: 0.258057 g | Temp: 11.6653 C
+                     || Gx: 0.755418 Gy: -0.677235 Gz: 0 deg/s
+                     || Pitch: -4.82162e-14 | Roll: 4.78952e-15 | Yaw: -3.64012e-13
+ || RSSI: -41 | SNR: 10.000000
+Received: 580993 || IMU TASK   || Ax: 0.0380859 Ay: -0.000183105 Az: 0.256165 g | Temp: 11.6918 C
+                     || Gx: 0.00733532 Gy: -0.127623 Gz: 0 deg/s
+                     || Pitch: -4.83089e-14 | Roll: 4.78456e-15 | Yaw: -3.64677e-13
+ || RSSI: -36 | SNR: 10.250000
+Received: 582042 || IMU TASK   || Ax: 0.0331421 Ay: 0.00219727 Az: 0.256775 g | Temp: 11.7006 C
+                     || Gx: -0.0537327 Gy: 0.0403144 Gz: 0 deg/s
+                     || Pitch: -4.83975e-14 | Roll: 4.77754e-15 | Yaw: -3.65341e-13
+ || RSSI: -38 | SNR: 9.250000
+Received: 583088 || IMU TASK   || Ax: 0.0343018 Ay: 0.003479 Az: 0.256531 g | Temp: 11.7006 C
+                     || Gx: -0.145335 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -4.85e-14 | Roll: 4.77104e-15 | Yaw: -3.66079e-13
+ || RSSI: -37 | SNR: 9.250000
+Received: 584106 || IMU TASK   || Ax: 0.0315552 Ay: 0.00299072 Az: 0.256409 g | Temp: 11.7124 C
+                     || Gx: -0.0842667 Gy: 0.360921 Gz: 999.908 deg/s
+                     || Pitch: -4.85705e-14 | Roll: 4.76764e-15 | Yaw: -3.66595e-13
+ || RSSI: -38 | SNR: 9.500000
+Received: 585169 || IMU TASK   || Ax: 0.0362549 Ay: -0.00323486 Az: 0.257996 g | Temp: 11.7329 C
+                     || Gx: -0.298005 Gy: -1000.02 Gz: 0 deg/s
+                     || Pitch: -4.88501e-14 | Roll: 4.51052e-15 | Yaw: -3.67236e-13
+ || RSSI: -37 | SNR: 10.000000
+Received: 586227 || IMU TASK   || Ax: 0.0411377 Ay: 0.00549316 Az: 0.257446 g | Temp: 11.7153 C
+                     || Gx: 0.373743 Gy: -0.509298 Gz: 0 deg/s
+                     || Pitch: -4.89558e-14 | Roll: 4.50209e-15 | Yaw: -3.67975e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 587274 || IMU TASK   || Ax: 0.039978 Ay: -0.00476074 Az: 0.255127 g | Temp: 11.7124 C
+                     || Gx: -2.37432 Gy: -1.04364 Gz: 999.633 deg/s
+                     || Pitch: -4.90452e-14 | Roll: 4.48951e-15 | Yaw: -3.68638e-13
+ || RSSI: -44 | SNR: 10.000000
+Received: 4ÄJgtqô∆ÙW";˝Ë—∂{ù§|C/F	x || RSSI: -121 | SNR: -10.000000
+Received: 588323 || IMU TASK   || Ax: 0.0249023 Ay: -0.00427246 Az: 0.25769 g | Temp: 11.7124 C
+                     || Gx: 0.266874 Gy: -1.62379 Gz: 999.221 deg/s
+                     || Pitch: -4.91428e-14 | Roll: 4.48435e-15 | Yaw: -3.69375e-13
+ || RSSI: -45 | SNR: 10.000000
+Received: 589368 || IMU TASK   || Ax: 0.0323486 Ay: 0.00274658 Az: 0.257324 g | Temp: 11.7476 C
+                     || Gx: 0.0989373 Gy: 0.223518 Gz: 0 deg/s
+                     || Pitch: -4.92282e-14 | Roll: 4.46562e-15 | Yaw: -3.7004e-13
+ || RSSI: -43 | SNR: 10.250000
+Received: 590442 || IMU TASK   || Ax: 0.0350952 Ay: 0.00299072 Az: 0.259277 g | Temp: 11.7565 C
+                     || Gx: -0.511743 Gy: -0.280293 Gz: 0 deg/s
+                     || Pitch: -4.93301e-14 | Roll: 4.4558e-15 | Yaw: -3.70777e-13
+ || RSSI: -37 | SNR: 9.500000
+Received: 591453 || IMU TASK   || Ax: 0.0356445 Ay: 0.00366211 Az: 0.257629 g | Temp: 11.7653 C
+                     || Gx: 0.160005 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -4.94116e-14 | Roll: 4.44829e-15 | Yaw: -3.71366e-13
+ || RSSI: -39 | SNR: 9.250000
+Received: 592500 || IMU TASK   || Ax: 0.0345459 Ay: 0.00311279 Az: 0.256409 g | Temp: 11.7741 C
+                     || Gx: 0.0836703 Gy: -0.310827 Gz: 0 deg/s
+                     || Pitch: -4.95139e-14 | Roll: 4.44166e-15 | Yaw: -3.72104e-13
+ || RSSI: -38 | SNR: 9.250000
+Received: 593517 || IMU TASK   || Ax: 0.0348511 Ay: 0.0055542 Az: 0.257019 g | Temp: 11.78 C
+                     || Gx: -0.710214 Gy: -0.341361 Gz: 0 deg/s
+                     || Pitch: -4.95851e-14 | Roll: 4.43495e-15 | Yaw: -3.72621e-13
+ || RSSI: -35 | SNR: 9.750000
+Received: 594577 || IMU TASK   || Ax: 0.0328979 Ay: -0.000671387 Az: 0.257385 g | Temp: 11.8006 C
+                     || Gx: -0.0537327 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -4.96881e-14 | Roll: 4.42944e-15 | Yaw: -3.73359e-13
+ || RSSI: -37 | SNR: 9.750000
+Received: 595594 || IMU TASK   || Ax: 0.0359497 Ay: -0.000366211 Az: 0.259644 g | Temp: 11.7976 C
+                     || Gx: -0.817083 Gy: -0.784104 Gz: 0 deg/s
+                     || Pitch: -4.97557e-14 | Roll: 4.42521e-15 | Yaw: -3.73874e-13
+ || RSSI: -37 | SNR: 10.500000
+Received: 596613 || IMU TASK   || Ax: 0.0349121 Ay: 0.0142212 Az: 0.254944 g | Temp: 11.7976 C
+                     || Gx: -1.96211 Gy: -0.738303 Gz: 999.602 deg/s
+                     || Pitch: -4.98156e-14 | Roll: 4.41853e-15 | Yaw: -3.74317e-13
+ || RSSI: -38 | SNR: 9.250000
+Received: 597662 || IMU TASK   || Ax: 0.0368042 Ay: 0.00164795 Az: 0.25647 g | Temp: 11.8212 C
+                     || Gx: -0.0689997 Gy: -999.734 Gz: 0 deg/s
+                     || Pitch: -4.99074e-14 | Roll: 4.41569e-15 | Yaw: -3.7498e-13
+ || RSSI: -35 | SNR: 9.750000
+Received: 598717 || IMU TASK   || Ax: 0.0289917 Ay: 0.00390625 Az: 0.258362 g | Temp: 11.8212 C
+                     || Gx: -0.893418 Gy: -0.570366 Gz: 0 deg/s
+                     || Pitch: -5.0006e-14 | Roll: 4.40906e-15 | Yaw: -3.75718e-13
+ || RSSI: -37 | SNR: 9.500000
+Received: 599771 || IMU TASK   || Ax: 0.0365601 Ay: 0.00494385 Az: 0.257202 g | Temp: 11.8182 C
+                     || Gx: -0.313272 Gy: 0.437256 Gz: 0 deg/s
+                     || Pitch: -5.01102e-14 | Roll: 4.40103e-15 | Yaw: -3.76454e-13
+ || RSSI: -38 | SNR: 9.500000
+Received: 600821 || IMU TASK   || Ax: 0.0435181 Ay: -0.0078125 Az: 0.254333 g | Temp: 11.8388 C
+                     || Gx: -0.0842667 Gy: -2.02073 Gz: 4.01095 deg/s
+                     || Pitch: -5.02101e-14 | Roll: 4.39484e-15 | Yaw: -3.7719e-13
+ || RSSI: -37 | SNR: 10.250000
+Received: 601858 || IMU TASK   || Ax: 0.0493774 Ay: 0.00457764 Az: 0.253357 g | Temp: 11.83 C
+                     || Gx: 0.99969 Gy: -0.494031 Gz: 0 deg/s
+                     || Pitch: -5.02989e-14 | Roll: 4.40592e-15 | Yaw: -3.77856e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 602877 || IMU TASK   || Ax: 0.0368042 Ay: -0.00164795 Az: 0.254639 g | Temp: 11.83 C
+                     || Gx: -0.496476 Gy: 0.360921 Gz: 0 deg/s
+                     || Pitch: -5.03926e-14 | Roll: 4.40801e-15 | Yaw: -3.78519e-13
+ || RSSI: -33 | SNR: 10.000000
+Received: 603898 || IMU TASK   || Ax: 0.0377197 Ay: -0.00592041 Az: 0.254578 g | Temp: 11.8476 C
+                     || Gx: 2.43479 Gy: -2.24974 Gz: 65.1553 deg/s
+                     || Pitch: -5.04638e-14 | Roll: 4.40992e-15 | Yaw: -3.79033e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 604763 || BME TASK   || Temp: 10.47 C | Pressure: 93038.7 Pa | humidity: 58.0459 % | altitude (asl): 713.931 m | altitude (relative): 0.572733 m || RSSI: -38 | SNR: 9.500000
+Received: 605925 || IMU TASK   || Ax: 0.0393677 Ay: -0.00469971 Az: 0.254639 g | Temp: 11.88 C
+                     || Gx: -1.12242 Gy: -0.356628 Gz: 998.381 deg/s
+                     || Pitch: -5.06355e-14 | Roll: 4.45708e-15 | Yaw: -3.80212e-13
+ || RSSI: -45 | SNR: 9.500000
+Received: 606984 || IMU TASK   || Ax: 0.0368042 Ay: -0.00610352 Az: 0.256042 g | Temp: 11.8535 C
+                     || Gx: 0.312675 Gy: 0.452523 Gz: 0 deg/s
+                     || Pitch: -5.07426e-14 | Roll: 4.48193e-15 | Yaw: -3.80948e-13
+ || RSSI: -45 | SNR: 9.500000
+Received: 607441 || GPS_COMP   || Lat: 466449148 Long: -1171851170 (degrees * 10^-7) | Alt: 771.169 (m) | SIV: 28 | | Time: 2023-2-4 18:44:38:0 | Time is valid  Date is valid PDOP: 96 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccEs || RSSI: -41 | SNR: 10.500000
+Received: 608004 || IMU TASK   || Ax: 0.0379639 Ay: -0.0106201 Az: 0.255005 g | Temp: 11.8976 C
+                     || Gx: -0.145335 Gy: -999.841 Gz: 0 deg/s
+                     || Pitch: -5.0806e-14 | Roll: 4.49693e-15 | Yaw: -3.81385e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 609060 || IMU TASK   || Ax: 0.0393677 Ay: -0.0126343 Az: 0.256531 g | Temp: 11.8947 C
+                     || Gx: 0.160005 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -5.09165e-14 | Roll: 4.52403e-15 | Yaw: -3.82119e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 610084 || IMU TASK   || Ax: 0.0374146 Ay: -0.0102539 Az: 0.256104 g | Temp: 11.8859 C
+                     || Gx: -0.0537327 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -5.09936e-14 | Roll: 4.5423e-15 | Yaw: -3.82634e-13
+ || RSSI: -39 | SNR: 10.500000
+Received: 611145 || IMU TASK   || Ax: 0.0370483 Ay: -0.00976562 Az: 0.256287 g | Temp: 11.8947 C
+                     || Gx: -0.114801 Gy: -0.29556 Gz: 999.877 deg/s
+                     || Pitch: -5.11048e-14 | Roll: 4.56742e-15 | Yaw: -3.8337e-13
+ || RSSI: -42 | SNR: 11.000000
+Received: 612193 || IMU TASK   || Ax: 0.0390015 Ay: -0.00671387 Az: 0.255981 g | Temp: 11.9124 C
+                     || Gx: -0.160602 Gy: 0.0861154 Gz: 0 deg/s
+                     || Pitch: -5.12167e-14 | Roll: 4.5908e-15 | Yaw: -3.84105e-13
+ || RSSI: -44 | SNR: 10.000000
+Received: 613249 || IMU TASK   || Ax: 0.0371094 Ay: -0.00494385 Az: 0.256714 g | Temp: 11.9094 C
+                     || Gx: -0.0537327 Gy: -0.371895 Gz: 0 deg/s
+                     || Pitch: -5.13302e-14 | Roll: 4.61645e-15 | Yaw: -3.84842e-13
+ || RSSI: -48 | SNR: 10.250000
+Received: 614306 || IMU TASK   || Ax: 0.0376587 Ay: -0.00830078 Az: 0.255127 g | Temp: 11.9006 C
+                     || Gx: -0.465942 Gy: 0.0861154 Gz: 999.908 deg/s
+                     || Pitch: -5.14323e-14 | Roll: 4.63569e-15 | Yaw: -3.85507e-13
+ || RSSI: -48 | SNR: 9.250000
+Received: 615364 || IMU TASK   || Ax: 0.0421143 Ay: -0.000366211 Az: 0.255859 g | Temp: 11.9271 C
+                     || Gx: 0.114204 Gy: 0.0861154 Gz: 0 deg/s
+                     || Pitch: -5.1537e-14 | Roll: 4.65881e-15 | Yaw: -3.86169e-13
+ || RSSI: -37 | SNR: 9.750000
+Received: 616418 || IMU TASK   || Ax: 0.03302 Ay: -0.0126343 Az: 0.256714 g | Temp: 11.9271 C
+                     || Gx: -0.862884 Gy: -999.582 Gz: 0 deg/s
+                     || Pitch: -5.16546e-14 | Roll: 4.69773e-15 | Yaw: -3.86904e-13
+ || RSSI: -42 | SNR: 9.750000
+Received: 617466 || IMU TASK   || Ax: 0.0414429 Ay: -0.00708008 Az: 0.256714 g | Temp: 11.9359 C
+                     || Gx: 0.740151 Gy: -998.33 Gz: 0 deg/s
+                     || Pitch: -5.17518e-14 | Roll: 4.72139e-15 | Yaw: -3.87567e-13
+ || RSSI: -34 | SNR: 10.000000
+Received: 618526 || IMU TASK   || Ax: 0.0333252 Ay: -0.00787354 Az: 0.256653 g | Temp: 11.9388 C
+                     || Gx: -0.359073 Gy: -0.127623 Gz: 999.694 deg/s
+                     || Pitch: -5.21705e-14 | Roll: 4.42618e-15 | Yaw: -3.88615e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 619584 || IMU TASK   || Ax: 0.0579834 Ay: -0.0232544 Az: 0.257324 g | Temp: 11.9565 C
+                     || Gx: -0.862884 Gy: -2.61614 Gz: 0 deg/s
+                     || Pitch: -5.22834e-14 | Roll: 4.4642e-15 | Yaw: -3.89352e-13
+ || RSSI: -45 | SNR: 10.250000
+Received: 620627 || IMU TASK   || Ax: 0.039917 Ay: -0.0123901 Az: 0.255981 g | Temp: 11.9476 C
+                     || Gx: 0.129471 Gy: -0.738303 Gz: 0 deg/s
+                     || Pitch: -5.23421e-14 | Roll: 4.4772e-15 | Yaw: -3.8972e-13
+ || RSSI: -47 | SNR: 9.500000
+Received: 621682 || IMU TASK   || Ax: 0.0491943 Ay: -0.0167236 Az: 0.256958 g | Temp: 11.9624 C
+                     || Gx: 5.62559 Gy: -998.223 Gz: 0 deg/s
+                     || Pitch: -5.24583e-14 | Roll: 4.51261e-15 | Yaw: -3.90454e-13
+ || RSSI: -51 | SNR: 9.500000
+Received: 622733 || IMU TASK   || Ax: 0.0407104 Ay: -0.0236206 Az: 0.250916 g | Temp: 11.9682 C
+                     || Gx: 1.15236 Gy: 0.223518 Gz: 998.457 deg/s
+                     || Pitch: -5.25766e-14 | Roll: 4.54439e-15 | Yaw: -3.91186e-13
+ || RSSI: -48 | SNR: 9.500000
+Received: 623780 || IMU TASK   || Ax: 0.0410767 Ay: -0.0137329 Az: 0.256714 g | Temp: 11.9682 C
+                     || Gx: 1.6409 Gy: -999.246 Gz: 997.938 deg/s
+                     || Pitch: -5.26727e-14 | Roll: 4.56945e-15 | Yaw: -3.91847e-13
+ || RSSI: -37 | SNR: 11.000000
+Received: 624845 || IMU TASK   || Ax: 0.038208 Ay: -0.0109253 Az: 0.255249 g | Temp: 12.0035 C
+                     || Gx: 0.0531363 Gy: 0.299853 Gz: 0 deg/s
+                     || Pitch: -5.27798e-14 | Roll: 4.59662e-15 | Yaw: -3.92583e-13
+ || RSSI: -40 | SNR: 10.250000
+Received: 625892 || IMU TASK   || Ax: 0.0352173 Ay: -0.00726318 Az: 0.256165 g | Temp: 11.9976 C
+                     || Gx: -0.130068 Gy: 0.223518 Gz: 0 deg/s
+                     || Pitch: -5.28757e-14 | Roll: 4.61972e-15 | Yaw: -3.93247e-13
+ || RSSI: -45 | SNR: 9.750000
+Received: 626948 || IMU TASK   || Ax: 0.03479 Ay: -0.0124512 Az: 0.256897 g | Temp: 11.9859 C
+                     || Gx: -0.252204 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -5.298e-14 | Roll: 4.65106e-15 | Yaw: -3.93988e-13
+ || RSSI: -36 | SNR: 9.500000
+Received: 628006 || IMU TASK   || Ax: 0.0383911 Ay: -0.0100708 Az: 0.256348 g | Temp: 12.0006 C
+                     || Gx: -0.0842667 Gy: 0.330387 Gz: 0 deg/s
+                     || Pitch: -5.30896e-14 | Roll: 4.67698e-15 | Yaw: -3.94724e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 629029 || IMU TASK   || Ax: 0.0429077 Ay: -0.0109253 Az: 0.255493 g | Temp: 12.0182 C
+                     || Gx: -0.0384657 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -5.31659e-14 | Roll: 4.69662e-15 | Yaw: -3.9524e-13
+ || RSSI: -39 | SNR: 9.750000
+Received: 630091 || IMU TASK   || Ax: 0.036377 Ay: -0.00805664 Az: 0.255737 g | Temp: 12.0153 C
+                     || Gx: 0.266874 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -5.3271e-14 | Roll: 4.72333e-15 | Yaw: -3.95976e-13
+ || RSSI: -41 | SNR: 9.750000
+Received: 631113 || IMU TASK   || Ax: 0.0374146 Ay: -0.00549316 Az: 0.256409 g | Temp: 12.0212 C
+                     || Gx: 0.282141 Gy: 0.147183 Gz: 0 deg/s
+                     || Pitch: -5.33473e-14 | Roll: 4.74178e-15 | Yaw: -3.96491e-13
+ || RSSI: -37 | SNR: 9.750000
+Received: 632168 || IMU TASK   || Ax: 0.0371704 Ay: -0.00946045 Az: 0.256042 g | Temp: 12.0241 C
+                     || Gx: -0.130068 Gy: -0.280293 Gz: 0 deg/s
+                     || Pitch: -5.34551e-14 | Roll: 4.77044e-15 | Yaw: -3.97224e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 633162 || THERM_COMP || Internal: 97.5044 C | External: 6.23824 C || RSSI: -35 | SNR: 9.250000
+Received: 633228 || IMU TASK   || Ax: 0.0335083 Ay: -0.00494385 Az: 0.257507 g | Temp: 12.0094 C
+                     || Gx: 0.327942 Gy: -0.463497 Gz: 0 deg/s
+                     || Pitch: -5.35618e-14 | Roll: 4.79601e-15 | Yaw: -3.9796e-13
+ || RSSI: -39 | SNR: 9.500000
+Received: 634295 || IMU TASK   || Ax: 0.0368042 Ay: -0.0112915 Az: 0.256897 g | Temp: 12.0447 C
+                     || Gx: 0.175272 Gy: -0.188691 Gz: 0 deg/s
+                     || Pitch: -5.36606e-14 | Roll: 4.8212e-15 | Yaw: -3.98623e-13
+ || RSSI: -37 | SNR: 9.750000
+Received: 634788 || BME TASK   || Temp: 10.35 C | Pressure: 92992.4 Pa | humidity: 57.4951 % | altitude (asl): 718.063 m | altitude (relative): 4.7724 m || RSSI: -42 | SNR: 9.250000
+Received: 635344 || IMU TASK   || Ax: 0.0396729 Ay: -0.00177002 Az: 0.255859 g | Temp: 12.0241 C
+                     || Gx: -0.130068 Gy: -999.658 Gz: 0 deg/s
+                     || Pitch: -5.37674e-14 | Roll: 4.84826e-15 | Yaw: -3.99361e-13
+ || RSSI: -34 | SNR: 9.250000
+Received: 636403 || IMU TASK   || Ax: 0.0284424 Ay: -0.00653076 Az: 0.257874 g | Temp: 12.0418 C
+                     || Gx: -0.450675 Gy: -999.368 Gz: 0 deg/s
+                     || Pitch: -5.38763e-14 | Roll: 4.87695e-15 | Yaw: -4.00096e-13
+ || RSSI: -30 | SNR: 9.500000
+Received: 637459 || IMU TASK   || Ax: 0.0324097 Ay: -0.00756836 Az: 0.256653 g | Temp: 12.0565 C
+                     || Gx: 0.526413 Gy: -0.463497 Gz: 0 deg/s
+                     || Pitch: -5.39856e-14 | Roll: 4.903e-15 | Yaw: -4.00833e-13
+ || RSSI: -34 | SNR: 10.250000
+Received: 638494 || IMU TASK   || Ax: 0.0384521 Ay: -0.0057373 Az: 0.256958 g | Temp: 12.0741 C
+                     || Gx: 0.495879 Gy: -0.29556 Gz: 0 deg/s
+                     || Pitch: -5.43087e-14 | Roll: 4.69466e-15 | Yaw: -4.01548e-13
+ || RSSI: -32 | SNR: 9.750000
+Received: 639499 || GPS_COMP   || Lat: 466449170 Long: -1171851144 (degrees * 10^-7) | Alt: 770.624 (m) | SIV: 28 | | Time: 2023-2-4 18:45:11:0 | Time is valid  Date is valid PDOP: 96 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccEs || RSSI: -31 | SNR: 10.250000
+Received: 640603 || IMU TASK   || Ax: 0.0366211 Ay: -0.00567627 Az: 0.25177 g | Temp: 12.0712 C
+                     || Gx: -0.572811 Gy: -999.765 Gz: 0 deg/s
+                     || Pitch: -5.44573e-14 | Roll: 4.72993e-15 | Yaw: -4.02581e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 641665 || IMU TASK   || Ax: 0.036438 Ay: -0.00726318 Az: 0.256165 g | Temp: 12.0918 C
+                     || Gx: 0.434811 Gy: -0.555099 Gz: 0 deg/s
+                     || Pitch: -5.45651e-14 | Roll: 4.75781e-15 | Yaw: -4.03317e-13
+ || RSSI: -30 | SNR: 9.500000
+Received: 642723 || IMU TASK   || Ax: 0.0387573 Ay: -0.0113525 Az: 0.256042 g | Temp: 12.0918 C
+                     || Gx: -0.114801 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -5.46741e-14 | Roll: 4.78558e-15 | Yaw: -4.04053e-13
+ || RSSI: -30 | SNR: 9.750000
+Received: 643779 || IMU TASK   || Ax: 0.0372925 Ay: -0.0100098 Az: 0.256897 g | Temp: 12.0976 C
+                     || Gx: -0.22167 Gy: 0.0555814 Gz: 0 deg/s
+                     || Pitch: -5.47827e-14 | Roll: 4.81253e-15 | Yaw: -4.04789e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 644845 || IMU TASK   || Ax: 0.0390015 Ay: -0.00665283 Az: 0.255371 g | Temp: 12.0976 C
+                     || Gx: 0.404277 Gy: 0.330387 Gz: 0 deg/s
+                     || Pitch: -5.48927e-14 | Roll: 4.8393e-15 | Yaw: -4.05524e-13
+ || RSSI: -33 | SNR: 10.000000
+Received: 645895 || IMU TASK   || Ax: 0.0351562 Ay: -0.0112305 Az: 0.255493 g | Temp: 12.1006 C
+                     || Gx: -0.389607 Gy: 0.116649 Gz: 0 deg/s
+                     || Pitch: -5.49989e-14 | Roll: 4.86992e-15 | Yaw: -4.0626e-13
+ || RSSI: -32 | SNR: 10.000000
+Received: 646910 || IMU TASK   || Ax: 0.0473022 Ay: -0.026001 Az: 0.257751 g | Temp: 12.1006 C
+                     || Gx: -1.42776 Gy: -1.74592 Gz: 0 deg/s
+                     || Pitch: -5.50972e-14 | Roll: 4.90256e-15 | Yaw: -4.06923e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 647921 || IMU TASK   || Ax: 0.0339355 Ay: -0.0178223 Az: 0.259338 g | Temp: 12.1182 C
+                     || Gx: 0.0836703 Gy: -999.429 Gz: 999.755 deg/s
+                     || Pitch: -5.51971e-14 | Roll: 4.92024e-15 | Yaw: -4.07512e-13
+ || RSSI: -35 | SNR: 10.000000
+Received: 648969 || IMU TASK   || Ax: 0.0303955 Ay: -0.0147095 Az: 0.255981 g | Temp: 12.1271 C
+                     || Gx: 0.343209 Gy: -1.63906 Gz: 0 deg/s
+                     || Pitch: -5.52925e-14 | Roll: 4.94181e-15 | Yaw: -4.08175e-13
+ || RSSI: -34 | SNR: 10.250000
+Received: 649861 || BME TASK   || Temp: 10.72 C | Pressure: 93036.1 Pa | humidity: 57.2998 % | altitude (asl): 714.164 m | altitude (relative): 0.809579 m || RSSI: -38 | SNR: 9.000000
+Received: 651021 || IMU TASK   || Ax: 0.0420532 Ay: -0.00860596 Az: 0.255493 g | Temp: 12.1476 C
+                     || Gx: -0.130068 Gy: 0.116649 Gz: 0 deg/s
+                     || Pitch: -5.54558e-14 | Roll: 4.97342e-15 | Yaw: -4.09278e-13
+ || RSSI: -44 | SNR: 9.750000
+Received: 652049 || IMU TASK   || Ax: 0.0367432 Ay: -0.00811768 Az: 0.256775 g | Temp: 12.1241 C
+                     || Gx: 0.175272 Gy: 0.116649 Gz: 0 deg/s
+                     || Pitch: -5.55319e-14 | Roll: 4.99092e-15 | Yaw: -4.09795e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 653164 || IMU TASã Ï‡|º`Qq:§5.<;-0`œÂI	,-0¶00w26318 "z: 0.25592 g | Temp: 12.1535 C
+                     || Gx: 0.00733532 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -5.56061e-14 | Roll: 5.01081e-15 | Yaw: -4.10309e-13
+ || RSSI: -27 | SNR: 9.000000
+Received: 654222 || IMU TASK   || Ax: 0.0388794 Ay: -0.00958252 Az: 0.255066 g | Temp: 12.1741 C
+                     || Gx: -0.0842667 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -5.57162e-14 | Roll: 5.03617e-15 | Yaw: -4.11045e-13
+ || RSSI: -28 | SNR: 10.000000
+Received: 655281 || IMU TASK   || Ax: 0.0377808 Ay: -0.00915527 Az: 0.256104 g | Temp: 12.1682 C
+                     || Gx: -0.0231987 Gy: 0.0250474 Gz: 0 deg/s
+                     || Pitch: -5.58255e-14 | Roll: 5.0612e-15 | Yaw: -4.11782e-13
+ || RSSI: -28 | SNR: 10.000000
+Received: 656330 || IMU TASK   || Ax: 0.0387573 Ay: -0.00793457 Az: 0.256897 g | Temp: 12.1859 C
+                     || Gx: -0.0842667 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -5.59243e-14 | Roll: 5.08402e-15 | Yaw: -4.12445e-13
+ || RSSI: -32 | SNR: 9.250000
+Received: 657379 || IMU TASK   || Ax: 0.0384521 Ay: -0.00982666 Az: 0.256348 g | Temp: 12.1653 C
+                     || Gx: 0.0378693 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -5.60225e-14 | Roll: 5.1074e-15 | Yaw: -4.13107e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 658436 || IMU TASK   || Ax: 0.038269 Ay: -0.00946045 Az: 0.255249 g | Temp: 12.1888 C
+                     || Gx: -0.298005 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -5.61316e-14 | Roll: 5.13337e-15 | Yaw: -4.13843e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 659493 || IMU TASK   || Ax: 0.0368652 Ay: -0.00793457 Az: 0.25647 g | Temp: 12.1947 C
+                     || Gx: -0.404874 Gy: -0é≤417ø9Jfö3ÈY0$eg@o                     || Pitch: -5.62389e-14 | Roll: 5.16038e-15 | Yaw: -4.1458e-13
+ || RSSI: -29 | SNR: 9.250000
+Received: 660510 || IMU TASK   || Ax: 0.0330811 Ay: -0.00640869 Az: 0.256775 g | Temp: 12.2006 C
+                     || Gx: -0.404874 Gy: -0.280293 Gz: 0 deg/s
+                     || Pitch: -5.63008e-14 | Roll: 5.17569e-15 | Yaw: || RSSI: -28 | SNR: -2.250000
+Received: 661537 || IMU TASK   || Ax: 0.0325317 Ay: -0.0090332 Az: 0.256409 g | Temp: 12.2035 C
+                     || Gx: -0.465942 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -5.63841e-14 | Roll: 5.19491e-15 | Yaw: -4.15613e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 662587 || IMU TASK   || Ax: 0.039978 Ay: -0.00262451 Az: 0.244934 g | Temp: 12.2124 C
+                     || Gx: -2.48119 Gy: -3.97491 Gz: 998.931 deg/s
+                     || Pitch: -5.64863e-14 | Roll: 5.2188e-15 | Yaw: -4.16271e-13
+ || RSSI: -32 | SNR: 9.500000
+Received: 663332 || THERM_COMP || Internal: 99.312 C | External: 6.31317 C || RSSI: -32 | SNR: 9.500000
+Received: 663623 || IMU TASK   || Ax: 0.0421753 Ay: -0.0100708 Az: 0.25531 g | Temp: 12.2212 C
+                     || Gx: 0.114204 Gy: -0.875706 Gz: 0 deg/s
+                     || Pitch: -5.65655e-14 | Roll: 5.23664e-15 | Yaw: -4.16786e-13
+ || RSSI: -32 | SNR: 10.000000
+Received: 664680 || IMU TASK   || Ax: 0.041687 Ay: -0.0137939 Az: 0.255554 g | Temp: 12.2241 C
+                     || Gx: -0.22167 Gy: -999.414 Gz: 0 deg/s
+                     || Pitch: -5.66639e-14 | Roll: 5.26086e-15 | Yaw: -4.17451e-13
+ || RSSI: -42 | SNR: 9.500000
+Received: 665737 || IMU TASK   || Ax: 0.0368652 Ay: -0.0125732 Az: 0.259583 g | Temp: 12.23 C
+                     || Gx: 0.526413 Gy: -999.75 Gz: 0 deg/s
+                     || Pitch: -5.67547e-14 | Roll: 5.28871e-15 | Yaw: -4.1804e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 666785 || IMU TASK   || Ax: 0.0374146 Ay: -0.00726318 Az: 0.256592 g | Temp: 12.2271 C
+                     || Gx: 0.129471 Gy: -0.14289 Gz: 0 deg/s
+                     || Pitch: -5.68546e-14 | Roll: 5.30958e-15 | Yaw: -4.18703e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 667824 || IMU TASK   || Ax: 0.0384521 Ay: -0.00939941 Az: 0.255737 g | Temp: 12.2418 C
+                     || Gx: 0.00733532 Gy: -0.0970886 Gz: 0 deg/s
+                     || Pitch: -5.71718e-14 | Roll: 5.10373e-15 | Yaw: -4.19342e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 668873 || IMU TASK   || Ax: 0.0374146 Ay: -0.00836182 Az: 0.256409 g | Temp: 12.2476 C
+                     || Gx: -0.0537327 Gy: -0.14289 Gz: 0 deg/s
+                     || Pitch: -5.72802e-14 | Roll: 5.12792e-15 | Yaw: -4.20079e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 669898 || IMU TASK   || Ax: 0.0380249 Ay: -0.00842285 Az: 0.25647 g | Temp: 12.2506 C
+                     || Gx: -0.00793168 Gy: -0.0970886 Gz: 0 deg/s
+                     || Pitch: -5.73783e-14 | Roll: 5.15042e-15 | Yaw: -4.20742e-13
+ || RSSI: -32 | SNR: 9.500000
+Received: 670916 || IMU TASK   || Ax: 0.0371704 Ay: -0.00738525 Az: 0.25647 g | Temp: 12.2535 C
+                     || Gx: 0.00733532 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -5.74757e-14 | Roll: 5.17215e-15 | Yaw: -4.21405e-13
+ || RSSI: -35 | SNR: 10.750000
+Received: 671850 || GPS_COMP   || Lat: 466449178 Long: -1171851091 (degrees * 10^-7) | Alt: 770.501 (m) | SIV: 28 | | Time: 2023-2-4 18:45:43:0 | Time is valid  Date is valid PDOP: 101 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccE || RSSI: -35 | SNR: 9.750000
+Received: 672993 || IMU TASK   || Ax: 0.0379639 Ay: -0.00939941 Az: 0.256348 g | Temp: 12.2829 C
+                     || Gx: 0.0989373 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -5.76715e-14 | Roll: 5.21663e-15 | Yaw: -4.2273e-13
+ || RSSI: -44 | SNR: 9.500000
+Received: 674041 || IMU TASK   || Ax: 0.0374756 Ay: -0.00891113 Az: 0.256104 g | Temp: 12.2682 C
+                     || Gx: 0.0989373 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -5.77695e-14 | Roll: 5.23874e-15 | Yaw: -4.23393e-13
+ || RSSI: -38 | SNR: 10.500000
+Received: 675063 || IMU TASK   || Ax: 0.0375366 Ay: -0.00909424 Az: 0.255066 g | Temp: 12.2888 C
+                     || Gx: 0.0836703 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -5.78455e-14 | Roll: 5.25635e-15 | Yaw: -4.23908e-13
+ || RSSI: -31 | SNR: 10.000000
+Received: 676122 || IMU TASK   || Ax: 0.038269 Ay: -0.00915527 Az: 0.255737 g | Temp: 12.2859 C
+                     || Gx: 0.0531363 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -5.81276e-14 | Roll: 5.05513e-15 | Yaw: -4.24587e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 677182 || IMU TASK   || Ax: 0.0371704 Ay: -0.00860596 Az: 0.256897 g | Temp: 12.2859 C
+                     || Gx: 0.0378693 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -5.8236e-14 | Roll: 5.07942e-15 | Yaw: -4.25323e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 678238 || IMU TASK   || Ax: 0.0377808 Ay: -0.00775146 Az: 0.256348 g | Temp: 12.2888 C
+                     || Gx: -0.0384657 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -5.83341e-14 | Roll: 5.10208e-15 | Yaw: -4.25987e-13
+ || RSSI: -32 | SNR: 9.500000
+Received: 679286 || IMU TASK   || Ax: 0.0385742 Ay: -0.00909424 Az: 0.255493 g | Temp: 12.3094 C
+                     || Gx: -0.22167 Gy: 0.0250474 Gz: 0 deg/s
+                     || Pitch: -5.8434e-14 | Roll: 5.12446e-15 | Yaw: -4.26652e-13
+ || RSSI: -32 | SNR: 9.250000
+Received: 680104 || BME TASK   || Temp: 10.87 C | Pressure: 93036.1 Pa | humidity: 56.7949 % | altitude (asl): 714.159 m | altitude (relative): 0.804551 m || RSSI: -42 | SNR: 9.500000
+Received: 681396 || IMU TASK   || Ax: 0.0404663 Ay: -0.00842285 Az: 0.255981 g | Temp: 12.3212 C
+                     || Gx: 0.556947 Gy: 0.16245 Gz: 0 deg/s
+                     || Pitch: -5.86494e-14 | Roll: 5.17264e-15 | Yaw: -4.28123e-13
+ || RSSI: -48 | SNR: 9.750000
+Received: 682453 || IMU TASK   || Ax: 0.0401001 Ay: -0.00543213 Az: 0.255371 g | Temp: 12.3182 C
+                     || Gx: -1.03082 Gy: -0.280293 Gz: 0 deg/s
+                     || Pitch: -5.87574e-14 | Roll: 5.19462e-15 | Yaw: -4.28858e-13
+ || RSSI: -44 | SNR: 9.750000
+Received: 683502 || IMU TASK   || Ax: 0.0522461 Ay: -0.0419922 Az: 0.270935 g | Temp: 12.3182 C
+                     || Gx: -23.6718 Gy: -996.651 Gz: 15.0185 deg/s
+                     || Pitch: -5.88941e-14 | Roll: 5.27263e-15 | Yaw: -4.29507e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 684559 || IMU TASK   || Ax: 0.0756836 Ay: -0.0471191 Az: 0.24408 g | Temp: 12.3565 C
+                     || Gx: -38.5266 Gy: -993.796 Gz: 958.382 deg/s
+                     || Pitch: -5.90688e-14 | Roll: 5.40624e-15 | Yaw: -4.30219e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 685589 || IMU TASK   || Ax: 0.0911255 Ay: -0.0528564 Az: 0.241089 g | Temp: 12.3388 C
+                     || Gx: -981.478 Gy: -16.7229 Gz: 81.4299 deg/s
+                     || Pitch: -5.92044e-14 | Roll: 5.50144e-15 | Yaw: -4.30715e-13
+ || RSSI: -34 | SNR: 9.250000
+Received: 686615 || IMU TASK   || Ax: 0.0582275 Ay: -0.0557861 Az: 0.238892 g | Temp: 12.3388 C
+                     || Gx: 3.41188 Gy: -988.422 Gz: 934.947 deg/s
+                     || Pitch: -5.93289e-14 | Roll: 5.61044e-15 | Yaw: -4.31212e-13
+ || RSSI: -45 | SNR: 9.750000
+Received: 687669 || IMU TASK   || Ax: 0.0606689 Ay: -0.0460815 Az: 0.245605 g | Temp: 12.3447 C
+                     || Gx: -5.18344 Gy: -993.17 Gz: 977.358 deg/s
+                     || Pitch: -5.95027e-14 | Roll: 5.74689e-15 | Yaw: -4.31916e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 688725 || IMU TASK   || Ax: 0.0393677 Ay: -0.0408325 Az: 0.416321 g | Temp: 12.3653 C
+                     || Gx: -4.31323 Gy: -5.3184 Gz: 998.778 deg/s
+                     || Pitch: -5.96618e-14 | Roll: 5.86999e-15 | Yaw: -4.32684e-13
+ || RSSI: -29 | SNR: 9.750000
+Received: 689783 || IMU TASK   || Ax: 0.0383911 Ay: -0.00628662 Az: 0.255371 g | Temp: 12.3624 C
+                     || Gx: -974.714 Gy: -966.88 Gz: 6.6674 deg/s
+                     || Pitch: -5.98421e-14 | Roll: 5.99955e-15 | Yaw: -4.33394e-13
+ || RSSI: -35 | SNR: 10.000000
+Received: 690833 || IMU TASK   || Ax: 0.0317383 Ay: 0.0165405 Az: 0.279358 g | Temp: 12.3624 C
+                     || Gx: -6.57274 Gy: -7.77639 Gz: 934.504 deg/s
+                     || Pitch: -5.99517e-14 | Roll: 5.94479e-15 | Yaw: -4.34133e-13
+ || RSSI: -41 | SNR: 9.500000
+Received: 691890 || IMU TASK   || Ax: -0.00518799 Ay: 0.0258179 Az: 0.242981 g | Temp: 12.3741 C
+                     || Gx: -15.6719 Gy: -3.63903 Gz: 984.442 deg/s
+                     || Pitch: -5.99902e-14 | Roll: 5.85968e-15 | Yaw: -4.34868e-13
+ || RSSI: -48 | SNR: 10.500000
+Received: 692948 || IMU TASK   || Ax: 0.0246582 Ay: 0.0237427 Az: 0.252197 g | Temp: 12.3565 C
+                     || Gx: -7.85517 Gy: -981.002 Gz: 993.877 deg/s
+                     || Pitch: -6.0048e-14 | Roll: 5.79838e-15 | Yaw: -4.35593e-13
+ || RSSI: -35 | SNR: 10.500000
+Received: 693525 || THERM_COMP || Internal: 102.534 C | External: 9.55847 C || RSSI: -34 | SNR: 9.750000
+Received: 693965 || IMU TASK   || Ax: 0.00152588 Ay: -0.00482178 Az: 0.257141 g | Temp: 12.3682 C
+                     || Gx: 3.62561 Gy: -2.96728 Gz: 34.835 deg/s
+                     || Pitch: -6.00884e-14 | Roll: 5.76641e-15 | Yaw: -4.36175e-13
+ || RSSI: -37 | SNR: 9.250000
+Received: 694984 || IMU TASK   || Ax: 0.0326538 Ay: 0.00244141 Az: 0.256836 g | Temp: 12.4035 C
+                     || Gx: -0.175869 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -6.01541e-14 | Roll: 5.76208e-15 | Yaw: -4.36692e-13
+ || RSSI: -33 | SNR: 10.250000
+Received: 696037 || IMU TASK   || Ax: 0.0324707 Ay: 0.00164795 Az: 0.257568 g | Temp: 12.3918 C
+                     || Gx: 0.190539 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -6.0212e-14 | Roll: 5.75748e-15 | Yaw: -4.37134e-13
+ || RSSI: -43 | SNR: 9.500000
+Received: 697190 || IMU TASK   || Ax: 0.03125 Ay: 0.0101929 Az: 0.255737 g | Temp: 12.4094 C
+                     || Gx: 0.69435 Gy: -0.463497 Gz: 0 deg/s
+                     || Pitch: -6.03079e-14 | Roll: 5.74673e-15 | Yaw: -4.37874e-13
+ || RSSI: -41 | SNR: 10.000000
+Received: 698251 || IMU TASK   || Ax: 0.0355225 Ay: 0.00714111 Az: 0.256165 g | Temp: 12.4094 C
+                     || Gx: 0.251607 Gy: -0.127623 Gz: 0 deg/s
+                     || Pitch: -6.0594e-14 | Roll: 5.49605e-15 | Yaw: -4.38763e-13
+ || RSSI: -36 | SNR: 10.250000
+Received: 699299 || IMU TASK   || Ax: 0.0338135 Ay: 0.00292969 Az: 0.256958 g | Temp: 12.43 C
+                     || Gx: -0.00793168 Gy: 0.0250474 Gz: 0 deg/s
+                     || Pitch: -6.0689e-14 | Roll: 5.48951e-15 | Yaw: -4.39501e-13
+ || RSSI: -41 | SNR: 9.500000
+Received: 700375 || IMU TASK   || Ax: 0.0336304 Ay: 0.00268555 Az: 0.25592 g | Temp: 12.4094 C
+                     || Gx: 0.205806 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -6.07845e-14 | Roll: 5.48211e-15 | Yaw: -4.40239e-13
+ || RSSI: -40 | SNR: 10.000000
+Received: 701430 || IMU TASK   || Ax: 0.0349731 Ay: 0.00256348 Az: 0.256165 g | Temp: 12.4359 C
+                     || Gx: -0.236937 Gy: 0.0861154 Gz: 0 deg/s
+                     || Pitch: -6.08804e-14 | Roll: 5.4748e-15 | Yaw: -4.40976e-13
+ || RSSI: -43 | SNR: 9.500000
+Received: 702488 || IMU TASK   || Ax: 0.0357056 Ay: 0.00317383 Az: 0.256165 g | Temp: 12.4388 C
+                     || Gx: -0.359073 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -6.09729e-14 | Roll: 5.46578e-15 | Yaw: -4.41714e-13
+ || RSSI: -34 | SNR: 10.000000
+Received: 703057 || GPS_COMP   || Lat: 466449169 Long: -1171851092 (degrees * 10^-7) | Alt: 769.769 (m) | SIV: 27 | | Time: 2023-2-4 18:46:14:0 | Time is valid  Date is valid PDOP: 98 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccEs || RSSI: -36 | SNR: 10.250000
+Received: 703573 || IMU TASK   || Ax: 0.0335693 Ay: 0.00653076 Az: 0.259766 g | Temp: 12.4359 C
+                     || Gx: -0.710214 Gy: -0.310827 Gz: 0 deg/s
+                     || Pitch: -6.10405e-14 | Roll: 5.45998e-15 | Yaw: -4.42233e-13
+ || RSSI: -35 | SNR: 10.000000
+Received: 704580 || IMU TASK   || Ax: 0.03302 Ay: 0.00292969 Az: 0.256897 g | Temp: 12.4624 C
+                     || Gx: -0.0537327 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -6.1108e-14 | Roll: 5.45475e-15 | Yaw: -4.4275e-13
+ || RSSI: -33 | SNR: 10.000000
+Received: 705639 || IMU TASK   || Ax: 0.0319214 Ay: 0.00164795 Az: 0.257812 g | Temp: 12.4271 C
+                     || Gx: 0.0684033 Gy: 0.0555814 Gz: 0 deg/s
+                     || Pitch: -6.12025e-14 | Roll: 5.44787e-15 | Yaw: -4.43489e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 706698 || IMU TASK   || Ax: 0.03302 Ay: -0.000427246 Az: 0.258179 g | Temp: 12.4359 C
+                     || Gx: 1.47297 Gy: -0.860439 Gz: 0 deg/s
+                     || Pitch: -6.13028e-14 | Roll: 5.44209e-15 | Yaw: -4.44227e-13
+ || RSSI: -36 | SNR: 10.250000
+Received: 707744 || IMU TASK   || Ax: 0.0285645 Ay: 0.0106201 Az: 0.256592 g | Temp: 12.4682 C
+                     || Gx: -0.633879 Gy: -0.494031 Gz: 0 deg/s
+                     || Pitch: -6.13917e-14 | Roll: 5.4366e-15 | Yaw: -4.44892e-13
+ || RSSI: -37 | SNR: 10.000000
+Received: 708801 || IMU TASK   || Ax: 0.0336914 Ay: 0.00317383 Az: 0.256592 g | Temp: 12.4712 C
+                     || Gx: 0.175272 Gy: 0.254052 Gz: 0 deg/s
+                     || Pitch: -6.14891e-14 | Roll: 5.43067e-15 | Yaw: -4.45629e-13
+ || RSSI: -36 | SNR: 10.250000
+Received: 709860 || IMU TASK   || Ax: 0.0300903 Ay: 0.00274658 Az: 0.257751 g | Temp: 12.4682 C
+                     || Gx: -0.0231987 Gy: 0.376188 Gz: 0 deg/s
+                     || Pitch: -6.15869e-14 | Roll: 5.42386e-15 | Yaw: -4.46368e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 710930 || IMU TASK   || Ax: 0.0354614 Ay: 0.00158691 Az: 0.25647 g | Temp: 12.4653 C
+                     || Gx: 0.450078 Gy: -0.371895 Gz: 0 deg/s
+                     || Pitch: -6.16653e-14 | Roll: 5.41829e-15 | Yaw: -4.46957e-13
+ || RSSI: -34 | SNR: 10.000000
+Received: 711987 || IMU TASK   || Ax: 0.0310059 Ay: 0.00640869 Az: 0.256042 g | Temp: 12.4741 C
+                     || Gx: 0.663816 Gy: -0.478764 Gz: 0 deg/s
+                     || Pitch: -6.17623e-14 | Roll: 5.40883e-15 | Yaw: -4.47694e-13
+ || RSSI: -37 | SNR: 9.750000
+Received: 713051 || IMU TASK   || Ax: 0.0272827 Ay: -0.00543213 Az: 0.258484 g | Temp: 12.48 C
+                     || Gx: 0.0989373 Gy: 0.0403144 Gz: 0 deg/s
+                     || Pitch: -6.18583e-14 | Roll: 5.40375e-15 | Yaw: -4.48433e-13
+ || RSSI: -44 | SNR: 9.250000
+Received: 714102 || IMU TASK   || Ax: 0.0383301 Ay: 0.00354004 Az: 0.255127 g | Temp: 12.4976 C
+                     || Gx: 1.47297 Gy: -0.371895 Gz: 0 deg/s
+                     || Pitch: -6.19491e-14 | Roll: 5.39356e-15 | Yaw: -4.49097e-13
+ || RSSI: -43 | SNR: 9.750000
+Received: 715161 || IMU TASK   || Ax: 0.0342407 Ay: 0.00402832 Az: 0.256409 g | Temp: 12.5006 C
+                     || Gx: 0.0378693 Gy: 0.376188 Gz: 0 deg/s
+                     || Pitch: -6.20488e-14 | Roll: 5.38689e-15 | Yaw: -4.49833e-13
+ || RSSI: -38 | SNR: 9.250000
+Received: 716222 || IMU TASK   || Ax: 0.0334473 Ay: 0.00128174 Az: 0.25708 g | Temp: 12.5065 C
+                     || Gx: -0.160602 Gy: 0.0555814 Gz: 0 deg/s
+                     || Pitch: -6.21457e-14 | Roll: 5.38026e-15 | Yaw: -4.50571e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 717270 || IMU TASK   || Ax: 0.0324097 Ay: 0.0022583 Az: 0.255371 g | Temp: 12.5212 C
+                     || Gx: -0.0995337 Gy: -0.173424 Gz: 0 deg/s
+                     || Pitch: -6.22423e-14 | Roll: 5.373e-15 | Yaw: -4.51309e-13
+ || RSSI: -39 | SNR: 9.750000
+Received: 718325 || IMU TASK   || Ax: 0.0333862 Ay: 0.00213623 Az: 0.256836 g | Temp: 12.5212 C
+                     || Gx: -0.0384657 Gy: 0.101382 Gz: 0 deg/s
+                     || Pitch: -6.23298e-14 | Roll: 5.36676e-15 | Yaw: -4.51973e-13
+ || RSSI: -34 | SNR: 10.000000
+Received: 719386 || IMU TASK   || Ax: 0.0336304 Ay: -0.00012207 Az: 0.256348 g | Temp: 12.5182 C
+                     || Gx: 0.114204 Gy: -0.112356 Gz: 0 deg/s
+                     || Pitch: -6.2427e-14 | Roll: 5.36039e-15 | Yaw: -4.52709e-13
+ || RSSI: -47 | SNR: 10.000000
+Received: 720447 || IMU TASK   || Ax: 0.0265503 Ay: 0.003479 Az: 0.260864 g | Temp: 12.5329 C
+                     || Gx: 0.0989373 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -6.25217e-14 | Roll: 5.35334e-15 | Yaw: -4.5345e-13
+ || RSSI: -47 | SNR: 10.250000
+Received: 721496 || IMU TASK   || Ax: 0.0332031 Ay: -0.00189209 Az: 0.253967 g | Temp: 12.5329 C
+                     || Gx: 0.618015 Gy: -0.432963 Gz: 0 deg/s
+                     || Pitch: -6.26091e-14 | Roll: 5.34894e-15 | Yaw: -4.54114e-13
+ || RSSI: -43 | SNR: 9.250000
+Received: 722546 || IMU TASK   || Ax: 0.0360107 Ay: 0.00811768 Az: 0.256714 g | Temp: 12.5388 C
+                     || Gx: -1.00029 Gy: -1.05891 Gz: 0 deg/s
+                     || Pitch: -6.26963e-14 | Roll: 5.34233e-15 | Yaw: -4.54779e-13
+ || RSSI: -39 | SNR: 10.500000
+Received: 723538 || THERM_COMP || Internal: 100.824 C | External: 6.26324 C || RSSI: -42 | SNR: 9.750000
+Received: 723595 || IMU TASK   || Ax: 0.0342407 Ay: -0.00439453 Az: 0.258423 g | Temp: 12.5624 C
+                     || Gx: -1.8247 Gy: -0.249759 Gz: 0 deg/s
+                     || Pitch: -6.27842e-14 | Roll: 5.33626e-15 | Yaw: -4.55442e-13
+ || RSSI: -45 | SNR: 10.000000
+Received: 724643 || IMU TASK   || Ax: 0.0328979 Ay: 0.0012207 Az: 0.25769 g | Temp: 12.5329 C
+                     || Gx: -0.130068 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -6.28797e-14 | Roll: 5.32844e-15 | Yaw: -4.5618e-13
+ || RSSI: -41 | SNR: 10.500000
+Received: 725343 || BME TASK   || Temp: 11.09 C | Pressure: 93035.3 Pa | humidity: 55.9346 % | altitude (asl): 714.229 m | altitude (relative): 0.875455 m || RSSI: -43 | SNR: 9.000000
+Received: 725691 || IMU TASK   || Ax: 0.0331421 Ay: 0.00341797 Az: 0.256104 g | Temp: 12.5771 C
+                     || Gx: -0.0537327 Gy: -0.402429 Gz: 0 deg/s
+                     || Pitch: -6.29667e-14 | Roll: 5.32154e-15 | Yaw: -4.56844e-13
+ || RSSI: -48 | SNR: 9.250000
+Received: 726743 || IMU TASK   || Ax: 0.0362549 Ay: -0.000610352 Az: 0.257019 g | Temp: 12.5741 C
+                     || Gx: 0.266874 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -6.30622e-14 | Roll: 5.3142e-15 | Yaw: -4.57582e-13
+ || RSSI: -43 | SNR: 9.750000
+Received: 727790 || IMU TASK   || Ax: 0.0324097 Ay: 0.00140381 Az: 0.256226 g | Temp: 12.5476 C
+                     || Gx: 0.129471 Gy: -0.494031 Gz: 0 deg/s
+                     || Pitch: -6.31481e-14 | Roll: 5.30737e-15 | Yaw: -4.58245e-13
+ || RSSI: -42 | SNR: 9.500000
+Received: 728838 || IMU TASK   || Ax: 0.0327759 Ay: 0.00262451 Az: 0.257141 g | Temp: 12.5859 C
+                     || Gx: -0.00793168 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -6.32436e-14 | Roll: 5.29941e-15 | Yaw: -4.58983e-13
+ || RSSI: -42 | SNR: 10.250000
+Received: 729859 || IMU TASK   || Ax: 0.0341187 Ay: 0.00231934 Az: 0.256287 g | Temp: 12.5712 C
+                     || Gx: -0.0689997 Gy: -0.0818216 Gz: 0 deg/s
+                     || Pitch: -6.333e-14 | Roll: 5.29306e-15 | Yaw: -4.59647e-13
+ || RSSI: -43 | SNR: 9.500000
+Received: 730871 || IMU TASK   || Ax: 0.0343018 Ay: 0.00354004 Az: 0.256287 g | Temp: 12.5918 C
+                     || Gx: 0.0836703 Gy: -0.112356 Gz: 0 deg/s
+                     || Pitch: -6.34167e-14 | Roll: 5.28677e-15 | Yaw: -4.60311e-13
+ || RSSI: -44 | SNR: 9.500000
+Received: 731930 || IMU TASK   || Ax: 0.0346069 Ay: 0.00299072 Az: 0.256592 g | Temp: 12.58 C
+                     || Gx: 0.0226023 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -6.35133e-14 | Roll: 5.27942e-15 | Yaw: -4.61048e-13
+ || RSSI: -46 | SNR: 9.750000
+Received: 732947 || IMU TASK   || Ax: 0.03302 Ay: 0.00134277 Az: 0.256653 g | Temp: 12.5976 C
+                     || Gx: -0.191136 Gy: 0.284586 Gz: 0 deg/s
+                     || Pitch: -6.35886e-14 | Roll: 5.27354e-15 | Yaw: -4.61638e-13
+ || RSSI: -43 | SNR: 9.250000
+Received: 734015 || IMU TASK   || Ax: 0.0327759 Ay: 0.00231934 Az: 0.257385 g | Temp: 84.7153 C
+                     || Gx: -813.449 Gy: -788.164 Gz: 172.803 deg/s
+                     || Pitch: -6.36843e-14 | Roll: 5.26681e-15 | Yaw: -4.62376e-13
+ || RSSI: -42 | SNR: 9.500000
+Received: 734699 || GPS_COMP   || Lat: 466449159 Long: -1171851176 (degrees * 10^-7) | Alt: 771.332 (m) | SIV: 29 | | Time: 2023-2-4 18:46:46:0 | Time is valid  Date is valid PDOP: 97 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccEs || RSSI: -42 | SNR: 10.250000
+Received: 736098 || IMU TASK   || Ax: 0.0341187 Ay: 0.00140381 Az: 0.256958 g | Temp: 12.6153 C
+                     || Gx: -0.37434 Gy: -0.14289 Gz: 0 deg/s
+                     || Pitch: -6.4094e-14 | Roll: 5.05677e-15 | Yaw: -4.63762e-13
+ || RSSI: -41 | SNR: 9.750000
+Received: 737147 || IMU TASK   || Ax: 0.0336914 Ay: 0.00256348 Az: 0.257019 g | Temp: 12.6182 C
+                     || Gx: 0.0684033 Gy: 0.208251 Gz: 0 deg/s
+                     || Pitch: -6.41805e-14 | Roll: 5.04991e-15 | Yaw: -4.64426e-13
+ || RSSI: -41 | SNR: 9.750000
+Received: 738193 || IMU TASK   || Ax: 0.0370483 Ay: 0.00158691 Az: 0.257141 g | Temp: 12.63 C
+                     || Gx: -0.481209 Gy: -0.478764 Gz: 0 deg/s
+                     || Pitch: -6.42674e-14 | Roll: 5.0438e-15 | Yaw: -4.6509e-13
+ || RSSI: -38 | SNR: 9.000000
+Received: 739249 || IMU TASK   || Ax: 0.0322876 Ay: 0.00250244 Az: 0.255737 g | Temp: 12.6447 C
+                     || Gx: -0.191136 Gy: -0.661968 Gz: 0 deg/s
+                     || Pitch: -6.43624e-14 | Roll: 5.03838e-15 | Yaw: -4.65828e-13
+ || RSSI: -37 | SNR: 9.500000
+Received: 740305 || IMU TASK   || Ax: 0.0336304 Ay: 0.00195312 Az: 0.256531 g | Temp: 12.6388 C
+                     || Gx: 0.0836703 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -6.46656e-14 | Roll: 4.83139e-15 | Yaw: -4.667e-13
+ || RSSI: -40 | SNR: 9.750000
+Received: 741378 || IMU TASK   || Ax: 0.0339966 Ay: 0.000183105 Az: 0.256409 g | Temp: 12.6388 C
+                     || Gx: -0.267471 Gy: -0.0818216 Gz: 0 deg/s
+                     || Pitch: -6.47618e-14 | Roll: 4.82441e-15 | Yaw: -4.67438e-13
+ || RSSI: -39 | SNR: 10.250000
+Received: 742398 || IMU TASK   || Ax: 0.0319824 Ay: 0.00384521 Az: 0.257324 g | Temp: 12.6388 C
+                     || Gx: 0.0684033 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -6.48194e-14 | Roll: 4.82057e-15 | Yaw: -4.67881e-13
+ || RSSI: -41 | SNR: 10.750000
+Received: 743456 || IMU TASK   || Ax: 0.0336304 Ay: 0.0032959 Az: 0.257019 g | Temp: 12.6476 C
+                     || Gx: 0.0684033 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -6.49158e-14 | Roll: 4.81365e-15 | Yaw: -4.68619e-13
+ || RSSI: -46 | SNR: 9.250000
+Received: 744488 || IMU TASK   || Ax: 0.0343628 Ay: 0.00274658 Az: 0.256409 g | Temp: 12.6712 C
+                     || Gx: -0.0231987 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -6.4993e-14 | Roll: 4.80833e-15 | Yaw: -4.69209e-13
+ || RSSI: -43 | SNR: 9.500000
+Received: 745528 || IMU TASK   || Ax: 0.0343628 Ay: 0.00238037 Az: 0.257141 g | Temp: 12.6771 C
+                     || Gx: 0.144738 Gy: -0.417696 Gz: 0 deg/s
+                     || Pitch: -6.50604e-14 | Roll: 4.80367e-15 | Yaw: -4.69725e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 746540 || IMU TASK   || Ax: 0.0339355 Ay: -0.00732422 Az: 0.262756 g | Temp: 12.68 C
+                     || Gx: 0.54168 Gy: -0.280293 Gz: 0 deg/s
+                     || Pitch: -6.51277e-14 | Roll: 4.80105e-15 | Yaw: -4.70243e-13
+ || RSSI: -30 | SNR: 9.750000
+Received: 747550 || IMU TASK   || Ax: 0.0313721 Ay: 0.00341797 Az: 0.256897 g | Temp: 12.6771 C
+                     || Gx: -0.130068 Gy: 0.0250474 Gz: 0 deg/s
+                     || Pitch: -6.51936e-14 | Roll: 4.79593e-15 | Yaw: -4.70759e-13
+ || RSSI: -34 | SNR: 10.000000
+Received: 748605 || IMU TASK   || Ax: 0.0337524 Ay: 0.00201416 Az: 0.256409 g | Temp: 12.6859 C
+                     || Gx: 0.0531363 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -6.529e-14 | Roll: 4.78928e-15 | Yaw: -4.71497e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 749612 || IMU TASK   || Ax: 0.0383911 Ay: 0.00506592 Az: 0.241211 g | Temp: 12.6624 C
+                     || Gx: -1.87051 Gy: -0.585633 Gz: 0 deg/s
+                     || Pitch: -6.5357e-14 | Roll: 4.78332e-15 | Yaw: -4.7201e-13
+ || RSSI: -44 | SNR: 9.750000
+Received: 750668 || IMU TASK   || Ax: 0.0318604 Ay: 0.00164795 Az: 0.256897 g | Temp: 12.6947 C
+                     || Gx: 0.160005 Gy: -0.188691 Gz: 0 deg/s
+                     || Pitch: -6.54529e-14 | Roll: 4.77555e-15 | Yaw: -4.72749e-13
+ || RSSI: -46 | SNR: 9.500000
+Received: 751721 || IMU TASK   || Ax: 0.0342407 Ay: 0.00292969 Az: 0.255981 g | Temp: 12.6976 C
+                     || Gx: -0.00793168 Gy: -0.0970886 Gz: 0 deg/s
+                     || Pitch: -6.55484e-14 | Roll: 4.76873e-15 | Yaw: -4.73486e-13
+ || RSSI: -53 | SNR: 10.000000
+Received: 752774 || IMU TASK   || Ax: 0.0328979 Ay: 0.00195312 Az: 0.256836 g | Temp: 12.7035 C
+                     || Gx: -0.0231987 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -6.56445e-14 | Roll: 4.76175e-15 | Yaw: -4.74223e-13
+ || RSSI: -52 | SNR: 10.250000
+Received: 753569 || THERM_COMP || Internal: 100.44 C | External: 6.23824 C || RSSI: -54 | SNR: 9.750000
+Received: 753798 || IMU TASK   || Ax: 0.0330811 Ay: 0.00213623 Az: 0.257324 g | Temp: 12.7182 C
+                     || Gx: -0.00793168 Gy: 0.0250474 Gz: 0 deg/s
+                     || Pitch: -6.57307e-14 | Roll: 4.75522e-15 | Yaw: -4.74887e-13
+ || RSSI: -47 | SNR: 10.250000
+Received: 754850 || IMU TASK   || Ax: 0.0324097 Ay: 0.00262451 Az: 0.256287 g | Temp: 12.7182 C
+                     || Gx: -0.130068 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -6.58168e-14 | Roll: 4.74866e-15 | Yaw: -4.75551e-13
+ || RSSI: -43 | SNR: 9.500000
+Received: 755773 || BME TASK   || Temp: 11.23 C | Pressure: 93035.3 Pa | humidity: 55.3633 % | altitude (asl): 714.229 m | altitude (relative): 0.875455 m || RSSI: -38 | SNR: 9.750000
+Received: 756920 || IMU TASK   || Ax: 0.034668 Ay: 0.00408936 Az: 0.257385 g | Temp: 12.7359 C
+                     || Gx: -0.0231987 Gy: -0.14289 Gz: 0 deg/s
+                     || Pitch: -6.59795e-14 | Roll: 4.73647e-15 | Yaw: -4.76805e-13
+ || RSSI: -44 | SNR: 9.750000
+Received: 757996 || IMU TASK   || Ax: 0.0346069 Ay: 0.00384521 Az: 0.256653 g | Temp: 12.7329 C
+                     || Gx: -0.252204 Gy: 0.16245 Gz: 0 deg/s
+                     || Pitch: -6.60755e-14 | Roll: 4.72823e-15 | Yaw: -4.77542e-13
+ || RSSI: -35 | SNR: 10.500000
+Received: 760134 || IMU TASK   || Ax: 0.0335693 Ay: 0.00280762 Az: 0.257141 g | Temp: 12.7418 C
+                     || Gx: -0.191136 Gy: -0.310827 Gz: 0 deg/s
+                     || Pitch: -6.62099e-14 | Roll: 4.71953e-15 | Yaw: -4.78576e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 761160 || IMU TASK   || Ax: 0.0328979 Ay: 0.00158691 Az: 0.25647 g | Temp: 12.7594 C
+                     || Gx: -0.206403 Gy: 0.101382 Gz: 0 deg/s
+                     || Pitch: -6.62672e-14 | Roll: 4.71523e-15 | Yaw: -4.79018e-13
+ || RSSI: -37 | SNR: 9.750000
+Received: 762217 || IMU TASK   || Ax: 0.0336914 Ay: 0.00256348 Az: 0.256653 g | Temp: 12.7712 C
+                     || Gx: -0.0384657 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -6.63633e-14 | Roll: 4.70834e-15 | Yaw: -4.79756e-13
+ || RSSI: -32 | SNR: 10.750000
+Received: 763264 || IMU TASK   || Ax: 0.03479 Ay: 0.00390625 Az: 0.257202 g | Temp: 12.7565 C
+                     || Gx: -0.0995337 Gy: -0.173424 Gz: 0 deg/s
+                     || Pitch: -6.64596e-14 | Roll: 4.69906e-15 | Yaw: -4.80493e-13
+ || RSSI: -31 | SNR: 9.500000
+Received: 764322 || IMU TASK   || Ax: 0.0338135 Ay: 0.00402832 Az: 0.257141 g | Temp: 12.7829 C
+                     || Gx: -0.0537327 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -6.6555e-14 | Roll: 4.69164e-15 | Yaw: -4.81234e-13
+ || RSSI: -32 | SNR: 9.250000
+Received: 765381 || IMU TASK   || Ax: 0.0339355 Ay: 0.00244141 Az: 0.256104 g | Temp: 12.7712 C
+                     || Gx: -0.0995337 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -6.66501e-14 | Roll: 4.68407e-15 | Yaw: -4.81971e-13
+ || RSSI: -30 | SNR: 10.500000
+Received: 766427 || IMU TASK   || Ax: 0.0327148 Ay: 0.00268555 Az: 0.25531 g | Temp: 12.7947 C
+                     || Gx: -0.313272 Gy: 0.238785 Gz: 0 deg/s
+                     || Pitch: -6.67374e-14 | Roll: 4.6773e-15 | Yaw: -4.82636e-13
+ || RSSI: -32 | SNR: 10.500000
+Received: 767493 || IMU TASK   || Ax: 0.0336304 Ay: 0.00323486 Az: 0.256897 g | Temp: 12.7888 C
+                     || Gx: -0.0995337 Gy: -0.0818216 Gz: 0 deg/s
+                     || Pitch: -6.68332e-14 | Roll: 4.66993e-15 | Yaw: -4.83374e-13
+ || RSSI: -30 | SNR: 12.750000
+Received: 768243 || GPS_COMP   || Lat: 466449207 Long: -1171851228 (degrees * 10^-7) | Alt: 771.664 (m) | SIV: 27 | | Time: 2023-2-4 18:47:19:0 | Time is valid  Date is valid PDOP: 101 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccE || RSSI: -33 | SNR: 9.500000
+Received: 769613 || IMU TASK   || Ax: 0.0375977 Ay: 0.00280762 Az: 0.256836 g | Temp: 12.7947 C
+                     || Gx: 0.450078 Gy: -0.127623 Gz: 0 deg/s
+                     || Pitch: -6.70281e-14 | Roll: 4.65513e-15 | Yaw: -4.8487e-13
+ || RSSI: -33 | SNR: 10.000000
+Received: 770660 || IMU TASK   || Ax: 0.0328979 Ay: 0.00299072 Az: 0.256897 g | Temp: 12.8006 C
+                     || Gx: -0.22167 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -6.71135e-14 | Roll: 4.64855e-15 | Yaw: -4.85534e-13
+ || RSSI: -34 | SNR: 12.750000
+Received: 771737 || IMU TASK   || Ax: 0.0338135 Ay: 0.00317383 Az: 0.257019 g | Temp: 12.7947 C
+                     || Gx: -0.22167 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -6.7473e-14 | Roll: 4.41396e-15 | Yaw: -4.86267e-13
+ || RSSI: -40 | SNR: 9.750000
+Received: 772796 || IMU TASK   || Ax: 0.0339355 Ay: 0.00799561 Az: 0.259888 g | Temp: 12.8035 C
+                     || Gx: -0.298005 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -6.75664e-14 | Roll: 4.40164e-15 | Yaw: -4.87003e-13
+ || RSSI: -41 | SNR: 10.750000
+Received: 773859 || IMU TASK   || Ax: 0.0333862 Ay: 0.00323486 Az: 0.258057 g | Temp: 12.8065 C
+                     || Gx: 0.0378693 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -6.7813e-14 | Roll: 4.10079e-15 | Yaw: -4.88044e-13
+ || RSSI: -45 | SNR: 9.500000
+Received: 774917 || IMU TASK   || Ax: 0.0286865 Ay: -0.000854492 Az: 0.257935 g | Temp: 12.8094 C
+                     || Gx: 0.938622 Gy: -0.921507 Gz: 0 deg/s
+                     || Pitch: -6.79079e-14 | Roll: 4.09146e-15 | Yaw: -4.88785e-13
+ || RSSI: -41 | SNR: 9.750000
+Received: 775939 || IMU TASK   || Ax: 0.0228882 Ay: 0.00830078 Az: 0.248169 g | Temp: 12.8182 C
+                     || Gx: 0.84702 Gy: -0.997842 Gz: 999.847 deg/s
+                     || Pitch: -6.79778e-14 | Roll: 4.0853e-15 | Yaw: -4.89374e-13
+ || RSSI: -39 | SNR: 9.750000
+Received: 776976 || IMU TASK   || Ax: 0.0309448 Ay: 0.0139771 Az: 0.258545 g | Temp: 12.8182 C
+                     || Gx: -2.45065 Gy: -aÁ˘0^:5 Gz: 0 deg/s
+                     || Pitch: -6.80574e-14 | Roll: 4.07413uçí∑*FYaw: -4.89962e-13
+ || RSSI: -28 | SNR: -2.250000
+Received: 777980 || IMU TASK   || Ax: 0.03302 Ay: 0.00469971 Az: 0.256836 g | Temp: 12.8418 C
+                     || Gx: -0.359073 Gy: 0.0403144 Gz: 0 deg/s
+                     || Pitch: -6.81328e-14 | Roll: 4.07115e-15 | Yaw: -4.90553e-13
+ || RSSI: -30 | SNR: 10.000000
+Received: 779029 || IMU TASK   || QKy$†æ9339966 Ay: 0.0020752 Az: 0.256958 g | Temp: 12.8418 C
+                     || Gx: 0.190539 Gy: -0.0818216 Gz: 0 deg/s
+                     || Pitch: -6.82292e-14 | Roll: 4.06518e-15 | Yaw: -4.9129e-13
+ || RSSI: -32 | SNR: 9.500000
+Received: 780053 || IMU TASK   || Ax: 0.69043 Ay: 0.721985 Az: 0.830811 g | Temp: 12.8418 C
+                     || Gx: -805.586 Gy: -827.37 Gz: 180.284 deg/s
+                     || Pitch: -6.84855e-14 | Roll: 3.85413e-15 | Yaw: -4.91971e-13
+ || RSSI: -41 | SNR: 9.750000
+Received: 781080 || IMU TASK   || Ax: 0.0341797 Ay: 0.00280762 Az: 0.257874 g | Temp: 12.8476 C
+                     || Gx: 0.327942 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -6.85532e-14 | Roll: 3.8483e-15 | Yaw: -4.92487e-13
+ || RSSI: -33 | SNR: 10.000000
+Received: 782115 || IMU TASK   || Ax: 0.0324097 Ay: 0.00152588 Az: 0.255981 g | Temp: 12.8535 C
+                     || Gx: -0.252204 Gy: 0.131916 Gz: 0 deg/s
+                     || Pitch: -6.86199e-14 | Roll: 3.84386e-15 | Yaw: -4.93004e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 783180 || IMU TASK   || Ax: 0.0366821 Ay: 0.00439453 Az: 0.249084 g | Temp: 12.8535 C
+                     || Gx: 0.785952 Gy: -0.127623 Gz: 0 deg/s
+                     || Pitch: -6.87166e-14 | Roll: 3.83545e-15 | Yaw: -4.93743e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 783766 || THERM_COMP || Internal: 99.312 C | External: 6.2882 C || RSSI: -30 | SNR: 10.000000
+Received: 784238 || IMU TASK   || Ax: 0.031311 Ay: -0.0012207 Az: 0.256836 g | Temp: 12.8741 C
+                     || Gx: 1.48823 Gy: -0.463497 Gz: 0 deg/s
+                     || Pitch: -6.88133e-14 | Roll: 3.83183e-15 | Yaw: -4.94482e-13
+ || RSSI: -30 | SNR: 9.750000
+Received: 785300 || IMU TASK   || Ax: 0.0345459 Ay: 0.00140381 Az: 0.256104 g | Temp: 12.8712 C
+                     || Gx: 1.57984 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -6.89064e-14 | Roll: 3.8201e-15 | Yaw: -4.9522e-13
+ || RSSI: -34 | SNR: 9.250000
+Received: 786096 || BME TASK   || Temp: 11.36 C | Pressure: 93031.6 Pa | humidity: 54.7891 % | altitude (asl): 714.566 m | altitude (relative): 1.21741 m || RSSI: -33 | SNR: 9.750000
+Received: 787401 || IMU TASK   || Ax: 0.0289307 Ay: 0.00305176 Az: 0.255615 g | Temp: 12.8741 C
+                     || Gx: -0.404874 Gy: 0.345654 Gz: 0 deg/s
+                     || Pitch: -6.92731e-14 | Roll: 3.57572e-15 | Yaw: -4.96733e-13
+ || RSSI: -37 | SNR: 9.750000
+Packet 0 sent...
+Received: 789520 || IMU TASK   || Ax: 0.0338745 Ay: 0.00476074 Az: 0.256775 g | Temp: 12.8859 C
+                     || Gx: 0.114204 Gy: -0.280293 Gz: 0 deg/s
+                     || Pitch: -6.94595e-14 | Roll: 3.54592e-15 | Yaw: -4.98214e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 790580 || IMU TASK   || Ax: 0.0321655 Ay: 0.00341797 Az: 0.256592 g | Temp: 12.8829 C
+                     || Gx: 0.266874 Gy: 0.0403144 Gz: 0 deg/s
+                     || Pitch: -6.95506e-14 | Roll: 3.53303e-15 | Yaw: -4.98952e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 791602 || IMU TASK   || Ax: 0.0355225 Ay: 0.00531006 Az: 0.256348 g | Temp: 12.8947 C
+                     || Gx: 0.373743 Gy: 0.254052 Gz: 0 deg/s
+                     || Pitch: -6.9615e-14 | Roll: 3.52298e-15 | Yaw: -4.99469e-13
+ || RSSI: -33 | SNR: 10.000000
+Received: 792616 || IMU TASK   || Ax: 0.0320435 Ay: 0.00537109 Az: 0.256958 g | Temp: 12.9153 C
+                     || Gx: 0.0378693 Gy: -0.127623 Gz: 0 deg/s
+                     || Pitch: -6.96701e-14 | Roll: 3.51479e-15 | Yaw: -4.99912e-13
+ || RSSI: -38 | SNR: 9.500000
+Packet 1 sent...
+Received: [793590] Message received || RSSI: -37 | SNR: 9.500000
+Received: 793677 || IMU TASK   || Ax: 0.03302 Ay: 0.00415039 Az: 0.256958 g | Temp: 12.9124 C
+                     || Gx: -0.206403 Gy: -0.203958 Gz: 0 deg/s
+                     || Pitch: -6.97622e-14 | Roll: 3.50213e-15 | Yaw: -5.00649e-13
+ || RSSI: -37 | SNR: 10.250000
+Received: 794741 || IMU TASK   || Ax: 0.0325317 Ay: 0.00463867 Az: 0.256226 g | Temp: 12.9035 C
+                     || Gx: -0.175869 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -6.98539e-14 | Roll: 3.48776e-15 | Yaw: -5.01387e-13
+ || RSSI: -36 | SNR: 10.500000
+Received: 795800 || IMU TASK   || Ax: 0.0314331 Ay: 0.00524902 Az: 0.257202 g | Temp: 12.9065 C
+                     || Gx: 0.282141 Gy: 0.0555814 Gz: 0 deg/s
+                     || Pitch: -7.01903e-14 | Roll: 3.24489e-15 | Yaw: -5.0225e-13
+ || RSSI: -36 | SNR: 10.000000
+Received: 796848 || IMU TASK   || Ax: 0.0303955 Ay: 0.00518799 Az: 0.257568 g | Temp: 12.9153 C
+                     || Gx: -0.481209 Gy: -0.75357 Gz: 1000.11 deg/s
+                     || Pitch: -7.02813e-14 | Roll: 3.2287e-15 | Yaw: -5.02987e-13
+ || RSSI: -41 | SNR: 9.750000
+Received: 797915 || IMU TASK   || Ax: 0.0302124 Ay: 0.00250244 Az: 0.257629 g | Temp: 12.9241 C
+                     || Gx: 0.465345 Gy: -0.570366 Gz: 0 deg/s
+                     || Pitch: -7.03739e-14 | Roll: 3.21702e-15 | Yaw: -5.03725e-13
+ || RSSI: -38 | SNR: 9.000000
+Received: Cutting down || RSSI: -35 | SNR: 10.250000
+Received: 798722 || GPS_COMP   || No Data || RSSI: -41 | SNR: 10.250000
+Received: 799011 || IMU TASK   || Ax: 0.0288696 Ay: 0.00372314 Az: 0.256165 g | Temp: 12.9359 C
+                     || Gx: -0.175869 Gy: -1000.02 Gz: 0 deg/s
+                     || Pitch: -7.07098e-14 | Roll: 3.00736e-15 | Yaw: -5.04631e-13
+ || RSSI: -44 | SNR: 9.500000
+Received: 800072 || IMU TASK   || Ax: 0.0342407 Ay: 0.00494385 Az: 0.256104 g | Temp: 12.9476 C
+                     || Gx: -0.0689997 Gy: 0.0250474 Gz: 0 deg/s
+                     || Pitch: -7.10425e-14 | Roll: 2.78135e-15 | Yaw: -5.05516e-13
+ || RSSI: -40 | SNR: 9.750000
+Received: 801134 || IMU TASK   || Ax: 0.0272827 Ay: 0.00537109 Az: 0.260437 g | Temp: 12.9388 C
+                     || Gx: 0.740151 Gy: -1.28791 Gz: 0 deg/s
+                     || Pitch: -7.13741e-14 | Roll: 2.55005e-15 | Yaw: -5.06381e-13
+ || RSSI: -43 | SNR: 9.500000
+Received: 802196 || IMU TASK   || Ax: 0.0330811 Ay: 0.00372314 Az: 0.25708 g | Temp: 12.9447 C
+                     || Gx: -0.298005 Gy: -1.10471 Gz: 999.831 deg/s
+                     || Pitch: -7.14694e-14 | Roll: 2.53684e-15 | Yaw: -5.07119e-13
+ || RSSI: -36 | SNR: 10.000000
+Received: 803266 || IMU TASK   || Ax: 0.0328369 Ay: 0.00457764 Az: 0.255493 g | Temp: 12.9565 C
+                     || Gx: -0.0689997 Gy: -0.112356 Gz: 0 deg/s
+                     || Pitch: -7.15644e-14 | Roll: 2.52583e-15 | Yaw: -5.07857e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 804318 || IMU TASK   || Ax: 0.0322266 Ay: 0.00384521 Az: 0.256287 g | Temp: 12.9506 C
+                     || Gx: -0.0842667 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -7.1659e-14 | Roll: 2.51409e-15 | Yaw: -5.08594e-13
+ || RSSI: -31 | SNR: 10.000000
+Received: 805380 || IMU TASK   || Ax: 0.0335083 Ay: 0.00378418 Az: 0.256226 g | Temp: 12.9712 C
+                     || Gx: 0.0378693 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -7.17544e-14 | Roll: 2.50262e-15 | Yaw: -5.09332e-13
+ || RSSI: -29 | SNR: 9.500000
+Received: 806428 || IMU TASK   || Ax: 0.0332642 Ay: 0.00390625 Az: 0.256531 g | Temp: 12.9476 C
+                     || Gx: 0.0836703 Gy: -0.0512∞76fCzúÜ0 deg/s
+                     || Pitch: -7.18499e-14 | Roll: 2.49098e-15 | Yaw: -5.1007e-13
+ || RSSI: -28 | SNR: 9.750000
+Received: 807481 || IMU TASK   || Ax: 0.032959 Ay: 0.00384521 Az: 0.256958 g | Temp: 12.9653 C
+                     || Gx: -0.0537327 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -7.19455e-14 | Roll: 2.47952e-15 | Yaw: -5.10808e-13
+ || RSSI: -29 | SNR: 9.750000
+Received: 808530 || IMU TASK   || Ax: 0.0335693 Ay: 0.00421143 Az: 0.256653 g | Temp: 12.9594 C
+                     || Gx: -0.0995337 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -7.20407e-14 | Roll: 2.46739e-15 | Yaw: -5.11545e-13
+ || RSSI: -31 | SNR: 10.250000
+Received: 809590 || IMU TASK   || Ax: 0.0350952 Ay: 0.00317383 Az: 0.257019 g | Temp: 12.9888 C
+                     || Gx: -0.0231987 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -7.21351e-14 | Roll: 2.45755e-15 | Yaw: -5.12284e-13
+ || RSSI: -34 | SNR: 10.000000
+Received: 810651 || IMU TASK   || Ax: 0.0330811 Ay: 0.00238037 Az: 0.256775 g | Temp: 12.9829 C
+                     || Gx: -0.0689997 Gy: 0.0708484 Gz: 0 deg/s
+                     || Pitch: -7.24201e-14 | Roll: 2.23984e-15 | Yaw: -5.13182e-13
+ || RSSI: -35 | SNR: 9.750000
+Received: 811709 || IMU TASK   || Ax: 0.0332642 Ay: 0.00360107 Az: 0.256958 g | Temp: 13.0035 C
+                     || Gx: -0.00793168 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -7.27037e-14 | Roll: 2.02233e-15 | Yaw: -5.14081e-13
+ || RSSI: -37 | SNR: 9.750000
+Received: 812769 || IMU TASK   || Ax: 0.0334473 Ay: 0.00482178 Az: 0.256836 g | Temp: 13.0035 C
+                     || Gx: -0.0689997 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -7.27995e-14 | Roll: 2.01079e-15 | Yaw: -5.14819e-13
+ || RSSI: -32 | SNR: 10.250000
+Received: 813769 || THERM_COMP || Internal: 99.0658 C | External: 6.31317 C || RSSI: -34 | SNR: 9.750000
+Received: 813830 || IMU TASK   || Ax: 0.0325317 Ay: 0.00390625 Az: 0.256592 g | Temp: 12.9947 C
+                     || Gx: 0.0226023 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -7.31322e-14 | Roll: 1.78024e-15 | Yaw: -5.1568e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 814887 || IMU TASK   || Ax: 0.034668 Ay: 0.00360107 Az: 0.256775 g | Temp: 13.0094 C
+                     || Gx: -0.236937 Gy: -0.0818216 Gz: 0 deg/s
+                     || Pitch: -7.34572e-14 | Roll: 1.57011e-15 | Yaw: -5.16598e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 815936 || IMU TASK   || Ax: 0.0327759 Ay: 0.00427246 Az: 0.255981 g | Temp: 13.0212 C
+                     || Gx: -0.0995337 Gy: 0.0708484 Gz: 0 deg/s
+                     || Pitch: -7.35515e-14 | Roll: 1.55908e-15 | Yaw: -5.17335e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 816531 || BME TASK   || Temp: 11.48 C | Pressure: 93027.1 Pa | humidity: 54.3105 % | altitude (asl): 714.959 m | altitude (relative): 1.61771 m || RSSI: -33 | SNR: 9.500000
+Received: 817006 || IMU TASK   || Ax: 0.0327759 Ay: 0.00366211 Az: 0.256714 g | Temp: 13.0241 C
+                     || Gx: -0.0842667 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -7.36472e-14 | Roll: 1.54814e-15 | Yaw: -5.18071e-13
+ || RSSI: -32 | SNR: 10.250000
+Received: 818056 || IMU TASK   || Ax: 0.0328979 Ay: 0.00311279 Az: 0.256348 g | Temp: 13.03 C
+                     || Gx: -0.160602 Gy: 0.101382 Gz: 0 deg/s
+                     || Pitch: -7.37425e-14 | Roll: 1.53718e-15 | Yaw: -5.18809e-13
+ || RSSI: -31 | SNR: 9.500000
+Received: 819105 || IMU TASK   || Ax: 0.0330811 Ay: 0.0045166 Az: 0.256287 g | Temp: 13.03 C
+                     || Gx: 0.0378693 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -7.38384e-14 | Roll: 1.5263e-15 | Yaw: -5.19546e-13
+ || RSSI: -33 | SNR: 12.500000
+Received: 820153 || IMU TASK   || Ax: 0.0331421 Ay: 0.00500488 Az: 0.255798 g | Temp: 13.0359 C
+                     || Gx: 0.0989373 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -7.39337e-14 | Roll: 1.51538e-15 | Yaw: -5.20284e-13
+ || RSSI: -31 | SNR: 10.500000
+Received: 821214 || IMU TASK   || Ax: 0.0333862 Ay: 0.003479 Az: 0.256042 g | Temp: 13.0359 C
+                     || Gx: -0.00793168 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -7.42396e-14 | Roll: 1.25786e-15 | Yaw: -5.21168e-13
+ || RSSI: -31 | SNR: 9.750000
+Received: 822261 || IMU TASK   || Ax: 0.0333862 Ay: 0.00390625 Az: 0.256531 g | Temp: 13.0418 C
+                     || Gx: 0.00733532 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -7.43356e-14 | Roll: 1.24735e-15 | Yaw: -5.21905e-13
+ || RSSI: -33 | SNR: 10.250000
+Received: 823309 || IMU TASK   || Ax: 0.0336914 Ay: 0.00366211 Az: 0.256042 g | Temp: 13.0476 C
+                     || Gx: 0.0226023 Gy: -0.0818216 Gz: 0 deg/s
+                     || Pitch: -7.44303e-14 | Roll: 1.23658e-15 | Yaw: -5.22643e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 824365 || IMU TASK   || Ax: 0.0336914 Ay: 0.00415039 Az: 0.256165 g | Temp: 13.0565 C
+                     || Gx: -0.0537327 Gy: -0.234492 Gz: 0 deg/s
+                     || Pitch: -7.45266e-14 | Roll: 1.2255e-15 | Yaw: -5.2338e-13
+ || RSSI: -35 | SNR: 9.250000
+Received: 825416 || IMU TASK   || Ax: 0.0336304 Ay: 0.00445557 Az: 0.25647 g | Temp: 13.0712 C
+                     || Gx: -0.0231987 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -7.46122e-14 | Roll: 1.2155e-15 | Yaw: -5.24043e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 827515 || IMU TASK   || Ax: 0.0325928 Ay: 0.00335693 Az: 0.25647 g | Temp: 13.0712 C
+                     || Gx: 0.00733532 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -7.47929e-14 | Roll: 1.19467e-15 | Yaw: -5.25444e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 828569 || IMU TASK   || Ax: 0.0324097 Ay: 0.00402832 Az: 0.256775 g | Temp: 13.0712 C
+                     || Gx: -0.0842667 Gy: 0.0708484 Gz: 0 deg/s
+                     || Pitch: -7.48877e-14 | Roll: 1.18348e-15 | Yaw: -5.26182e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 829628 || IMU TASK   || Ax: 0.0386963 Ay: 0.00616455 Az: 0.256653 g | Temp: 13.0653 C
+                     || Gx: -0.756015 Gy: -0.29556 Gz: 0 deg/s
+                     || Pitch: -7.49828e-14 | Roll: 1.1689e-15 | Yaw: -5.2692e-13
+ || RSSI: -48 | SNR: 9.500000
+Received: 830685 || IMU TASK   || Ax: 0.0330811 Ay: 0.00195312 Az: 0.257019 g | Temp: 13.0624 C
+                     || Gx: 0.175272 Gy: -0.219225 Gz: 0 deg/s
+                     || Pitch: -7.50782e-14 | Roll: 1.15882e-15 | Yaw: -5.27657e-13
+ || RSSI: -34 | SNR: 9.250000
+Received: 831347 || GPS_COMP   || Lat: 466449237 Long: -1171851080 (degrees * 10^-7) | Alt: 770.766 (m) | SIV: 27 | | Time: 2023-2-4 18:48:23:0 | Time is valid  Date is valid PDOP: 102 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccE || RSSI: -33 | SNR: 9.500000
+Received: 832134 || BME TASK   || Temp: 11.26 C | Pressure: 92983.6 Pa | humidity: 54.0264 % | altitude (asl): 718.845 m | altitude (relative): 5.56725 m || RSSI: -32 | SNR: 9.000000
+Received: 832797 || IMU TASK   || Ax: 0.0333862 Ay: 0.00378418 Az: 0.255554 g | Temp: 13.1006 C
+                     || Gx: 1.2745 Gy: -0.539832 Gz: 0 deg/s
+                     || Pitch: -7.52693e-14 | Roll: 1.13723e-15 | Yaw: -5.29134e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 833853 || IMU TASK   || Ax: 0.032959 Ay: 0.00317383 Az: 0.258118 g | Temp: 13.1065 C
+                     || Gx: 0.648549 Gy: 0.131916 Gz: 0 deg/s
+                     || Pitch: -7.53535e-14 | Roll: 1.12584e-15 | Yaw: -5.298e-13
+ || RSSI: -31 | SNR: 9.750000
+Received: 834911 || IMU TASK   || Ax: 0.0325317 Ay: 0.00323486 Az: 0.256165 g | Temp: 13.0947 C
+                     || Gx: 0.0684033 Gy: -0.188691 Gz: 0 deg/s
+                     || Pitch: -7.54496e-14 | Roll: 1.11534e-15 | Yaw: -5.30538e-13
+ || RSSI: -31 | SNR: 9.750000
+Received: 835993 || IMU TASK   || Ax: 0.0331421 Ay: 0.00390625 Az: 0.257446 g | Temp: 13.1094 C
+                     || Gx: 0.00733532 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -7.55444e-14 | Roll: 1.10326e-15 | Yaw: -5.31275e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 837044 || IMU TASK   || Ax: 0.0325317 Ay: 0.00390625 Az: 0.256104 g | Temp: 13.0976 C
+                     || Gx: -0.00793168 Gy: -0.234492 Gz: 0 deg/s
+                     || Pitch: -7.56318e-14 | Roll: 1.09315e-15 | Yaw: -5.31939e-13
+ || RSSI: -30 | SNR: 10.500000
+Received: 838195 || IMU TASK   || Ax: 0.0340576 Ay: 0.00323486 Az: 0.256226 g | Temp: 13.1212 C
+                     || Gx: -0.130068 Gy: 0.0403144 Gz: 0 deg/s
+                     || Pitch: -7.57284e-14 | Roll: 1.08258e-15 | Yaw: -5.32677e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 839252 || IMU TASK   || Ax: 0.0340576 Ay: 0.00427246 Az: 0.256531 g | Temp: 13.1094 C
+                     || Gx: 0.0989373 Gy: -0.0970886 Gz: 0 deg/s
+                     || Pitch: -7.58248e-14 | Roll: 1.07105e-15 | Yaw: -5.33415e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 840299 || IMU TASK   || Ax: 0.0323486 Ay: 0.00402832 Az: 0.257202 g | Temp: 13.1212 C
+                     || Gx: -0.0842667 Gy: 0.0250474 Gz: 0 deg/s
+                     || Pitch: -7.59105e-14 | Roll: 1.06085e-15 | Yaw: -5.34078e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 841345 || IMU TASK   || Ax: 0.0333252 Ay: 0.00341797 Az: 0.257996 g | Temp: 13.1153 C
+                     || Gx: 0.0531363 Gy: 0.101382 Gz: 0 deg/s
+                     || Pitch: -7.60069e-14 | Roll: 1.04961e-15 | Yaw: -5.34816e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 842393 || IMU TASK   || Ax: 0.0341187 Ay: 0.00360107 Az: 0.25647 g | Temp: 13.1388 C
+                     || Gx: 0.0226023 Gy: -0.14289 Gz: 0 deg/s
+                     || Pitch: -7.60932e-14 | Roll: 1.03982e-15 | Yaw: -5.3548e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 843445 || IMU TASK   || Ax: 0.0331421 Ay: 0.00366211 Az: 0.25647 g | Temp: 13.1271 C
+                     || Gx: -0.0689997 Gy: -0.14289 Gz: 0 deg/s
+                     || Pitch: -7.61893e-14 | Roll: 1.02826e-15 | Yaw: -5.36218e-13
+ || RSSI: -34 | SNR: 9.250000
+Received: 844506 || IMU TASK   || Ax: 0.0287476 Ay: 0.00646973 Az: 0.256714 g | Temp: 13.1506 C
+                     || Gx: 0.190539 Gy: -999.887 Gz: 0 deg/s
+                     || Pitch: -7.62835e-14 | Roll: 1.01726e-15 | Yaw: -5.36955e-13
+ || RSSI: -32 | SNR: 10.500000
+Received: 845555 || IMU TASK   || Ax: 0.032959 Ay: 0.00421143 Az: 0.256531 g | Temp: 13.1476 C
+                     || Gx: -0.130068 Gy: -0.0970886 Gz: 0 deg/s
+                     || Pitch: -7.63812e-14 | Roll: 1.00567e-15 | Yaw: -5.37693e-13
+ || RSSI: -31 | SNR: 9.750000
+Received: 846610 || IMU TASK   || Ax: 0.0355835 Ay: 0.00219727 Az: 0.256104 g | Temp: 13.1476 C
+                     || Gx: 0.633282 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -7.64783e-14 | Roll: 9.9506e-16 | Yaw: -5.3843e-13
+ || RSSI: -32 | SNR: 10.000000
+Received: 847205 || BME TASK   || Temp: 11.61 C | Pressure: 93029.2 Pa | humidity: 53.834 % | altitude (asl): 714.775 m | altitude (relative): 1.43013 m || RSSI: -34 | SNR: 9.250000
+Received: 847675 || IMU TASK   || Ax: 0.0338135 Ay: 0.00476074 Az: 0.256653 g | Temp: 13.1624 C
+                     || Gx: -0.114801 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -7.6573e-14 | Roll: 9.84292e-16 | Yaw: -5.39167e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 848731 || IMU TASK   || Ax: 0.0321655 Ay: 0.00378418 Az: 0.256653 g | Temp: 13.1624 C
+                     || Gx: -0.0537327 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -7.66685e-14 | Roll: 9.72927e-16 | Yaw: -5.39905e-13
+ || RSSI: -33 | SNR: 10.750000
+Received: 849778 || IMU TASK   || Ax: 0.0344238 Ay: 0.00408936 Az: 0.257568 g | Temp: 13.1712 C
+                     || Gx: -0.00793168 Gy: 0.131916 Gz: 0 deg/s
+                     || Pitch: -7.67552e-14 | Roll: 9.63193e-16 | Yaw: -5.40568e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 850826 || IMU TASK   || Ax: 0.0335693 Ay: 0.00524902 Az: 0.256592 g | Temp: 13.1829 C
+                     || Gx: -0.710214 Gy: 0.345654 Gz: 0 deg/s
+                     || Pitch: -7.68514e-14 | Roll: 9.51091e-16 | Yaw: -5.41305e-13
+ || RSSI: -36 | SNR: 9.250000
+Received: 851877 || IMU TASK   || Ax: 0.0337524 Ay: 0.00372314 Az: 0.256958 g | Temp: 13.1771 C
+                     || Gx: -0.0231987 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -7.69404e-14 | Roll: 9.39288e-16 | Yaw: -5.41969e-13
+ || RSSI: -34 | SNR: 10.500000
+Received: 852924 || IMU TASK   || Ax: 0.0343018 Ay: 0.00628662 Az: 0.256042 g | Temp: 13.1594 C
+                     || Gx: 0.0989373 Gy: -0.0970886 Gz: 0 deg/s
+                     || Pitch: -7.70266e-14 | Roll: 9.29414e-16 | Yaw: -5.42632e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 853983 || IMU TASK   || Ax: 0.0328979 Ay: 0.00311279 Az: 0.256409 g | Temp: 13.2035 C
+                     || Gx: -0.145335 Gy: -0.127623 Gz: 0 deg/s
+                     || Pitch: -7.71214e-14 | Roll: 9.18031e-16 | Yaw: -5.43369e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 855055 || IMU TASK   || Ax: 0.0336914 Ay: 0.00396729 Az: 0.256714 g | Temp: 13.1888 C
+                     || Gx: 0.0684033 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -7.72177e-14 | Roll: 9.06298e-16 | Yaw: -5.44107e-13
+ || RSSI: -34 | SNR: 9.250000
+Received: 856121 || IMU TASK   || Ax: 0.032959 Ay: 0.00360107 Az: 0.256714 g | Temp: 13.2065 C
+                     || Gx: 0.00733532 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -7.73141e-14 | Roll: 8.94495e-16 | Yaw: -5.44845e-13
+ || RSSI: -35 | SNR: 10.750000
+Received: 857167 || IMU TASK   || Ax: 0.0339355 Ay: 0.00396729 Az: 0.256714 g | Temp: 13.1976 C
+                     || Gx: -0.0689997 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -7.74003e-14 | Roll: 8.84199e-16 | Yaw: -5.45509e-13
+ || RSSI: -34 | SNR: 10.750000
+Received: 858217 || IMU TASK   || Ax: 0.0322876 Ay: -0.000183105 Az: 0.258179 g | Temp: 13.2094 C
+                     || Gx: -0.52701 Gy: -0.265026 Gz: 0 deg/s
+                     || Pitch: -7.74872e-14 | Roll: 8.73746e-16 | Yaw: -5.46173e-13
+ || RSSI: -34 | SNR: 9.250000
+Received: 859267 || IMU TASK   || Ax: 0.0349121 Ay: 0.00714111 Az: 0.256409 g | Temp: 13.2241 C
+                     || Gx: 0.205806 Gy: 0.223518 Gz: 0 deg/s
+                     || Pitch: -7.75823e-14 | Roll: 8.64907e-16 | Yaw: -5.4691e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 860313 || IMU TASK   || Ax: 0.0353394 Ay: 0.00506592 Az: 0.256409 g | Temp: 13.23 C
+                     || Gx: -0.313272 Gy: 0.254052 Gz: 0 deg/s
+                     || Pitch: -7.76703e-14 | Roll: 8.54121e-16 | Yaw: -5.47574e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 861372 || IMU TASK   || Ax: 0.0349731 Ay: 0.0078125 Az: 0.257263 g | Temp: 13.2153 C
+                     || Gx: -0.313272 Gy: -0.402429 Gz: 0 deg/s
+                     || Pitch: -7.77671e-14 | Roll: 8.42317e-16 | Yaw: -5.48313e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 862286 || BME TASK   || Temp: 11.66 C | Pressure: 93028.2 Pa | humidity: 53.5498 % | altitude (asl): 714.862 m | altitude (relative): 1.51864 m || RSSI: -34 | SNR: 9.500000
+Received: 862907 || GPS_COMP   || Lat: 466449217 Long: -1171851124 (degrees * 10^-7) | Alt: 770.003 (m) | SIV: 27 | | Time: 2023-2-4 18:48:54:0 | Time is valid  Date is valid PDOP: 102 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccE || RSSI: -36 | SNR: 9.750000
+Received: 863475 || IMU TASK   || Ax: 0.0322876 Ay: 0.00305176 Az: 0.256775 g | Temp: 13.2447 C
+                     || Gx: 0.0684033 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -7.79496e-14 | Roll: 8.21411e-16 | Yaw: -5.49715e-13
+ || RSSI: -41 | SNR: 10.000000
+Received: 864530 || IMU TASK   || Ax: 0.0337524 Ay: 0.00445557 Az: 0.256714 g | Temp: 13.2271 C
+                     || Gx: -0.0689997 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -7.80458e-14 | Roll: 8.09871e-16 | Yaw: -5.50452e-13
+ || RSSI: -43 | SNR: 10.000000
+Received: 865587 || IMU TASK   || Ax: 0.0336914 Ay: 0.0045166 Az: 0.256958 g | Temp: 13.2476 C
+                     || Gx: -0.114801 Gy: -0.0970886 Gz: 0 deg/s
+                     || Pitch: -7.81425e-14 | Roll: 7.9812e-16 | Yaw: -5.5119e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 866647 || IMU TASK   || Ax: 0.0333862 Ay: 0.0045166 Az: 0.256531 g | Temp: 13.2506 C
+                     || Gx: 0.0531363 Gy: -0.203958 Gz: 0 deg/s
+                     || Pitch: -7.84459e-14 | Roll: 5.89008e-16 | Yaw: -5.52075e-13
+ || RSSI: -35 | SNR: 9.000000
+Received: 867702 || IMU TASK   || Ax: 0.0334473 Ay: 0.00366211 Az: 0.256653 g | Temp: 13.2594 C
+                     || Gx: -0.0231987 Gy: 0.0250474 Gz: 0 deg/s
+                     || Pitch: -7.85415e-14 | Roll: 5.77625e-16 | Yaw: -5.52812e-13
+ || RSSI: -37 | SNR: 9.250000
+Received: 868760 || IMU TASK   || Ax: 0.0323486 Ay: 0.003479 Az: 0.257324 g | Temp: 13.2535 C
+                     || Gx: -0.0384657 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -7.86369e-14 | Roll: 5.664e-16 | Yaw: -5.5355e-13
+ || RSSI: -36 | SNR: 10.000000
+Received: 869809 || IMU TASK   || Ax: 0.0342407 Ay: 0.00506592 Az: 0.256592 g | Temp: 13.2565 C
+                     || Gx: -0.00793168 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -7.87228e-14 | Roll: 5.55982e-16 | Yaw: -5.54214e-13
+ || RSSI: -33 | SNR: 9.250000
+Received: 870868 || IMU TASK   || Ax: 0.0332031 Ay: 0.00390625 Az: 0.256531 g | Temp: 13.2535 C
+                     || Gx: 0.00733532 Gy: -0.203958 Gz: 0 deg/s
+                     || Pitch: -7.88188e-14 | Roll: 5.44302e-16 | Yaw: -5.54952e-13
+ || RSSI: -34 | SNR: 9.250000
+Received: 871927 || IMU TASK   || Ax: 0.0332642 Ay: 0.00384521 Az: 0.256836 g | Temp: 13.2565 C
+                     || Gx: -0.0537327 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -7.89146e-14 | Roll: 5.32954e-16 | Yaw: -5.55689e-13
+ || RSSI: -32 | SNR: 10.000000
+Received: 872985 || IMU TASK   || Ax: 0.0327148 Ay: 0.00378418 Az: 0.256226 g | Temp: 13.2741 C
+                     || Gx: 0.0684033 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -7.90109e-14 | Roll: 5.2194e-16 | Yaw: -5.56424e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 873970 || THERM_COMP || Internal: 101.472 C | External: 6.36306 C || RSSI: -34 | SNR: 9.750000
+Received: 874050 || IMU TASK   || Ax: 0.03302 Ay: 0.00402832 Az: 0.257019 g | Temp: 13.2771 C
+                     || Gx: 0.0531363 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -7.91068e-14 | Roll: 5.09961e-16 | Yaw: -5.57161e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 875108 || IMU TASK   || Ax: 0.0338745 Ay: 0.00415039 Az: 0.257019 g | Temp: 13.28 C
+                     || Gx: -0.0537327 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -7.92029e-14 | Roll: 4.98772e-16 | Yaw: -5.57899e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 876143 || IMU TASK   || Ax: 0.0352783 Ay: 0.00506592 Az: 0.256042 g | Temp: 13.2976 C
+                     || Gx: -0.145335 Gy: 0.452523 Gz: 0 deg/s
+                     || Pitch: -7.92702e-14 | Roll: 4.90493e-16 | Yaw: -5.58416e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 877203 || IMU TASK   || Ax: 0.0330811 Ay: 0.00512695 Az: 0.255859 g | Temp: 13.2918 C
+                     || Gx: 0.0226023 Gy: -0.234492 Gz: 0 deg/s
+                     || Pitch: -7.93668e-14 | Roll: 4.78865e-16 | Yaw: -5.59153e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 878271 || IMU TASK   || Ax: 0.0319824 Ay: 0.00378418 Az: 0.258362 g | Temp: 13.2888 C
+                     || Gx: -1.29036 Gy: -999.124 Gz: 0 deg/s
+                     || Pitch: -7.94619e-14 | Roll: 4.68167e-16 | Yaw: -5.59891e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 879318 || IMU TASK   || Ax: 0.0325317 Ay: 0.00177002 Az: 0.257202 g | Temp: 13.2918 C
+                     || Gx: -0.130068 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -7.95508e-14 | Roll: 4.58293e-16 | Yaw: -5.60556e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 881425 || IMU TASK   || Ax: 0.0346069 Ay: 0.00372314 Az: 0.257263 g | Temp: 13.3035 C
+                     || Gx: -0.160602 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -7.97347e-14 | Roll: 4.35984e-16 | Yaw: -5.61958e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 882472 || IMU TASK   || Ax: 0.0337524 Ay: 0.00408936 Az: 0.256348 g | Temp: 13.3329 C
+                     || Gx: 0.0226023 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -7.98314e-14 | Roll: 4.24303e-16 | Yaw: -5.62695e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 883528 || IMU TASK   || Ax: 0.0336304 Ay: 0.00408936 Az: 0.256409 g | Temp: 13.3182 C
+                     || Gx: -0.0537327 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -7.99276e-14 | Roll: 4.12798e-16 | Yaw: -5.63433e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 884589 || IMU TASK   || Ax: 0.0336304 Ay: 0.00421143 Az: 0.25592 g | Temp: 13.33 C
+                     || Gx: -0.0384657 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -8.0014e-14 | Roll: 4.02538e-16 | Yaw: -5.64096e-13
+ || RSSI: -32 | SNR: 9.750000
+Received: 885635 || IMU TASK   || Ax: 0.0336304 Ay: 0.00427246 Az: 0.256409 g | Temp: 13.3124 C
+                     || Gx: -0.0537327 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -8.01007e-14 | Roll: 3.92295e-16 | Yaw: -5.6476e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 886682 || IMU TASK   || Ax: 0.034729 Ay: 0.00427246 Az: 0.257019 g | Temp: 13.3212 C
+                     || Gx: -0.0384657 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -8.01885e-14 | Roll: 3.81772e-16 | Yaw: -5.65424e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 887743 || IMU TASK   || Ax: 0.0333862 Ay: 0.00378418 Az: 0.256409 g | Temp: 13.3241 C
+                     || Gx: -0.0537327 Gy: -0.0818216 Gz: 0 deg/s
+                     || Pitch: -8.02849e-14 | Roll: 3.70688e-16 | Yaw: -5.66161e-13
+ || RSSI: -34 | SNR: 10.250000
+Received: 888792 || IMU TASK   || Ax: 0.0339966 Ay: 0.00408936 Az: 0.25708 g | Temp: 13.3418 C
+                     || Gx: -0.00793168 Gy: 0.0250474 Gz: 0 deg/s
+                     || Pitch: -8.03822e-14 | Roll: 3.59288e-16 | Yaw: -5.66899e-13
+ || RSSI: -35 | SNR: 9.750000
+Received: 889848 || IMU TASK   || Ax: 0.0333862 Ay: 0.00390625 Az: 0.256958 g | Temp: 13.3418 C
+                     || Gx: -0.0689997 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -8.04782e-14 | Roll: 3.48203e-16 | Yaw: -5.67636e-13
+ || RSSI: -35 | SNR: 10.250000
+Received: 890904 || IMU TASK   || Ax: 0.0344849 Ay: 0.00286865 Az: 0.256897 g | Temp: 13.3506 C
+                     || Gx: -0.0231987 Gy: -0.127623 Gz: 0 deg/s
+                     || Pitch: -8.05747e-14 | Roll: 3.36435e-16 | Yaw: -5.68373e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 891951 || IMU TASK   || Ax: 0.0339355 Ay: 0.00463867 Az: 0.256653 g | Temp: 13.3476 C
+                     || Gx: -0.0384657 Gy: -0.0970886 Gz: 0 deg/s
+                     || Pitch: -8.06617e-14 | Roll: 3.25526e-16 | Yaw: -5.69037e-13
+ || RSSI: -32 | SNR: 10.500000
+Received: 892660 || BME TASK   || Temp: 11.78 C | Pressure: 93026.2 Pa | humidity: 53.0908 % | altitude (asl): 715.046 m | altitude (relative): 1.70572 m || RSSI: -33 | SNR: 9.500000
+Received: 893010 || IMU TASK   || Ax: 0.0327148 Ay: 0.00366211 Az: 0.257141 g | Temp: 13.3565 C
+                     || Gx: 0.0684033 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -8.07579e-14 | Roll: 3.14231e-16 | Yaw: -5.69774e-13
+ || RSSI: -33 | SNR: 9.500000
+Received: 894073 || IMU TASK   || Ax: 0.0345459 Ay: 0.00476074 Az: 0.256104 g | Temp: 13.3594 C
+                     || Gx: -0.0537327 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -8.08259e-14 | Roll: 3.06251e-16 | Yaw: -5.70291e-13
+ || RSSI: -32 | SNR: 10.250000
+Received: 895127 || IMU TASK   || Ax: 0.0339355 Ay: 0.00427246 Az: 0.256531 g | Temp: 13.3771 C
+                     || Gx: -0.00793168 Gy: -0.127623 Gz: 0 deg/s
+                     || Pitch: -8.09122e-14 | Roll: 2.95763e-16 | Yaw: -5.70954e-13
+ || RSSI: -35 | SNR: 10.750000
+Received: 896173 || IMU TASK   || Ax: 0.0338745 Ay: 0.00457764 Az: 0.256897 g | Temp: 13.3829 C
+                     || Gx: -0.175869 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -8.09999e-14 | Roll: 2.85292e-16 | Yaw: -5.71618e-13
+ || RSSI: -32 | SNR: 10.500000
+Received: 896666 || GPS_COMP   || Lat: 466449288 Long: -1171851189 (degrees * 10^-7) | Alt: 770.388 (m) | SIV: 27 | | Time: 2023-2-4 18:49:27:0 | Time is valid  Date is valid PDOP: 102 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccE || RSSI: -32 | SNR: 9.250000
+Received: 897224 || IMU TASK   || Ax: 0.0344849 Ay: 0.00469971 Az: 0.257019 g | Temp: 13.3741 C
+                     || Gx: 0.0684033 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -8.10978e-14 | Roll: 2.73103e-16 | Yaw: -5.72355e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 898282 || IMU TASK   || Ax: 0.0326538 Ay: 0.00372314 Az: 0.25647 g | Temp: 13.3829 C
+                     || Gx: -0.0384657 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -8.11942e-14 | Roll: 2.6158e-16 | Yaw: -5.73093e-13
+ || RSSI: -39 | SNR: 9.250000
+Received: 899343 || IMU TASK   || Ax: 0.0325317 Ay: 0.00482178 Az: 0.256165 g | Temp: 13.3594 C
+                     || Gx: -0.0384657 Gy: -0.234492 Gz: 0 deg/s
+                     || Pitch: -8.1281e-14 | Roll: 2.51881e-16 | Yaw: -5.73756e-13
+ || RSSI: -44 | SNR: 9.750000
+Received: 900400 || IMU TASK   || Ax: 0.0338135 Ay: 0.00366211 Az: 0.256165 g | Temp: 13.3888 C
+                     || Gx: -0.0231987 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -8.13768e-14 | Roll: 2.40727e-16 | Yaw: -5.74494e-13
+ || RSSI: -40 | SNR: 9.750000
+Received: 901447 || IMU TASK   || Ax: 0.0336304 Ay: 0.00396729 Az: 0.256836 g | Temp: 13.3947 C
+                     || Gx: -0.00793168 Gy: -0.112356 Gz: 0 deg/s
+                     || Pitch: -8.14648e-14 | Roll: 2.29941e-16 | Yaw: -5.75158e-13
+ || RSSI: -39 | SNR: 11.000000
+Received: 902504 || IMU TASK   || Ax: 0.0328369 Ay: 0.00402832 Az: 0.25708 g | Temp: 13.3918 C
+                     || Gx: 0.0226023 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -8.15611e-14 | Roll: 2.18786e-16 | Yaw: -5.75895e-13
+ || RSSI: -42 | SNR: 10.000000
+Received: 903553 || IMU TASK   || Ax: 0.0296631 Ay: 0.000976562 Az: 0.256042 g | Temp: 13.4065 C
+                     || Gx: 0.404277 Gy: -0.646701 Gz: 0 deg/s
+                     || Pitch: -8.16456e-14 | Roll: 2.11893e-16 | Yaw: -5.7656e-13
+ || RSSI: -38 | SNR: 9.750000
+Received: 904136 || THERM_COMP || Internal: 100.313 C | External: 6.41293 C || RSSI: -36 | SNR: 9.750000
+Received: 904613 || IMU TASK   || Ax: 0.0301514 Ay: 0.003479 Az: 0.257385 g | Temp: 13.4153 C
+                     || Gx: -0.0689997 Gy: -0.539832 Gz: 0 deg/s
+                     || Pitch: -8.17419e-14 | Roll: 1.99336e-16 | Yaw: -5.77298e-13
+ || RSSI: -36 | SNR: 9.500000
+Received: 905661 || IMU TASK   || Ax: 0.0330811 Ay: 0.00543213 Az: 0.257202 g | Temp: 13.3976 C
+                     || Gx: 0.801219 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -8.18281e-14 | Roll: 1.87813e-16 | Yaw: -5.77964e-13
+ || RSSI: -37 | SNR: 9.750000
+Received: 906711 || IMU TASK   || Ax: 0.0310669 Ay: 0.00695801 Az: 0.256897 g | Temp: 13.4035 C
+                     || Gx: 0.0684033 Gy: -0.463497 Gz: 0 deg/s
+                     || Pitch: -8.19264e-14 | Roll: 1.81604e-16 | Yaw: -5.78702e-13
+ || RSSI: -35 | SNR: 9.500000
+Received: 907726 || BME TASK   || Temp: 11.82 C | Pressure: 93025.3 Pa | humidity: 52.8926 % | altitude (asl): 715.123 m | altitude (relative): 1.78417 m || RSSI: -33 | SNR: 9.500000
+Received: 908829 || IMU TASK   || Ax: 0.0328979 Ay: 0.00402832 Az: 0.25708 g | Temp: 13.4035 C
+                     || Gx: -0.00793168 Gy: -0.00548658 Gz: 0 deg/s
+                     || Pitch: -8.21154e-14 | Roll: 1.59839e-16 | Yaw: -5.80176e-13
+ || RSSI: -38 | SNR: 9.250000
+Received: 909885 || IMU TASK   || Ax: 0.0327148 Ay: 0.00396729 Az: 0.256042 g | Temp: 13.4329 C
+                     || Gx: -0.00793168 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -8.22108e-14 | Roll: 1.48421e-16 | Yaw: -5.80913e-13
+ || RSSI: -36 | SNR: 9.750000
+Received: 910948 || IMU TASK   || Ax: 0.0338135 Ay: 0.0032959 Az: 0.256104 g | Temp: 13.43 C
+                     || Gx: -0.0842667 Gy: -0.0970886 Gz: 0 deg/s
+                     || Pitch: -8.23078e-14 | Roll: 1.37425e-16 | Yaw: -5.8165e-13
+ || RSSI: -38 | SNR: 9.500000
+Received: 912004 || IMU TASK   || Ax: 0.0339355 Ay: 0.00317383 Az: 0.257202 g | Temp: 13.4388 C
+                     || Gx: -0.00793168 Gy: -0.112356 Gz: 0 deg/s
+                     || Pitch: -8.24027e-14 | Roll: 1.26674e-16 | Yaw: -5.82388e-13
+ || RSSI: -37 | SNR: 10.500000
+Received: 913062 || IMU TASK   || Ax: 0.0338745 Ay: 0.00366211 Az: 0.256958 g | Temp: 13.4271 C
+                     || Gx: 0.00733532 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -8.24994e-14 | Roll: 1.15291e-16 | Yaw: -5.83126e-13
+ || RSSI: -41 | SNR: 10.750000
+Received: 914109 || IMU TASK   || Ax: 0.0335693 Ay: 0.00323486 Az: 0.256592 g | Temp: 13.4535 C
+                     || Gx: 0.0684033 Gy: -0.402429 Gz: 0 deg/s
+                     || Pitch: -8.25849e-14 | Roll: 1.04978e-16 | Yaw: -5.83791e-13
+ || RSSI: -38 | SNR: 9.500000
+Received: 915158 || IMU TASK   || Ax: 0.034729 Ay: 0.00469971 Az: 0.256592 g | Temp: 13.4447 C
+                     || Gx: -0.00793168 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -8.2682e-14 | Roll: 9.34556e-17 | Yaw: -5.84528e-13
+ || RSSI: -37 | SNR: 9.750000
+Received: 916202 || IMU TASK   || Ax: 0.0333862 Ay: 0.00354004 Az: 0.256592 g | Temp: 13.4535 C
+                     || Gx: -0.0842667 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -8.27789e-14 | Roll: 8.20204e-17 | Yaw: -5.85265e-13
+ || RSSI: -37 | SNR: 10.500000
+Received: 917295 || IMU TASK   || Ax: 0.0341187 Ay: 0.00457764 Az: 0.256897 g | Temp: 13.4565 C
+                     || Gx: -0.114801 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -8.28747e-14 | Roll: 7.0936e-17 | Yaw: -5.86003e-13
+ || RSSI: -36 | SNR: 9.500000
+Received: 918365 || IMU TASK   || Ax: 0.0344238 Ay: 0.00360107 Az: 0.25708 g | Temp: 13.4447 C
+                     || Gx: 0.0836703 Gy: -0.677235 Gz: 1000.17 deg/s
+                     || Pitch: -8.29706e-14 | Roll: 6.07988e-17 | Yaw: -5.86741e-13
+ || RSSI: -40 | SNR: 10.250000
+Received: 919416 || IMU TASK   || Ax: 0.0355225 Ay: 0.00317383 Az: 0.256592 g | Temp: 13.4653 C
+                     || Gx: -0.0231987 Gy: 0.0403144 Gz: 0 deg/s
+                     || Pitch: -8.30654e-14 | Roll: 4.94864e-17 | Yaw: -5.8748e-13
+ || RSSI: -33 | SNR: 9.750000
+Received: 920472 || IMU TASK   || Ax: 0.0345459 Ay: 0.0065918 Az: 0.256104 g | Temp: 13.4653 C
+                     || Gx: 0.129471 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -8.31625e-14 | Roll: 3.69989e-17 | Yaw: -5.88217e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 921530 || IMU TASK   || Ax: 0.0362549 Ay: 0.00109863 Az: 0.256104 g | Temp: 13.4888 C
+                     || Gx: 0.114204 Gy: 0.223518 Gz: 0 deg/s
+                     || Pitch: -8.32584e-14 | Roll: 2.73001e-17 | Yaw: -5.88955e-13
+ || RSSI: -38 | SNR: 11.250000
+Received: 922577 || IMU TASK   || Ax: 0.0330811 Ay: 0.00408936 Az: 0.257507 g | Temp: 13.4712 C
+                     || Gx: 0.00733532 Gy: -0.0970886 Gz: 0 deg/s
+                     || Pitch: -8.33434e-14 | Roll: 1.6777e-17 | Yaw: -5.89618e-13
+ || RSSI: -34 | SNR: 9.750000
+Received: 923627 || IMU TASK   || Ax: 0.0316162 Ay: 0.00177002 Az: 0.257202 g | Temp: 13.4947 C
+                     || Gx: -0.00793168 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -8.34391e-14 | Roll: 5.69259e-18 | Yaw: -5.90356e-13
+ || RSSI: -34 | SNR: 9.500000
+Received: 924688 || IMU TASK   || Ax: 0.0328369 Ay: 0.00531006 Az: 0.256531 g | Temp: 13.4741 C
+                     || Gx: -0.00793168 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -8.35345e-14 | Roll: -6.14594e-18 | Yaw: -5.91092e-13
+ || RSSI: -31 | SNR: 9.250000
+Received: 925742 || IMU TASK   || Ax: 0.03479 Ay: 0.00457764 Az: 0.256531 g | Temp: 13.4918 C
+                     || Gx: -0.298005 Gy: -0.387162 Gz: 0 deg/s
+                     || Pitch: -8.36316e-14 | Roll: -1.83528e-17 | Yaw: -5.91828e-13
+ || RSSI: -45 | SNR: 9.750000
+Received: 926799 || IMU TASK   || Ax: 0.0355835 Ay: 0.00317383 Az: 0.256226 g | Temp: 13.4741 C
+                     || Gx: 0.266874 Gy: -999.75 Gz: 0 deg/s
+                     || Pitch: -8.37276e-14 | Roll: -2.82095e-17 | Yaw: -5.92566e-13
+ || RSSI: -51 | SNR: 10.000000
+Received: 927856 || IMU TASK   || Ax: 0.0316162 Ay: 0.00842285 Az: 0.256653 g | Temp: 13.4888 C
+                     || Gx: 0.144738 Gy: -1.13524 Gz: 1000.18 deg/s
+                     || Pitch: -8.38236e-14 | Roll: -4.21175e-17 | Yaw: -5.93301e-13
+ || RSSI: -48 | SNR: 12.750000
+Received: 928816 || GPS_COMP   || Lat: 466449354 Long: -1171851278 (degrees * 10^-7) | Alt: 768.333 (m) | SIV: 27 | | Time: 2023-2-4 18:50:0:0 | Time is valid  Date is valid PDOP: 102 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccEs || RSSI: -40 | SNR: 10.000000
+Received: 929951 || IMU TASK   || Ax: 0.0339355 Ay: 0.00469971 Az: 0.256714 g | Temp: 13.5124 C
+                     || Gx: 0.0378693 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -8.39913e-14 | Roll: -6.15503e-17 | Yaw: -5.94631e-13
+ || RSSI: -36 | SNR: 10.750000
+Received: 931003 || IMU TASK   || Ax: 0.0336914 Ay: 0.00396729 Az: 0.256104 g | Temp: 13.4976 C
+                     || Gx: 0.0226023 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -8.40878e-14 | Roll: -7.29854e-17 | Yaw: -5.95368e-13
+ || RSSI: -35 | SNR: 10.250000
+Received: 932053 || IMU TASK   || Ax: 0.0339355 Ay: 0.00415039 Az: 0.256287 g | Temp: 13.5065 C
+                     || Gx: -0.0689997 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -8.4175e-14 | Roll: -8.36488e-17 | Yaw: -5.96032e-13
+ || RSSI: -34 | SNR: 10.250000
+Received: 933117 || IMU TASK   || Ax: 0.0328369 Ay: 0.00445557 Az: 0.256104 g | Temp: 13.5006 C
+                     || Gx: -0.0689997 Gy: -0.127623 Gz: 0 deg/s
+                     || Pitch: -8.42705e-14 | Roll: -9.47683e-17 | Yaw: -5.96769e-13
+ || RSSI: -39 | SNR: 10.250000
+Received: 934167 || IMU TASK   || Ax: 0.0327759 Ay: 0.00421143 Az: 0.256531 g | Temp: 13.5271 C
+                     || Gx: -0.00793168 Gy: -0.0360206 Gz: 0 deg/s
+                     || Pitch: -8.43652e-14 | Roll: -1.05449e-16 | Yaw: -5.97507e-13
+ || RSSI: -42 | SNR: 9.500000
+Received: 935216 || IMU TASK   || Ax: 0.0328369 Ay: 0.00384521 Az: 0.257202 g | Temp: 13.5359 C
+                     || Gx: -0.130068 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -8.44602e-14 | Roll: -1.16323e-16 | Yaw: -5.98244e-13
+ || RSSI: -37 | SNR: 10.000000
+Received: 936261 || IMU TASK   || Ax: 0.0337524 Ay: 0.00372314 Az: 0.256714 g | Temp: 13.5271 C
+                     || Gx: 0.0226023 Gy: -0.112356 Gz: 0 deg/s
+                     || Pitch: -8.45473e-14 | Roll: -1.26759e-16 | Yaw: -5.98908e-13
+ || RSSI: -40 | SNR: 9.250000
+Received: 937309 || IMU TASK   || Ax: 0.0316162 Ay: 0.00427246 Az: 0.257141 g | Temp: 13.53 C
+                     || Gx: -0.191136 Gy: -0.249759 Gz: 0 deg/s
+                     || Pitch: -8.46459e-14 | Roll: -1.37825e-16 | Yaw: -5.99647e-13
+ || RSSI: -46 | SNR: 9.500000
+Received: 938049 || BME TASK   || Temp: 11.92 C | Pressure: 93026.6 Pa | humidity: 52.54 % | altitude (asl): 715.009 m | altitude (relative): 1.668 m || RSSI: -37 | SNR: 10.000000
+Received: 938409 || IMU TASK   || Ax: 0.0343018 Ay: 0.00384521 Az: 0.25769 g | Temp: 13.5241 C
+                     || Gx: -0.00793168 Gy: 0.00978042 Gz: 0 deg/s
+                     || Pitch: -8.47229e-14 | Roll: -1.46946e-16 | Yaw: -6.00238e-13
+ || RSSI: -42 | SNR: 9.500000
+Received: 939456 || IMU TASK   || Ax: 0.0328979 Ay: 0.00408936 Az: 0.257202 g | Temp: 13.53 C
+                     || Gx: 0.0836703 Gy: -0.0665546 Gz: 0 deg/s
+                     || Pitch: -8.48101e-14 | Roll: -1.56907e-16 | Yaw: -6.00902e-13
+ || RSSI: -43 | SNR: 9.500000
+Received: 940503 || IMU TASK   || Ax: 0.0320435 Ay: 0.00372314 Az: 0.256836 g | Temp: 13.5624 C
+                     || Gx: -0.0384657 Gy: 0.0403144 Gz: 0 deg/s
+                     || Pitch: -8.48955e-14 | Roll: -1.66904e-16 | Yaw: -6.01565e-13
+ || RSSI: -37 | SNR: 11.250000
+Received: 941554 || IMU TASK   || Ax: 0.0321045 Ay: 0.00238037 Az: 0.256714 g | Temp: 13.5624 C
+                     || Gx: 0.114204 Gy: 0.0861154 Gz: 0 deg/s
+                     || Pitch: -8.49812e-14 | Roll: -1.76147e-16 | Yaw: -6.0223e-13
+ || RSSI: -38 | SNR: 9.500000
+Received: 942601 || IMU TASK   || Ax: 0.0350952 Ay: 0.00360107 Az: 0.256165 g | Temp: 13.5476 C
+                     || Gx: 0.190539 Gy: -0.158157 Gz: 0 deg/s
+                     || Pitch: -8.50678e-14 | Roll: -1.86565e-16 | Yaw: -6.02894e-13
+ || RSSI: -35 | SNR: 9.750000
+Received: 943659 || IMU TASK   || Ax: 0.0332642 Ay: 0.00427246 Az: 0.256348 g | Temp: 13.5594 C
+                     || Gx: -0.191136 Gy: 0.16245 Gz: 0 deg/s
+                     || Pitch: -8.51636e-14 | Roll: -1.9786e-16 | Yaw: -6.03632e-13
+ || RSSI: -36 | SNR: 11.000000
+Received: 944708 || IMU TASK   || Ax: 0.0338745 Ay: 0.00482178 Az: 0.256531 g | Temp: 13.5624 C
+                     || Gx: 0.0226023 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -8.52509e-14 | Roll: -2.08225e-16 | Yaw: -6.04295e-13
+ || RSSI: -33 | SNR: 10.750000
+Received: 945761 || IMU TASK   || Ax: 0.0338745 Ay: 0.00335693 Az: 0.257324 g | Temp: 13.5506 C
+                     || Gx: -0.0537327 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -8.53482e-14 | Roll: -2.19643e-16 | Yaw: -6.05033e-13
+ || RSSI: -42 | SNR: 9.750000
+Received: 946816 || IMU TASK   || Ax: 0.0325928 Ay: 0.00341797 Az: 0.256836 g | Temp: 13.5771 C
+                     || Gx: -0.175869 Gy: 0.0861154 Gz: 0 deg/s
+                     || Pitch: -8.54449e-14 | Roll: -2.31148e-16 | Yaw: -6.05771e-13
+ || RSSI: -36 | SNR: 9.500000
+Received: 947872 || IMU TASK   || Ax: 0.0335693 Ay: 0.00421143 Az: 0.256348 g | Temp: 13.5741 C
+                     || Gx: -0.00793168 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -8.55411e-14 | Roll: -2.42917e-16 | Yaw: -6.06508e-13
+ || RSSI: -40 | SNR: 9.750000
+Received: 948921 || IMU TASK   || Ax: 0.0333862 Ay: 0.0032959 Az: 0.256775 g | Temp: 13.5947 C
+                     || Gx: 0.00733532 Gy: -0.0512876 Gz: 0 deg/s
+                     || Pitch: -8.56284e-14 | Roll: -2.53247e-16 | Yaw: -6.07172e-13
+ || RSSI: -42 | SNR: 10.250000
+Received: 949982 || IMU TASK   || Ax: 0.0331421 Ay: 0.003479 Az: 0.257019 g | Temp: 13.58 C
+                     || Gx: -0.0537327 Gy: -0.0207536 Gz: 0 deg/s
+                     || Pitch: -8.5715e-14 | Roll: -2.62981e-16 | Yaw: -6.07836e-13
+ || RSSI: -42 | SNR: 9.750000
+Received: 951052 || IMU TASK   || Ax: 0.0358887 Ay: -0.00189209 Az: 0.255859 g | Temp: 13.5947 C
+                     || Gx: -1.53463 Gy: 0.421989 Gz: 961.175 deg/s
+                     || Pitch: -8.58115e-14 | Roll: -2.72609e-16 | Yaw: -6.08574e-13
+ || RSSI: -41 | SNR: 10.000000
+Received: 952107 || IMU TASK   || Ax: 0.0328369 Ay: 0.00579834 Az: 0.256714 g | Temp: 13.5918 C
+                     || Gx: 0.327942 Gy: -0.0818216 Gz: 0 deg/s
+                     || Pitch: -8.59055e-14 | Roll: -2.91849e-16 | Yaw: -6.09312e-13
+ || RSSI: -42 | SNR: 9.250000
+Received: 953137 || BME TASK   || Temp: 11.97 C | Pressure: 93028.7 Pa | humidity: 52.3525 % | altitude (asl): 714.821 m | altitude (relative): 1.4774 m || RSSI: -42 | SNR: 9.500000
+Received: 954210 || IMU TASK   || Ax: 0.0352783 Ay: 0.00421143 Az: 0.256653 g | Temp: 13.6124 C
+                     || Gx: 0.0684033 Gy: -0.127623 Gz: 0 deg/s
+                     || Pitch: -8.60838e-14 | Roll: -3.23331e-16 | Yaw: -6.10713e-13
+ || RSSI: -47 | SNR: 9.500000
+Received: 955278 || IMU TASK   || Ax: 0.0377808 Ay: -0.0115356 Az: 0.257263 g | Temp: 13.5888 C
+                     || Gx: -3.09187 Gy: -8.31073 Gz: 18.6367 deg/s
+                     || Pitch: -8.61921e-14 | Roll: -3.08897e-16 | Yaw: -6.11451e-13
+ || RSSI: -33 | SNR: 10.000000
+Received: 956337 || IMU TASK   || Ax: 0.0630493 Ay: -0.043457 Az: 0.249756 g | Temp: 13.6006 C
+                     || Gx: -0.313272 Gy: -994.147 Gz: 987.481 deg/s
+                     || Pitch: -8.63653e-14 | Roll: -1.97983e-16 | Yaw: -6.12175e-13
+ || RSSI: -48 | SNR: 10.000000
+Received: 957398 || IMU TASK   || Ax: 0.0715332 Ay: -0.0450439 Az: 0.247803 g | Temp: 13.5771 C
+                     || Gx: -2.52699 Gy: -994.452 Gz: 994.992 deg/s
+                     || Pitch: -8.65498e-14 | Roll: -7.65108e-17 | Yaw: -6.12891e-13
+ || RSSI: -44 | SNR: 10.000000
+Received: 958472 || IMU TASK   || Ax: 0.0750122 Ay: -0.0426025 Az: 0.236511 g | Temp: 13.5888 C
+                     || Gx: -981.493 Gy: -994.559 Gz: 16.881 deg/s
+                     || Pitch: -8.6737e-14 | Roll: 4.8434e-17 | Yaw: -6.13604e-13
+ || RSSI: -49 | SNR: 9.750000
+Received: 958890 || GPS_COMP   || Lat: 466449303 Long: -1171851305 (degrees * 10^-7) | Alt: 767.539 (m) | SIV: 27 | | Time: 2023-2-4 18:50:30:0 | Time is valid  Date is valid PDOP: 102 (10^-2) | ATTroll: 10734.3 | ATTpitch: 10734.3 | ATTheading: 18862.2 | horizAccE || RSSI: -53 | SNR: 9.750000
+Received: 959524 || IMU TASK   || Ax: 0.0668335 Ay: -0.0413818 Az: 0.24823 g | Temp: 13.6035 C
+                     || Gx: -988.775 Gy: -993.612 Gz: 8.1483 deg/s
+                     || Pitch: -8.69109e-14 | Roll: 1.54349e-16 | Yaw: -6.14313e-13
+ || RSSI: -56 | SNR: 10.750000
+Received: 960582 || IMU TASK   || Ax: 0.0621948 Ay: -0.0454102 Az: 0.24762 g | Temp: 13.6124 C
+                     || Gx: 3.48821 Gy: -1.18105 Gz: 10.53 deg/s
+                     || Pitch: -8.72473e-14 | Roll: 6.37647e-18 | Yaw: -6.15083e-13
+ || RSSI: -54 | SNR: 9.750000
+Received: 961649 || IMU TASK   || Ax: 0.0568237 Ay: -0.0437012 Az: 0.259827 g | Temp: 13.6006 C
+                     || Gx: 0.54168 Gy: -14.4481 Gz: 999.587 deg/s
+                     || Pitch: -8.74252e-14 | Roll: 1.22219e-16 | Yaw: -6.15801e-13
+ || RSSI: -58 | SNR: 9.500000
+Received: 962700 || IMU TASK   || Ax: 0.0566406 Ay: -0.0413208 Az: 0.251404 g | Temp: 13.6124 C
+                     || Gx: -1.01555 Gy: -992.727 Gz: 993.954 deg/s
+                     || Pitch: -8.75845e-14 | Roll: 2.24223e-16 | Yaw: -6.16444e-13
+ || RSSI: -43 | SNR: 9.500000
+Received: 963748 || IMU TASK   || Ax: 0.0599976 Ay: -0.041748 Az: 0.249573 g | Temp: 13.6124 C
+                     || Gx: -5.06131 Gy: -994.62 Gz: 5.49185 deg/s
+                     || Pitch: -8.77413e-14 | Roll: 3.29788e-16 | Yaw: -6.1709e-13
+ || RSSI: -46 | SNR: 9.500000
+Received: 964739 || THERM_COMP || Internal: 100.44 C | External: 6.36306 C || RSSI: -48 | SNR: 9.250000
+Received: 964797 || IMU TASK   || Ax: 0.0919189 Ay: -0.065918 Az: 0.22998 g | Temp: 13.6153 C

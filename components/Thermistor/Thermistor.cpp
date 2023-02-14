@@ -56,7 +56,11 @@ void ThermistorComponent::logThermistors(){
 
   std::ostringstream data;
 
-  data << xTaskGetTickCount() << " || " THERM_TASK_ID << " || Internal: " << therm1_c << " C | External: " << therm2_c << " C";
+  data << xTaskGetTickCount() << " || " THERM_TASK_ID;
+  int header_len = data.str().length();
+  data << " || Internal: " << therm1_c << " C | External: " << therm2_c << " C\n";
+  data << std::string(header_len-3, ' ') << "Internal_R: " << therm1_RT << " |  External_R:" << therm2_RT << "deg/s\n";
+
   SDData *sddata = new SDData();                    
   sddata->file_name = new std::string("measure");     
   sddata->message = new std::string(data.str());        
@@ -82,8 +86,8 @@ void ThermistorComponent::logThermistors(){
 #endif
 
 #ifdef THERM_LOG_LoRa
-  // Update LoRa every 30 seconds
-  if (curr_tick - _lastUpdateLoRa > 30000 / portTICK_PERIOD_MS)
+  // Update LoRa every 15 seconds
+  if (curr_tick - _lastUpdateLoRa > 15000 / portTICK_PERIOD_MS)
   {
     std::string *loradata = new std::string(data.str());
     _lastUpdateLoRa = curr_tick;

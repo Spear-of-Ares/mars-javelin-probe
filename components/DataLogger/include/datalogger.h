@@ -21,9 +21,9 @@
 
 #define LOGFILE   "javelin.log"
 
-#if CONFIG_SD2_ATTACHED == true
+//#if CONFIG_SD2_ATTACHED == true
 #define SD2_ATTACHED
-#endif
+//#endif
 
 #define SPEED_LOG
 
