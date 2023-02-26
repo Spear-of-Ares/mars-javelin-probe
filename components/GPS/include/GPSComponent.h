@@ -1,10 +1,10 @@
 /*********************************************************************************
-*     File Name           :     /components/GPS/include/GPSComponent.h
-*     Created By          :     jon
-*     Creation Date       :     [2022-10-21 00:38]
-*     Last Modified       :     [2022-11-06 02:11]
-*     Description         :     Component for handling both GPS modules and their data
-**********************************************************************************/
+ *     File Name           :     /components/GPS/include/GPSComponent.h
+ *     Created By          :     jon
+ *     Creation Date       :     [2022-10-21 00:38]
+ *     Last Modified       :     [2022-11-06 02:11]
+ *     Description         :     Component for handling both GPS modules and their data
+ **********************************************************************************/
 
 #ifndef __GPS_COMPONENT_H__
 #define __GPS_COMPONENT_H__
@@ -19,6 +19,11 @@
 
 #include "datalogger.h"
 
+extern "C"
+{
+#include "umsg_GPS.h"
+}
+
 #define ADDRESS 0x42
 #define GPS_COMP_ID "GPS_COMP  "
 
@@ -26,23 +31,18 @@
 #define DUAL_GPS
 #endif
 
-class GPSComponent{
+class GPSComponent
+{
 public:
-  GPSComponent(QueueHandle_t dataOutSD, QueueHandle_t dataOutLoRa, QueueHandle_t dataOutIridium);
   static void vMainLoop_Task(void *arg);
+
 private:
   void setup();
   void get_data();
-  std::string getGPS_MSG(int gps);
-  void sendData(std::string msg);
-  QueueHandle_t _dataOutSD;
-  QueueHandle_t _dataOutIridium;
-  QueueHandle_t _dataOutLoRa;
+  void getGPS_MSG(int gps);
+
   SFE_UBLOX_GNSS _GNSS_1;
   SFE_UBLOX_GNSS _GNSS_2;
-  TickType_t _lastUpdateIridium;
-  TickType_t _lastUpdateLoRa;
 };
 
 #endif /* __GPS_COMPONENT_H__ */
-

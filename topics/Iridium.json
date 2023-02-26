@@ -1,0 +1,69 @@
+{
+    "enums": [
+        {
+            "name": "iridium_state",
+            "enumerators": [
+                "iridium_ok",
+                "iridium_sleeping",
+                "iridium_off",
+                "iridium_disconnected"
+            ]
+        },
+        {
+            "name": "msg_type",
+            "enumerators": [
+                "iridium_msg_gps_data",
+                "iridium_msg_response",
+                "iridium_msg_command",
+                "iridium_msg_other"
+            ]
+        }
+    ],
+    "msgs": [
+        {
+            "name": "received_msg",
+            "fields": [
+                {
+                    "name": "receive_tick",
+                    "type": "uint32"
+                },
+                {
+                    "name": "recv_msg_type",
+                    "type": "msg_type"
+                },
+                {
+                    "name": "time_ymd_hms",
+                    "type": "int32",
+                    "length": 6
+                },
+                {
+                    "name": "msg_data",
+                    "type": "uint8",
+                    "length": 512
+                }
+            ]
+        },
+        {
+            "name": "sent_msg",
+            "fields": [
+                {
+                    "name": "send_tick",
+                    "type": "uint32"
+                },
+                {
+                    "name": "sent_msg_type",
+                    "type": "msg_type"
+                }
+            ]
+        },
+        {
+            "name": "state",
+            "fields": [
+                {
+                    "name": "state",
+                    "type": "iridium_state"
+                }
+            ]
+        }
+    ]
+}

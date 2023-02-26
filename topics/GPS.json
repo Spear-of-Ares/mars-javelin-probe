@@ -1,0 +1,105 @@
+{
+    "enums": [
+        {
+            "name": "gps_state",
+            "enumerators": [
+                "gps_ok",
+                "gps_sleeping",
+                "gps_off",
+                "gps_disconnected"
+            ]
+        }
+    ],
+    "msgs": [
+        {
+            "name": "configuration",
+            "fields": [
+                {
+                    "name": "sample_freq_hz",
+                    "type": "uint8"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "data",
+            "fields": [
+                {
+                    "name": "lat_long",
+                    "type": "int64",
+                    "length": 2
+                },
+                {
+                    "name": "altitude",
+                    "type": "uint32"
+                },
+                {
+                    "name": "time_ymd_hms",
+                    "type": "int32",
+                    "length": 7
+                },
+                {
+                    "name": "valid_time",
+                    "type": "bool"
+                },
+                {
+                    "name": "locked_sats",
+                    "type": "uint8"
+                },
+                {
+                    "name": "p_dilution_precision",
+                    "type": "uint16"
+                },
+                {
+                    "name": "ground_speed",
+                    "type": "int32"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "state",
+            "fields": [
+                {
+                    "name": "state",
+                    "type": "gps_state"
+                },
+                {
+                    "type": "uint8",
+                    "bitfield": [
+                        {
+                            "name": "initializing",
+                            "bits": 1
+                        },
+                        {
+                            "name": "not_enough_sats",
+                            "bits": 1
+                        },
+                        {
+                            "name": "receiving_data",
+                            "bits": 1
+                        },
+                        {
+                            "name": "reconnecting",
+                            "bits": 1
+                        },
+                        {
+                            "name": "not_present",
+                            "bits": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        }
+    ]
+}

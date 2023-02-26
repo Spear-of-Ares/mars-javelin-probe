@@ -1,0 +1,44 @@
+{
+    "enums": [],
+    "msgs": [
+        {
+            "name": "task_run_time_stats",
+            "fields": [
+                {
+                    "name": "task_name",
+                    "type": "char",
+                    "length": 16
+                },
+                {
+                    "name": "run_time",
+                    "type": "uint32"
+                },
+                {
+                    "name": "cpu_usage",
+                    "type": "uint32"
+                },
+                {
+                    "name": "stack_hwm",
+                    "type": "uint32"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "system_run_time_stats",
+            "fields": [
+                {
+                    "name": "free_heap_size",
+                    "type": "uint32"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        }
+    ]
+}

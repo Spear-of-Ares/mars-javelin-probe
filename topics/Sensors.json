@@ -1,0 +1,277 @@
+{
+    "enums": [
+        {
+            "name": "sensor_state",
+            "enumerators": [
+                "sensor_ok",
+                "sensor_sleeping",
+                "sensor_off",
+                "sensor_disconnected"
+            ]
+        },
+        {
+            "name": "imu_processing_level",
+            "enumerators": [
+                "raw",
+                "normalized",
+                "scaled"
+            ]
+        },
+        {
+            "name": "imu_accelerometer_range",
+            "enumerators": [
+                "G_16",
+                "G_8",
+                "G_4",
+                "G_2"
+            ]
+        },
+        {
+            "name": "imu_gyroscope_scale",
+            "enumerators": [
+                "DPS_2000",
+                "DPS_1000",
+                "DPS_500",
+                "DPS_250"
+            ]
+        }
+    ],
+    "msgs": [
+        {
+            "name": "imu_configuration",
+            "fields": [
+                {
+                    "name": "sample_rate_hz",
+                    "type": "uint16"
+                },
+                {
+                    "name": "accelerometer_range",
+                    "type": "imu_accelerometer_range"
+                },
+                {
+                    "name": "gyroscope_scale",
+                    "type": "imu_gyroscope_scale"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "imu_data",
+            "fields": [
+                {
+                    "name": "accelerometer",
+                    "type": "float",
+                    "length": 3
+                },
+                {
+                    "name": "gyroscope",
+                    "type": "float",
+                    "length": 3
+                },
+                {
+                    "name": "magnetometer",
+                    "type": "float",
+                    "length": 3
+                },
+                {
+                    "name": "attitude",
+                    "type": "float",
+                    "length": 3
+                },
+                {
+                    "name": "temperature_c",
+                    "type": "float"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "imu_state",
+            "fields": [
+                {
+                    "name": "state",
+                    "type": "sensor_state"
+                },
+                {
+                    "type": "uint8",
+                    "bitfield": [
+                        {
+                            "name": "initializing",
+                            "bits": 1
+                        },
+                        {
+                            "name": "logging_data",
+                            "bits": 1
+                        },
+                        {
+                            "name": "reconnecting",
+                            "bits": 1
+                        },
+                        {
+                            "name": "not_present",
+                            "bits": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "baro_configuration",
+            "fields": [
+                {
+                    "name": "start_pressure_hpa",
+                    "type": "float"
+                },
+                {
+                    "name": "start_alt_m",
+                    "type": "float"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "baro_data",
+            "fields": [
+                {
+                    "name": "pressure_pa",
+                    "type": "float"
+                },
+                {
+                    "name": "relative_humidity",
+                    "type": "float"
+                },
+                {
+                    "name": "temperature_c",
+                    "type": "float"
+                },
+                {
+                    "name": "gained_alt_m",
+                    "type": "float"
+                },
+                {
+                    "name": "alt_above_sea_m",
+                    "type": "float"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "baro_state",
+            "fields": [
+                {
+                    "name": "state",
+                    "type": "sensor_state"
+                },
+                {
+                    "type": "uint8",
+                    "bitfield": [
+                        {
+                            "name": "initializing",
+                            "bits": 1
+                        },
+                        {
+                            "name": "logging_data",
+                            "bits": 1
+                        },
+                        {
+                            "name": "reconnecting",
+                            "bits": 1
+                        },
+                        {
+                            "name": "not_present",
+                            "bits": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "thermistor_configuration",
+            "fields": [
+                {
+                    "name": "R1_value",
+                    "type": "float"
+                },
+                {
+                    "name": "voltage_source_value",
+                    "type": "float"
+                },
+                {
+                    "name": "TO_value",
+                    "type": "float"
+                },
+                {
+                    "name": "RO_value",
+                    "type": "float"
+                },
+                {
+                    "name": "B_value",
+                    "type": "float"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "thermistor_data",
+            "fields": [
+                {
+                    "name": "temperature_c",
+                    "type": "float"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "thermistor_state",
+            "fields": [
+                {
+                    "name": "state",
+                    "type": "sensor_state"
+                },
+                {
+                    "type": "uint8",
+                    "bitfield": [
+                        {
+                            "name": "logging_data",
+                            "bits": 1
+                        },
+                        {
+                            "name": "not_present",
+                            "bits": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        }
+    ]
+}

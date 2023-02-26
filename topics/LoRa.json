@@ -1,0 +1,81 @@
+{
+    "enums": [
+        {
+            "name": "lora_state",
+            "enumerators": [
+                "LoRa_ok",
+                "LoRa_sleeping",
+                "LoRa_off",
+                "LoRa_disconnected"
+            ]
+        },
+        {
+            "name": "msg_type",
+            "enumerators": [
+                "LoRa_msg_sensor_data",
+                "LoRa_msg_gps_data",
+                "LoRa_msg_response",
+                "LoRa_msg_command",
+                "LoRa_msg_other"
+            ]
+        }
+    ],
+    "msgs": [
+        {
+            "name": "received_msg",
+            "fields": [
+                {
+                    "name": "receive_tick",
+                    "type": "uint32"
+                },
+                {
+                    "name": "recv_msg_type",
+                    "type": "msg_type"
+                },
+                {
+                    "name": "RSSI",
+                    "type": "int32"
+                },
+                {
+                    "name": "signal_to_noise",
+                    "type": "float"
+                },
+                {
+                    "name": "frequency_error",
+                    "type": "int64"
+                },
+                {
+                    "name": "msg_data",
+                    "type": "uint8",
+                    "length": 512
+                }
+            ]
+        },
+        {
+            "name": "sent_msg",
+            "fields": [
+                {
+                    "name": "send_tick",
+                    "type": "uint32"
+                },
+                {
+                    "name": "sent_msg_type",
+                    "type": "msg_type"
+                }
+            ]
+        },
+        {
+            "name": "state_msg",
+            "fields": [
+                {
+                    "name": "state",
+                    "type": "lora_state"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        }
+    ]
+}

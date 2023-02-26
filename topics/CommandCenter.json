@@ -1,0 +1,31 @@
+{
+    "enums": [],
+    "msgs": [
+        {
+            "name": "command",
+            "fields": [
+                {
+                    "type": "uint8",
+                    "bitfield": [
+                        {
+                            "name": "cutdown",
+                            "bits": 1
+                        },
+                        {
+                            "name": "low_alt_data_gather",
+                            "bits": 1
+                        },
+                        {
+                            "name": "self_test",
+                            "bits": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        }
+    ]
+}
