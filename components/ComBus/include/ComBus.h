@@ -1,10 +1,13 @@
-/*********************************************************************************
- *     File Name           :     /components/ComBus/include/ComBus.h
- *     Created By          :     jon
- *     Creation Date       :     [2022-10-23 19:22]
- *     Last Modified       :     [2022-10-28 01:04]
- *     Description         :     Definitions and initializtion for the communication busses (1 I2C and 2 SPI)
- **********************************************************************************/
+/*!
+ * @file ComBus.h
+ * @author Jon Kopf (kopf0033@vandals.uidaho.edu)
+ * @brief Initialises the Communication bus. Starts I2C for sensors and SPI and for SD cards and LoRa
+ * @version 1.0
+ * @date 2023-02-23
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 
 #ifndef __COM_BUS_H__
 #define __COM_BUS_H__
@@ -41,15 +44,37 @@
 #define SD1_CS_GPIO CONFIG_SD1_CS_GPIO
 #define SD2_CS_GPIO CONFIG_SD2_CS_GPIO
 
+/*!
+ * @brief Initializes the SPI bus for LoRa. Uses HSPI.
+ *
+ */
 void initLoRaSPI();
+
+/*!
+ * @brief Initializes the SPI bus for the 2 SD cards. Uses VSPI.
+ *
+ */
 void initSDSPI();
 
-extern sdmmc_host_t SDHost;
-extern int i2c_master_port;
+extern sdmmc_host_t SDHost; /*!< SDSPI host. Holds configuration values like max frequency.*/
+extern int i2c_master_port; /*< The port that I2C will be running on*/
 
+/*!
+ * @brief Initializes the I2C
+ *
+ */
 void initI2C();
 
+/*!
+ * @brief Initializes both I2C and SPI bus
+ *
+ */
 void initComBus();
+
+/*!
+ * @brief Performs a scan on the I2C bus and prints out all addresses found.
+ *
+ */
 void i2cScan();
 
 #endif /* __COM_BUS_H__ */

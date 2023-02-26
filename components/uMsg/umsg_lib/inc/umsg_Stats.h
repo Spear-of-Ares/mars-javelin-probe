@@ -1,19 +1,21 @@
-// Generated with umsg_gen on 2023-02-14
+// Generated with umsg_gen on 2023-02-23
 #pragma once
 #include <umsg_types.h>
 
 // msg structure typedefs
 typedef struct
 {
-    char task_name[8];
+    char task_name[16];
     uint32_t run_time;
     uint32_t cpu_usage;
     uint32_t stack_hwm;
+    uint32_t measure_tick;
 } umsg_Stats_task_run_time_stats_t;
 
 typedef struct
 {
     uint32_t free_heap_size;
+    uint32_t measure_tick;
 } umsg_Stats_system_run_time_stats_t;
 
 // api function headers

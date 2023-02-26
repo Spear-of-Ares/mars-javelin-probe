@@ -43,29 +43,6 @@ extern "C"
 #define NUM_SECTORS 8
 #define WRITE_BLK_SIZE SECTOR_SIZE *NUM_SECTORS
 
-class SDData
-{
-public:
-  SDData()
-  {
-    file_name = NULL;
-    message = NULL;
-  }
-  ~SDData()
-  {
-    if (file_name != NULL)
-    {
-      delete file_name;
-    }
-    if (message != NULL)
-    {
-      delete message;
-    }
-  }
-  std::string *file_name;
-  std::string *message;
-};
-
 class DataLogger
 {
 public:
@@ -162,7 +139,7 @@ private:
   umsg_sub_handle_t _stats_system_run_time_sub;
   umsg_sub_handle_t _stats_task_run_time_sub;
   umsg_Stats_system_run_time_stats_t _system_run_time_data;
-  umsg_Stats_task_run_time_stats_t _task_tun_time_data;
+  umsg_Stats_task_run_time_stats_t _task_run_time_data;
 };
 
 #endif /* __DATA_LOGGER_H__ */

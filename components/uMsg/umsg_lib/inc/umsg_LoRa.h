@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-02-14
+// Generated with umsg_gen on 2023-02-23
 #pragma once
 #include <umsg_types.h>
 
@@ -28,7 +28,7 @@ typedef struct
     int32_t RSSI;
     float signal_to_noise;
     int64_t frequency_error;
-    uint8_t msg_data[10];
+    uint8_t msg_data[512];
 } umsg_LoRa_received_msg_t;
 
 typedef struct

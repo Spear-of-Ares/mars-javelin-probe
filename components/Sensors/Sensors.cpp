@@ -1,5 +1,17 @@
 #include "Sensors.h"
 
+// void Sensors::vAccelLoop_Task(void *arg)
+// {
+//     Sensors sensors = *((Sensors *)arg);
+//     sensors.setup();
+
+//     while (true) // limited / no movement for 5 seconds == kill task
+//     {
+//         // sensors.log_accel();
+//         vTaskDelay(1 / portTICK_PERIOD_MS);
+//     }
+// }
+
 void Sensors::vMainLoop_Task(void *arg)
 {
     Sensors sensors = *((Sensors *)arg);

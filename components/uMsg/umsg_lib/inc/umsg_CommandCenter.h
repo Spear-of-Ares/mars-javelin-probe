@@ -1,10 +1,12 @@
-// Generated with umsg_gen on 2023-02-14
+// Generated with umsg_gen on 2023-02-23
 #pragma once
 #include <umsg_types.h>
 
 // msg structure typedefs
 typedef struct
 {
+    uint8_t cutdown : 1, low_alt_data_gather : 1, self_test : 1;
+    uint32_t measure_tick;
 } umsg_CommandCenter_command_t;
 
 // api function headers

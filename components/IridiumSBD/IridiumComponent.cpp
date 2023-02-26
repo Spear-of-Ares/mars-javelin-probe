@@ -1,14 +1,14 @@
 /*********************************************************************************
-*     File Name           :     /components/IridiumSBD/IridiumSBDComponent.cpp
-*     Created By          :     jon
-*     Creation Date       :     [2022-10-21 00:37]
-*     Last Modified       :     [AUTO_UPDATE_BEFORE_SAVE]
-*     Description         :     Component for handling IridiumSBD things
-**********************************************************************************/
+ *     File Name           :     /components/IridiumSBD/IridiumSBDComponent.cpp
+ *     Created By          :     jon
+ *     Creation Date       :     [2022-10-21 00:37]
+ *     Last Modified       :     [AUTO_UPDATE_BEFORE_SAVE]
+ *     Description         :     Component for handling IridiumSBD things
+ **********************************************************************************/
 
 #include "IridiumComponent.h"
 
-HardwareSerial SerialPort(2);
+HardwareSerial SerialPort(1);
 IridiumSBD Iridium(SerialPort);
 
 void IridiumComponent::vMainLoop_Task(void *arg)
@@ -70,43 +70,36 @@ void IridiumComponent::vRX()
     }
     sd_msg << " Received: " << received;
 
-    if (rx_buf[0] == 0x01)
-    {
-      xTaskNotify(_cmd_center, rx_buf[1], eSetBits);
-    }
-    std::ostringstream response;
-    response << "[" << xTaskGetTickCount() << "] Message Received";
+    // if (rx_buf[0] == 0x01)
+    // {
+    //   xTaskNotify(_cmd_center, rx_buf[1], eSetBits);
+    // }
+    // std::ostringstream response;
+    // response << "[" << xTaskGetTickCount() << "] Message Received";
 
-    err = Iridium.sendSBDText(response.str().c_str());
-    if (err != ISBD_SUCCESS)
-    {
-      sd_msg << " | Failed to send response";
-    }
+    // err = Iridium.sendSBDText(response.str().c_str());
+    // if (err != ISBD_SUCCESS)
+    // {
+    //   sd_msg << " | Failed to send response";
+    // }
   }
 
-  SDData *sdOut = new SDData();
-  sdOut->file_name = new std::string("comms");
-  sdOut->message = new std::string(sd_msg.str());
-  if (xQueueSend(_dataOutSD, &(sdOut), 10 / portTICK_PERIOD_MS) != pdTRUE)
-  {
-    printf("Failed to post stats data\n");
-  }
 #endif
 }
 
-void IridiumComponent::checkQueue(){
-  while (uxQueueMessagesWaiting(_dataOutIridium) != 0)
-  {
-    std::string *msg;
-    if (xQueueReceive(_dataOutIridium, &(msg), 5 / portTICK_PERIOD_MS) != pdTRUE)
-    {
-      printf("Iridium could not receive from queue\n");
-      return;
-    }
-#ifdef IRIDIUM_ATTACHED
-    Iridium.sendSBDText(msg->c_str());
-#endif
-    delete msg;
-  }
+void IridiumComponent::checkQueue()
+{
+  //   while (uxQueueMessagesWaiting(_dataOutIridium) != 0)
+  //   {
+  //     std::string *msg;
+  //     if (xQueueReceive(_dataOutIridium, &(msg), 5 / portTICK_PERIOD_MS) != pdTRUE)
+  //     {
+  //       printf("Iridium could not receive from queue\n");
+  //       return;
+  //     }
+  // #ifdef IRIDIUM_ATTACHED
+  //     Iridium.sendSBDText(msg->c_str());
+  // #endif
+  //     delete msg;
+  //   }
 }
-

@@ -7,7 +7,7 @@
                 {
                     "name": "task_name",
                     "type": "char",
-                    "length": 8
+                    "length": 16
                 },
                 {
                     "name": "run_time",
@@ -20,6 +20,10 @@
                 {
                     "name": "stack_hwm",
                     "type": "uint32"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
                 }
             ]
         },
@@ -28,6 +32,10 @@
             "fields": [
                 {
                     "name": "free_heap_size",
+                    "type": "uint32"
+                },
+                {
+                    "name": "measure_tick",
                     "type": "uint32"
                 }
             ]

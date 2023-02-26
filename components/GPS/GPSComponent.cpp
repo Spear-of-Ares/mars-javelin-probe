@@ -63,7 +63,9 @@ void GPSComponent::getGPS_MSG(int gps)
     default:
         myGNSS = &_GNSS_1;
     }
+
     // Calling getPVT returns true if there actually is a fresh navigation solution available.
+    // Get DOP will return true if there is Dilution of Precision Available
     // Start the reading only when valid LLH is available
     if (myGNSS->getPVT() && (myGNSS->getInvalidLlh() == false))
     {
@@ -71,12 +73,12 @@ void GPSComponent::getGPS_MSG(int gps)
         data.lat_long[0] = myGNSS->getLatitude();
         data.lat_long[1] = myGNSS->getLongitude();
 
-        data.altitude = myGNSS->getAltitude();
+        data.altitude = myGNSS->getAltitudeMSL();
 
         data.locked_sats = myGNSS->getSIV();
 
-        // int PDOP = myGNSS->getPDOP();
-        // data << " PDOP: " << PDOP << " (10^-2)";
+        data.p_dilution_precision = myGNSS->getPDOP();
+        data.ground_speed = myGNSS->getGroundSpeed();
 
         data.time_ymd_hms[0] = myGNSS->getYear();
         data.time_ymd_hms[1] = myGNSS->getMonth();
@@ -86,13 +88,6 @@ void GPSComponent::getGPS_MSG(int gps)
         data.time_ymd_hms[5] = myGNSS->getSecond();
         data.time_ymd_hms[6] = myGNSS->getMillisecond();
         data.valid_time = myGNSS->getTimeValid();
-
-        // data << "valid  Date is ";
-        // if (myGNSS->getDateValid() == false)
-        // {
-        //     data << "not ";
-        // }
-        // data << "valid";
 
         umsg_GPS_data_publish(&data);
     }

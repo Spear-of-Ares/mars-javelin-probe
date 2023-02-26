@@ -57,7 +57,7 @@ esp_err_t RunTimeStats::get_real_time_stats(TickType_t xTicksToWait)
   return ret;
 }
 
-esp_err_t RunTimeStats::print_real_time_stats(TickType_t xTicksToWait, char *pcWriteBuffer)
+esp_err_t RunTimeStats::print_real_time_stats(TickType_t xTicksToWait)
 {
   esp_err_t ret = get_real_time_stats(xTicksToWait);
   if (ret != ESP_OK)
@@ -65,7 +65,6 @@ esp_err_t RunTimeStats::print_real_time_stats(TickType_t xTicksToWait, char *pcW
     return ret;
   }
 
-  sprintf(pcWriteBuffer, "Task | Run Time | Percentage | Stack HWM \n");
   // Match each task in _start_array to those in the end_array
   for (int i = 0; i < _start_array_size; i++)
   {
@@ -84,69 +83,51 @@ esp_err_t RunTimeStats::print_real_time_stats(TickType_t xTicksToWait, char *pcW
     // Check if matching task found
     if (k >= 0)
     {
-      uint32_t task_elapsed_time = _end_array[k].ulRunTimeCounter - _start_array[i].ulRunTimeCounter;
-      uint32_t percentage_time = (task_elapsed_time * 100UL) / (_total_elapsed_time * portNUM_PROCESSORS);
-      uint32_t stack_usage = (_start_array[i].usStackHighWaterMark + _end_array[k].usStackHighWaterMark) / 2;
-      sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "%s | %d | %d%% | %d\n", _start_array[i].pcTaskName, task_elapsed_time, percentage_time, stack_usage);
+      umsg_Stats_task_run_time_stats_t task_data;
+      for (int c = 0; c < sizeof(task_data.task_name) && _start_array[i].pcTaskName[c] != '\0'; c++)
+      {
+        task_data.task_name[c] = _start_array[i].pcTaskName[c];
+      }
+      task_data.task_name[c] = '\0';
+      task_data.run_time = _end_array[k].ulRunTimeCounter - _start_array[i].ulRunTimeCounter;
+      task_data.cpu_usage = (task_data.run_time * 100UL) / (_total_elapsed_time * portNUM_PROCESSORS);
+      task_data.stack_hwm = (_start_array[i].usStackHighWaterMark + _end_array[k].usStackHighWaterMark) / 2;
+      task_data.measure_tick = xTaskGetTickCount();
+
+      umsg_Stats_task_run_time_stats_publish(&task_data);
     }
   }
 
-  // Print unmatched tasks
-  for (int i = 0; i < _start_array_size; i++)
-  {
-    if (_start_array[i].xHandle != NULL)
-    {
-      sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "%s | Deleted\n", _start_array[i].pcTaskName);
-    }
-  }
-  for (int i = 0; i < _end_array_size; i++)
-  {
-    if (_end_array[i].xHandle != NULL)
-    {
-      sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "%s | Created\n", _end_array[i].pcTaskName);
-    }
-  }
-  sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "Free Heap Size: %d", xPortGetFreeHeapSize());
+  // // Print unmatched tasks
+  // for (int i = 0; i < _start_array_size; i++)
+  // {
+  //   if (_start_array[i].xHandle != NULL)
+  //   {
+  //     sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "%s | Deleted\n", _start_array[i].pcTaskName);
+  //   }
+  // }
+  // for (int i = 0; i < _end_array_size; i++)
+  // {
+  //   if (_end_array[i].xHandle != NULL)
+  //   {
+  //     sprintf(pcWriteBuffer + strlen(pcWriteBuffer), "%s | Created\n", _end_array[i].pcTaskName);
+  //   }
+  // }
+  umsg_Stats_system_run_time_stats_t sys_data;
+  sys_data.free_heap_size = xPortGetFreeHeapSize();
+  sys_data.measure_tick = xTaskGetTickCount();
+
+  umsg_Stats_system_run_time_stats_publish(&sys_data);
   free_arrays();
   return ret; // Will return ESP_OK due to check at top
 }
 
 void RunTimeStats::get_stats()
 {
-  char pcWriteBuffer[1028];
   esp_err_t ret;
 
-  ret = print_real_time_stats(STATS_TICKS, pcWriteBuffer);
-  if (ret == ESP_OK)
-  {
-    SDData *send_data = new SDData();
-
-    std::ostringstream data;
-    data << xTaskGetTickCount() << " || " << STATS_TASK_ID << " || ";
-    int header_len = data.str().length();
-    int i = 0;
-    while (pcWriteBuffer[i] != '\0')
-    {
-      data << pcWriteBuffer[i];
-      if (pcWriteBuffer[i] == '\n')
-      {
-        data << std::string(header_len - 3, ' ') << "|| ";
-      }
-      i++;
-    }
-    data << "\n";
-
-    send_data->file_name = new std::string("stats");
-    send_data->message = new std::string(data.str());
-    delete send_data; // WARNING: THIS NEEDS TO BE DELETED
-
-    // ret = xQueueSend(_dataOutSD, &(send_data), 10 / portTICK_PERIOD_MS);
-    // if (ret != pdTRUE)
-    // {
-    //   printf("Failed to post stats data\n");
-    // }
-  }
-  else
+  ret = print_real_time_stats(STATS_TICKS);
+  if (ret != ESP_OK)
   {
     printf("Error getting real time stats: %s\n", esp_err_to_name(ret));
   }
@@ -159,6 +140,7 @@ void RunTimeStats::stats_task(void *arg)
   while (1)
   {
     rt_stats.get_stats();
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    // Run Every 10 Seconds
+    vTaskDelay(pdMS_TO_TICKS(10000));
   }
 }

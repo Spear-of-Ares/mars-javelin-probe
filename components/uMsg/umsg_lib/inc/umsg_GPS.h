@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-02-14
+// Generated with umsg_gen on 2023-02-23
 #pragma once
 #include <umsg_types.h>
 
@@ -25,6 +25,8 @@ typedef struct
     int32_t time_ymd_hms[7];
     bool valid_time;
     uint8_t locked_sats;
+    uint16_t p_dilution_precision;
+    int32_t ground_speed;
     uint32_t measure_tick;
 } umsg_GPS_data_t;
 

@@ -50,6 +50,14 @@
                     "type": "uint8"
                 },
                 {
+                    "name": "p_dilution_precision",
+                    "type": "uint16"
+                },
+                {
+                    "name": "ground_speed",
+                    "type": "int32"
+                },
+                {
                     "name": "measure_tick",
                     "type": "uint32"
                 }

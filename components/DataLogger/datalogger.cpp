@@ -31,8 +31,8 @@ void DataLogger::initSubs()
   _therm_0_state_sub = umsg_Sensors_thermistor_state_subscribe_ch(1, 3, 0);
   _therm_1_state_sub = umsg_Sensors_thermistor_state_subscribe_ch(1, 3, 1);
 
-  _stats_system_run_time_sub = umsg_Stats_system_run_time_stats_subscribe(1, 1);
-  _stats_task_run_time_sub = umsg_Stats_task_run_time_stats_subscribe(1, 1);
+  _stats_system_run_time_sub = umsg_Stats_system_run_time_stats_subscribe(1, 10);
+  _stats_task_run_time_sub = umsg_Stats_task_run_time_stats_subscribe(1, 30);
 
   // umsg_StatusMsgs_msg_subscribe(1, 1);
 }
@@ -44,8 +44,12 @@ void DataLogger::readSubs()
   //=================
   // Commands
   //=================
-  if (umsg_CommandCenter_command_receive(_commandCenter_command_sub, &_commandCenter_command_data, timeout) == pdPASS)
+  if (umsg_CommandCenter_command_peek(&_commandCenter_command_data))
   {
+    while (umsg_CommandCenter_command_receive(_commandCenter_command_sub, &_commandCenter_command_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(Command_toDataLine(_commandCenter_command_data));
+    }
   }
 
   //=================
@@ -194,6 +198,24 @@ void DataLogger::readSubs()
     if (umsg_Sensors_thermistor_state_receive(_therm_1_state_sub, &_therm_1_state_data, timeout) == pdPASS)
     {
       _datalines.push_back(therm_state_toDataLine(_therm_1_state_data, therm_1_name));
+    }
+  }
+
+  //=================
+  // Stats
+  //=================
+  if (umsg_Stats_task_run_time_stats_peek(&_task_run_time_data))
+  {
+    while (umsg_Stats_task_run_time_stats_receive(_stats_task_run_time_sub, &_task_run_time_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(Stats_task_toDataLine(_task_run_time_data));
+    }
+  }
+  if (umsg_Stats_system_run_time_stats_peek(&_system_run_time_data))
+  {
+    while (umsg_Stats_system_run_time_stats_receive(_stats_system_run_time_sub, &_system_run_time_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(Stats_system_toDataLine(_system_run_time_data));
     }
   }
 }

@@ -48,7 +48,7 @@ DataLine LoRa_received_toDataLine(umsg_LoRa_received_msg_t &data)
 
     std::stringstream ss;
     ss << std::hex << std::setfill('0');
-    for (int i = 0; i < sizeof(data.msg_data); i++)
+    for (int i = 0; i < sizeof(data.msg_data) && data.msg_data[i] != 0x00; i++)
     {
         ss << std::hex << std::setw(2) << static_cast<int>(data.msg_data[i]);
     }

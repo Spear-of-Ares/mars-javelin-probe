@@ -136,9 +136,17 @@ void LoRaComponent::vRX()
       received += (char)LoRa.read();
     }
 
-    for (int i = 0; i < sizeof(recv_msg.msg_data) && i < received.length(); i++)
+    // Copy received data into message to be passed to other tasks
+    int i;
+    for (i = 0; i < sizeof(recv_msg.msg_data) && i < received.length(); i++)
     {
       recv_msg.msg_data[i] = received[i];
+    }
+
+    // Make sure msg_data ends with 0x00
+    if (i < sizeof(recv_msg.msg_data))
+    {
+      recv_msg.msg_data[i] = 0x00;
     }
 
     DataLine response;

@@ -1,15 +1,13 @@
-/*********************************************************************************
- *     File Name           :     mars-javelin-probe/main/mars-javelin-probe.c
- *     Created By          :     jon
- *     Creation Date       :     [2022-10-03 22:40]
- *     Last Modified       :     [2022-11-06 03:29]
- *     Description         :     Coordinates and controls generation of new tasks
- *                               Using the ESP Arduino library for access to a wider number of
- *                               libraries for components, such as the IridiumSBD library.
+/**
+ * @file main.cpp
+ * @author Jon Kopf (kopf0033@vandals.uidaho.edu)
+ * @brief  Main entrance to the code.
+ * @version 2.0
+ * @date 2023-02-23
  *
- *                               Using Arduino as a component from the following article:
- *                               https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/esp-idf_component.html **********************************************************************************/
-
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include <string>
 #include <cstdio>
 #include "esp_log.h"
@@ -29,127 +27,30 @@
 #include <umsg_StatusMsgs.h>
 #include <umsg_GPS.h>
 
-// #define LoRaTRANSMITTER
-
-// Alternate main task for an outside LoRa transmitter to test receive and transmit of probe
-#ifdef LoRaTRANSMITTER
-#include "SPI.h"
-#include "LoRa.h"
-void vRX()
-{
-  int packetSize = LoRa.parsePacket();
-  if (packetSize)
-  {
-    std::string received("");
-    SDData *sdOut = new SDData();
-    sdOut->file_name = new std::string("comms");
-
-    while (LoRa.available())
-    {
-      received += (char)LoRa.read();
-    }
-    printf("RSSI: %4d SNR: %6.2f || ", LoRa.packetRssi(), LoRa.packetSnr());
-    printf("%s\n", received.c_str());
-  }
-}
-
-void vTX()
-{
-  static int count = 0;
-  LoRa.beginPacket();
-  LoRa.write(0x01);
-  LoRa.write(0x01);
-  LoRa.endPacket();
-  printf("Packet %4d sent...\n", count++);
-}
+/*!
+ * @brief Main entrance to program. Initializes all other tasks.
+ *
+ */
 extern "C" void app_main(void)
 {
-  initArduino();
-
-  SPIClass *hspi = new SPIClass(HSPI);
-  hspi->begin(CONFIG_HSPI_SCK_GPIO, CONFIG_HSPI_MISO_GPIO, CONFIG_HSPI_MOSI_GPIO, CONFIG_LORA_CS_GPIO);
-  LoRa.setPins(CONFIG_LORA_CS_GPIO, CONFIG_HSPI_RST_GPIO, CONFIG_HSPI_DI0_GPIO);
-  LoRa.setSPI(*hspi);
-  LoRa.setSPIFrequency(1E6);
-  if (!LoRa.begin(915E6))
-  {
-    printf("Starting LoRa failed\n");
-    return;
-  }
-  Serial.begin(115200);
-
-  std::string cut_down = "0x0101";
-  // Check if something was sent on serial
-  std::string msg = "";
-  int time = 0;
-
-  vTaskDelay(500 / portTICK_PERIOD_MS);
-  printf("\n");
-  for (;;)
-  {
-    vRX();
-    while (Serial.available())
-    {
-      char new_char = char(Serial.read());
-      if (new_char == 'c')
-      {
-        msg = "";
-      }
-      else
-      {
-        msg += new_char;
-      }
-    }
-
-    // if something was sent, then send the TX packet
-    if (msg == "fire")
-    {
-      for (int i = 0; i < 20; i++)
-      {
-        vTX();
-        vTaskDelay(5 / portTICK_PERIOD_MS);
-      }
-      msg = "";
-    }
-    if (time % 300 == 0 && msg != "")
-    {
-      printf("%s\n", msg.c_str());
-      time = 0;
-    }
-    else
-    {
-      time += 1;
-    }
-    vTaskDelay(10 / portTICK_PERIOD_MS);
-  }
-}
-#else
-
-extern "C" void app_main(void)
-{
+  const TickType_t inter_task_delay = 1000 / portTICK_PERIOD_MS;
   gpio_set_level(GPIO_NUM_4, 0);
 
   // Initialize artuidno library
   initArduino();
 
-  vTaskDelay(1000 / portTICK_PERIOD_MS);
+  vTaskDelay(inter_task_delay);
 
   initComBus();
   i2cScan();
 
-  vTaskDelay(1000 / portTICK_PERIOD_MS);
+  vTaskDelay(inter_task_delay);
   /**************************************
    *
    *  Initialization
    *
    ***************************************/
   BaseType_t xReturned;
-
-  QueueHandle_t dataOutSD = xQueueCreate(50, sizeof(SDData *));
-
-  QueueHandle_t dataOutLoRa = xQueueCreate(50, sizeof(std::string *));
-  QueueHandle_t dataOutIridium = xQueueCreate(50, sizeof(std::string *));
-
   /**************************************
    *
    *  Creating the DataLogger process
@@ -161,7 +62,7 @@ extern "C" void app_main(void)
   TaskHandle_t xDataLogHandle = NULL;
   xReturned = xTaskCreate(
       DataLogger::vLogLoop_Task, // Function for task
-      "Log Loop Task",           // Name of task
+      "LOGG_TASK",               // Name of task
       1024 * 5,                  // Stack size of task
       (void *)(&data_log),       // task parameters
       9,                         // Task priority
@@ -172,19 +73,19 @@ extern "C" void app_main(void)
     printf("Could not start the Data log loop task\n");
   }
 
+  vTaskDelay(inter_task_delay);
   /**************************************
    *
    *  Creating the Command Center process
    *
    ***************************************/
-  // Init before other tasks that need dataOutSD Queue
-  CommandComponent cmd_center = CommandComponent(dataOutSD, dataOutLoRa, dataOutIridium);
+  CommandComponent cmd_center = CommandComponent();
 
   TaskHandle_t xCmdCenter = NULL;
   xReturned = xTaskCreate(
       CommandComponent::vMainLoop_Task, // Function for task
-      "Command Center Task",            // Name of task
-      1024 * 2,                         // Stack size of task
+      "CMDC_TASK",                      // Name of task
+      1024 * 10,                        // Stack size of task
       (void *)(&cmd_center),            // task parameters
       10,                               // Task priority
       &xCmdCenter                       // Handle to resulting task
@@ -193,6 +94,8 @@ extern "C" void app_main(void)
   {
     printf("Could not start the Data log loop task\n");
   }
+
+  vTaskDelay(inter_task_delay);
 
   /**************************************
    *
@@ -204,7 +107,7 @@ extern "C" void app_main(void)
   TaskHandle_t xGPSComponentHandle = NULL;
   xReturned = xTaskCreatePinnedToCore(
       GPSComponent::vMainLoop_Task, // Function for task
-      "GPS Component Task",         // Name of task
+      "GPS_TASK",                   // Name of task
       1024 * 4,                     // Stack size of task
       (void *)(&gps_component),     // task parameters
       8,                            // Task priority
@@ -217,7 +120,7 @@ extern "C" void app_main(void)
 
   // Allow GPS to configure i2c address
   printf("Waiting for GPS setup\n");
-  vTaskDelay(1000 / portTICK_PERIOD_MS);
+  vTaskDelay(inter_task_delay);
 
   /**************************************
    *
@@ -229,8 +132,8 @@ extern "C" void app_main(void)
   TaskHandle_t xLoraHandle = NULL;
   xReturned = xTaskCreate(
       LoRaComponent::vMainLoop_Task,
-      "LoRa Component Task",
-      1024 * 3,
+      "LoRa_TASK",
+      1024 * 5,
       (void *)(&lora_component),
       10,
       &xLoraHandle);
@@ -238,6 +141,7 @@ extern "C" void app_main(void)
   {
     printf("Could not start the Lora RX task\n");
   }
+  vTaskDelay(inter_task_delay);
 
   // /**************************************
   //  *
@@ -249,7 +153,7 @@ extern "C" void app_main(void)
   TaskHandle_t xSensorsComponentHandle = NULL;
   xReturned = xTaskCreate(
       Sensors::vMainLoop_Task,      // Function for task
-      "Sensors",                    // Name of task
+      "SENS_TASK",                  // Name of task
       1024 * 6,                     // Stack size of task
       (void *)(&sensors_component), // task parameters
       11,                           // Task priority
@@ -259,18 +163,19 @@ extern "C" void app_main(void)
   {
     printf("Could not start the Sensors task\n");
   }
+  vTaskDelay(inter_task_delay);
 
   /**************************************
    *
    *  Creating the IridiumSBD process
    *
    ***************************************/
-  IridiumComponent iridium_component = IridiumComponent(dataOutSD, dataOutIridium, xCmdCenter);
+  IridiumComponent iridium_component = IridiumComponent();
 
   TaskHandle_t xIridiumComponentHandle = NULL;
   xReturned = xTaskCreate(
       IridiumComponent::vMainLoop_Task, // Function for task
-      "Iridium Component Task",         // Name of task
+      "IRID_TASK",                      // Name of task
       1024 * 2,                         // Stack size of task
       (void *)(&iridium_component),     // task parameters
       15,                               // Task priority
@@ -280,18 +185,19 @@ extern "C" void app_main(void)
   {
     printf("Could not start the IridiumSBD Component task\n");
   }
+  vTaskDelay(inter_task_delay * 10);
 
   /**************************************
    *
    *  Creating the Stats process
    *
    ***************************************/
-  RunTimeStats stats_component = RunTimeStats(dataOutSD);
+  RunTimeStats stats_component = RunTimeStats();
 
   TaskHandle_t xStatsComponent = NULL;
   xReturned = xTaskCreate(
       RunTimeStats::stats_task,   // Function for task
-      "stats",                    // Name of task
+      "STAT_TASK",                // Name of task
       1024 * 4,                   // Stack size of task
       (void *)(&stats_component), // task parameters
       5,                          // Task priority
@@ -301,7 +207,8 @@ extern "C" void app_main(void)
   {
     printf("Could not start the Run Time stats Component task\n");
   }
-  // Main task must stay alive as it has references to classes that will be deleted otherwise
+
+  /// Main task must stay alive as it has references to classes that will be deleted otherwise
   for (;;)
   {
     vTaskDelay(10000);

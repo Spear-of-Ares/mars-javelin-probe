@@ -47,7 +47,7 @@
                 {
                     "name": "msg_data",
                     "type": "uint8",
-                    "length": 10
+                    "length": 512
                 }
             ]
         },
