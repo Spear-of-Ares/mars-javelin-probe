@@ -214,4 +214,3 @@ extern "C" void app_main(void)
     vTaskDelay(10000);
   }
 }
-#endif

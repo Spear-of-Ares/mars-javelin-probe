@@ -63,27 +63,37 @@
             "fields": [
                 {
                     "name": "accelerometer",
-                    "type": "float",
+                    "type": "double",
                     "length": 3
                 },
                 {
                     "name": "gyroscope",
-                    "type": "float",
+                    "type": "double",
                     "length": 3
                 },
                 {
                     "name": "magnetometer",
-                    "type": "float",
+                    "type": "double",
                     "length": 3
                 },
                 {
                     "name": "attitude",
-                    "type": "float",
+                    "type": "double",
+                    "length": 3
+                },
+                {
+                    "name": "linear_accel",
+                    "type": "double",
+                    "length": 3
+                },
+                {
+                    "name": "gravity",
+                    "type": "double",
                     "length": 3
                 },
                 {
                     "name": "temperature_c",
-                    "type": "float"
+                    "type": "uint8"
                 },
                 {
                     "name": "measure_tick",

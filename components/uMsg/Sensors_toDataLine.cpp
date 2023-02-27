@@ -86,6 +86,12 @@ DataLine imu_data_toDataLine(umsg_Sensors_imu_data_t &data)
     dataline.data.push_back(std::to_string(data.attitude[0]));
     dataline.data.push_back(std::to_string(data.attitude[1]));
     dataline.data.push_back(std::to_string(data.attitude[2]));
+    dataline.data.push_back(std::to_string(data.linear_accel[0]));
+    dataline.data.push_back(std::to_string(data.linear_accel[1]));
+    dataline.data.push_back(std::to_string(data.linear_accel[2]));
+    dataline.data.push_back(std::to_string(data.gravity[0]));
+    dataline.data.push_back(std::to_string(data.gravity[1]));
+    dataline.data.push_back(std::to_string(data.gravity[2]));
     dataline.data.push_back(std::to_string(data.temperature_c));
 
     return dataline;

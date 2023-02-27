@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-02-23
+// Generated with umsg_gen on 2023-02-26
 #pragma once
 #include <umsg_types.h>
 
@@ -45,11 +45,13 @@ typedef struct
 
 typedef struct
 {
-    float accelerometer[3];
-    float gyroscope[3];
-    float magnetometer[3];
-    float attitude[3];
-    float temperature_c;
+    double accelerometer[3];
+    double gyroscope[3];
+    double magnetometer[3];
+    double attitude[3];
+    double linear_accel[3];
+    double gravity[3];
+    uint8_t temperature_c;
     uint32_t measure_tick;
 } umsg_Sensors_imu_data_t;
 

@@ -84,7 +84,8 @@ esp_err_t RunTimeStats::print_real_time_stats(TickType_t xTicksToWait)
     if (k >= 0)
     {
       umsg_Stats_task_run_time_stats_t task_data;
-      for (int c = 0; c < sizeof(task_data.task_name) && _start_array[i].pcTaskName[c] != '\0'; c++)
+      int c;
+      for (c = 0; c < sizeof(task_data.task_name) && _start_array[i].pcTaskName[c] != '\0'; c++)
       {
         task_data.task_name[c] = _start_array[i].pcTaskName[c];
       }

@@ -7,8 +7,9 @@
 
 #include "Wire.h"
 #include "Thermistor.h"
-#include "MPU6050.h"
-#include "Adafruit_BME280.h"
+#include "Adafruit_BNO055.h"  // IMU
+#include "Adafruit_ADXL375.h" // Accelerometer
+#include "MS5611.h"           // Barometer
 
 extern "C"
 {
@@ -19,7 +20,6 @@ extern "C"
 class Sensors
 {
 public:
-    Sensors() {}
     static void vMainLoop_Task(void *arg);
 
 private:
@@ -30,19 +30,19 @@ private:
     void log_data();
 
     esp_err_t setup_imu();
-    esp_err_t setup_bme();
+    esp_err_t setup_accel();
+    esp_err_t setup_baro();
     esp_err_t setup_therm();
 
     void log_imu();
-    void log_bme();
+    void log_baro();
+    void log_accel();
     void log_therm();
 
-    MPU6050 _imu;
-    float _pitch;
-    float _roll;
-    float _yaw;
+    Adafruit_BNO055 _imu;
+    Adafruit_ADXL375 _impact_accel;
 
-    Adafruit_BME280 _bme;
+    MS5611 _baro;
     float _start_press_hpa;
     float _start_alt_m;
 
@@ -51,7 +51,7 @@ private:
 
     int sample_rate_hz;
 
-    float fusion_boundary;
+    uint8_t imu_calibration;
 
     umsg_sub_handle_t cmd_sub_handle;
 };
