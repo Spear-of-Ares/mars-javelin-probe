@@ -125,6 +125,9 @@ public:
   int read(uint8_t channel);
   size_t write(uint8_t channel,
                uint8_t val);
+  size_t writeBytes(uint8_t channel,
+                    uint8_t *vals,
+                    size_t size);
   int available(uint8_t channel);
   void pinMode(uint8_t pin,
                uint8_t io);

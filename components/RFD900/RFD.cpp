@@ -25,18 +25,7 @@ void RFDComponent::vRX()
 
 void RFDComponent::checkQueue()
 {
-  i2cuart.write(SC16IS752_CHANNEL_A, 0x55);
-  vTaskDelay(10 / portTICK_PERIOD_MS);
-
-  if (i2cuart.available(SC16IS752_CHANNEL_A) == 0)
-  {
-    printf("Not connected correctly. No value\n");
-    return;
-  }
-  if (i2cuart.read(SC16IS752_CHANNEL_A) != 0x55)
-  {
-    printf("Not connected correctly. Wrong value\n");
-    return;
-  }
-  printf("Working!!\n");
+  uint8_t vals[5] = {0x48, 0x45, 0x4c, 0x4c, 0x4f};
+  i2cuart.writeBytes(SC16IS752_CHANNEL_A, vals, 5);
+  vTaskDelay(100 / portTICK_PERIOD_MS);
 }

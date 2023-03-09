@@ -111,6 +111,15 @@ size_t SC16IS752::write(uint8_t channel, uint8_t val)
   return 1;
 }
 
+size_t SC16IS752::writeBytes(uint8_t channel, uint8_t *vals, size_t size)
+{
+  for (int i = 0; i < size; i++)
+  {
+    WriteByte(channel, vals[i]);
+  }
+  return size;
+}
+
 void SC16IS752::pinMode(uint8_t pin, uint8_t i_o)
 {
   GPIOSetPinMode(pin, i_o);
