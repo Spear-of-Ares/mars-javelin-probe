@@ -7,6 +7,19 @@
  **********************************************************************************/
 #include "LoRaComponent.h"
 
+namespace LoRaData{
+  template<class T>
+  uint8_t* toByteArray(T data_struct, size_t &size){
+    void* temp_pointer = &data_struct;
+    size = sizeof(T);
+    uint8_t* buffer = new uint8_t[size];
+
+    memcpy(buffer, temp_pointer, size);
+
+    return buffer;
+  }
+}
+
 void LoRaComponent::initSubs()
 {
   _gps_data_sub = umsg_GPS_data_subscribe(1, 5);
@@ -58,86 +71,93 @@ bool LoRaComponent::setup()
 void LoRaComponent::readSubs()
 {
   int timeout = 1 / portTICK_PERIOD_MS;
+  LoRaData::LoRaRemoteData data;
 
   // Peek first, then receive so we don't have to wait for timeout if there is no data.
-  while (umsg_GPS_data_receive(_gps_data_sub, &_gps_data, timeout) == pdPASS)
+  while (umsg_GPS_data_receive(_gps_data_sub, &_gps_data, timeout) != pdPASS)
   {
-    _datalines.push_back(std::make_pair(GPS_data_toDataLine(_gps_data), LORA_MSG_GPS_DATA));
+    vTaskDelay(10 / portTICK_PERIOD_MS);
   }
 
-  while (umsg_Sensors_imu_data_receive(_imu_data_sub, &_imu_data, timeout) == pdPASS)
+  data.latitude = _gps_data.lat_long[0];
+  data.longitude = _gps_data.lat_long[1];
+  data.altitude_gps = _gps_data.altitude;
+  data.pdop = _gps_data.p_dilution_precision;
+  data.hour = _gps_data.time_ymd_hms[3];
+  data.minute = _gps_data.time_ymd_hms[4];
+  data.second = _gps_data.time_ymd_hms[5];
+
+  while (umsg_Sensors_imu_data_receive(_imu_data_sub, &_imu_data, timeout) != pdPASS)
   {
-    _datalines.push_back(std::make_pair(imu_data_toDataLine(_imu_data), LORA_MSG_SENSOR_DATA));
+    vTaskDelay(10 / portTICK_PERIOD_MS);
   }
 
-  while (umsg_Sensors_baro_data_receive(_baro_data_sub, &_baro_data, timeout) == pdPASS)
+  data.attitude_x = _imu_data.attitude[0];
+  data.attitude_y = _imu_data.attitude[1];
+  data.attitude_z = _imu_data.attitude[2];
+  data.linear_accel_x = _imu_data.linear_accel[0];
+  data.linear_accel_y = _imu_data.linear_accel[1];
+  data.linear_accel_z = _imu_data.linear_accel[2];
+  data.velocity_x = _imu_data.velocity[0];
+  data.velocity_y = _imu_data.velocity[1];
+  data.velocity_z = _imu_data.velocity[2];
+  data.position_x = _imu_data.position[0];
+  data.position_y = _imu_data.position[1];
+  data.position_z = _imu_data.position[2];
+  data.vertical_speed = _imu_data.vertical_speed;
+  data.horizontal_speed = _imu_data.horizontal_speed;
+  data.angle_of_attack = _imu_data.angle_of_attack;
+  data.imu_temp = _imu_data.temperature_c;
+
+  while (umsg_Sensors_baro_data_receive(_baro_data_sub, &_baro_data, timeout) != pdPASS)
   {
-    _datalines.push_back(std::make_pair(baro_data_toDataLine(_baro_data), LORA_MSG_SENSOR_DATA));
+    vTaskDelay(10 / portTICK_PERIOD_MS);
   }
 
-  std::string therm_0_name = "INT";
-  std::string therm_1_name = "EXT";
-  while (umsg_Sensors_thermistor_data_receive(_therm_0_data_sub, &_therm_0_data, timeout) == pdPASS)
+  data.pressure_hpa = _baro_data.pressure_pa;
+  data.altitude_baro = _baro_data.alt_above_sea_m;
+  data.baro_temp = _baro_data.temperature_c;
+
+  while (umsg_Sensors_thermistor_data_receive(_therm_0_data_sub, &_therm_0_data, timeout) != pdPASS)
   {
-    _datalines.push_back(std::make_pair(therm_data_toDataLine(_therm_0_data, therm_0_name), LORA_MSG_SENSOR_DATA));
-  }
-  while (umsg_Sensors_thermistor_data_receive(_therm_1_data_sub, &_therm_1_data, timeout) == pdPASS)
-  {
-    _datalines.push_back(std::make_pair(therm_data_toDataLine(_therm_1_data, therm_1_name), LORA_MSG_SENSOR_DATA));
+    vTaskDelay(10 / portTICK_PERIOD_MS);
   }
 
-  // Sort all entries by the time at which they were recorded
-  std::sort(_datalines.begin(), _datalines.end(), [](const std::pair<DataLine, umsg_LoRa_msg_type_t> &data1, const std::pair<DataLine, umsg_LoRa_msg_type_t> &data2)
-            { return data1.first.recorded_tick < data2.first.recorded_tick; });
+  data.internal_temp = _therm_0_data.temperature_c;
 
-  for (int i = 0; i < _datalines.size(); i++)
+  while (umsg_Sensors_thermistor_data_receive(_therm_1_data_sub, &_therm_1_data, timeout) != pdPASS)
   {
-
-    std::string string = _datalines[i].first.toString();
-    // Max LoRa message length of 255
-    for (unsigned int i = 0; i < string.length(); i += 250)
-    {
-
-      // Because of async send, check if we can start a packet. If not, attempt to receive and wait.
-      while (LoRa.beginPacket() == 0)
-      {
-        vRX();
-        vTaskDelay(100 / portTICK_PERIOD_MS); // 100 ms here is importatnt
-      }
-
-      // use the x's to mark where messages should be joined. In GUI, these are removed.
-      std::string substr = string.substr(i, 250);
-      if (i != 0)
-      {
-        substr.insert(0, "IMU_2 x");
-        vTaskDelay(200 / portTICK_PERIOD_MS); // 200 ms here is important
-      }
-      else
-      {
-        substr += 'x';
-      }
-
-      vTX(substr, _datalines[i].second);
-      // If LoRa message over 255 bits, and inner loop runs, give LoRa modem time to update
-      vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
+    vTaskDelay(10 / portTICK_PERIOD_MS);
   }
 
-  _datalines.clear();
+  data.external_temp = _therm_1_data.temperature_c;
+
+  size_t data_bytes_size;
+  uint8_t* data_bytes = LoRaData::toByteArray<LoRaData::LoRaRemoteData>(data, data_bytes_size);
+  vTX((const uint8_t*) data_bytes, data_bytes_size, LORA_MSG_SENSOR_DATA);
 }
 
-void LoRaComponent::vTX(std::string msg, umsg_LoRa_msg_type_t msg_type)
+void LoRaComponent::vTX(const uint8_t *msg, size_t size, umsg_LoRa_msg_type_t msg_type)
 {
+
+  while(LoRa.beginPacket() == 0){
+    vRX();
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+  }
 
   umsg_LoRa_sent_msg_t sent_msg;
   sent_msg.sent_msg_type = msg_type;
 
   LoRa.beginPacket();
-  LoRa.print(msg.c_str());
+  LoRa.write(msg, size);
   LoRa.endPacket(true); // Async send
   sent_msg.send_tick = xTaskGetTickCount();
 
   umsg_LoRa_sent_msg_publish(&sent_msg);
+}
+
+void LoRaComponent::vTX(std::string msg, umsg_LoRa_msg_type_t msg_type){
+  vTX((uint8_t *)msg.c_str(), msg.length(), msg_type);
 }
 
 void LoRaComponent::vRX()
@@ -190,6 +210,7 @@ void LoRaComponent::vRX()
 
     response.data.push_back("Received");
     umsg_LoRa_received_msg_publish(&recv_msg);
+
     vTX(response.toString(), LORA_MSG_RESPONSE);
   }
 }
