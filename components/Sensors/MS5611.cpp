@@ -8,17 +8,14 @@
 //
 //  HISTORY see changelog.md
 
-
 #include "MS5611.h"
 
-
 // datasheet page 10
-#define MS5611_CMD_READ_ADC       0x00
-#define MS5611_CMD_READ_PROM      0xA0
-#define MS5611_CMD_RESET          0x1E
-#define MS5611_CMD_CONVERT_D1     0x40
-#define MS5611_CMD_CONVERT_D2     0x50
-
+#define MS5611_CMD_READ_ADC 0x00
+#define MS5611_CMD_READ_PROM 0xA0
+#define MS5611_CMD_RESET 0x1E
+#define MS5611_CMD_CONVERT_D1 0x40
+#define MS5611_CMD_CONVERT_D2 0x50
 
 /////////////////////////////////////////////////////
 //
@@ -26,59 +23,68 @@
 //
 MS5611::MS5611(uint8_t deviceAddress)
 {
-  _address           = deviceAddress;
-  _samplingRate      = OSR_ULTRA_LOW;
-  _temperature       = MS5611_NOT_READ;
-  _pressure          = MS5611_NOT_READ;
-  _result            = MS5611_NOT_READ;
-  _lastRead          = 0;
-  _deviceID          = 0;
-  _pressureOffset    = 0;
+  _address = deviceAddress;
+  _samplingRate = OSR_ULTRA_LOW;
+  _temperature = MS5611_NOT_READ;
+  _pressure = MS5611_NOT_READ;
+  _result = MS5611_NOT_READ;
+  _lastRead = 0;
+  _deviceID = 0;
+  _pressureOffset = 0;
   _temperatureOffset = 0;
-  _compensation      = true;
+  _compensation = true;
 }
 
-
-#if defined (ESP8266) || defined(ESP32)
-bool MS5611::begin(uint8_t dataPin, uint8_t clockPin, TwoWire * wire)
+#if defined(ESP8266) || defined(ESP32)
+bool MS5611::begin(uint8_t dataPin, uint8_t clockPin, TwoWire *wire)
 {
-  if ((_address < 0x76) || (_address > 0x77)) return false;
+  if ((_address < 0x76) || (_address > 0x77))
+    return false;
 
   _wire = wire;
   if ((dataPin < 255) && (clockPin < 255))
   {
     _wire->begin(dataPin, clockPin);
-  } else {
+  }
+  else
+  {
     _wire->begin();
   }
-  if (! isConnected()) return false;
+  if (!isConnected())
+    return false;
 
   return reset();
 }
 #endif
 
-
-bool MS5611::begin(TwoWire * wire)
+bool MS5611::begin(TwoWire *wire)
 {
-  if ((_address < 0x76) || (_address > 0x77)) return false;
+  if ((_address < 0x76) || (_address > 0x77))
+  {
+    return false;
+  }
+
   _wire = wire;
   _wire->begin();
-  if (! isConnected()) return false;
+  if (!isConnected())
+  {
+    return false;
+  }
 
   return reset();
 }
 
-
 bool MS5611::isConnected()
 {
+
   _wire->beginTransmission(_address);
-   #ifdef ARDUINO_ARCH_NRF52840
-   //  needed for NANO 33 BLE
+
+#ifdef ARDUINO_ARCH_NRF52840
+  //  needed for NANO 33 BLE
   _wire->write(0);
-   #endif
+#endif
   return (_wire->endTransmission() == 0);
 }
-
 
 bool MS5611::reset(uint8_t mathMode)
 {
@@ -116,22 +122,25 @@ bool MS5611::reset(uint8_t mathMode)
   return ROM_OK;
 }
 
-
 int MS5611::read(uint8_t bits)
 {
   //  VARIABLES NAMES BASED ON DATASHEET
   //  ALL MAGIC NUMBERS ARE FROM DATASHEET
 
   convert(MS5611_CMD_CONVERT_D1, bits);
-  if (_result) return _result;
+  if (_result)
+    return _result;
   //  NOTE: D1 and D2 seem reserved in MBED (NANO BLE)
   uint32_t _D1 = readADC();
-  if (_result) return _result;
+  if (_result)
+    return _result;
 
   convert(MS5611_CMD_CONVERT_D2, bits);
-  if (_result) return _result;
+  if (_result)
+    return _result;
   uint32_t _D2 = readADC();
-  if (_result) return _result;
+  if (_result)
+    return _result;
 
   //  Serial.println(_D1);
   //  Serial.println(_D2);
@@ -144,7 +153,7 @@ int MS5611::read(uint8_t bits)
   float dT = _D2 - C[5];
   _temperature = 2000 + dT * C[6];
 
-  float offset =  C[2] + dT * C[4];
+  float offset = C[2] + dT * C[4];
   float sens = C[1] + dT * C[3];
 
   if (_compensation)
@@ -178,23 +187,22 @@ int MS5611::read(uint8_t bits)
   return MS5611_READ_OK;
 }
 
-
 void MS5611::setOversampling(osr_t samplingRate)
 {
-  _samplingRate = (uint8_t) samplingRate;
+  _samplingRate = (uint8_t)samplingRate;
 }
-
 
 float MS5611::getTemperature() const
 {
-  if (_temperatureOffset == 0) return _temperature * 0.01;
+  if (_temperatureOffset == 0)
+    return _temperature * 0.01;
   return _temperature * 0.01 + _temperatureOffset;
 };
 
-
 float MS5611::getPressure() const
 {
-  if (_pressureOffset == 0) return _pressure * 0.01;
+  if (_pressureOffset == 0)
+    return _pressure * 0.01;
   return _pressure * 0.01 + _pressureOffset;
 };
 
@@ -210,7 +218,6 @@ uint16_t MS5611::getSerialCode()
   return readProm(7) >> 4;
 }
 
-
 /////////////////////////////////////////////////////
 //
 //  PRIVATE
@@ -221,8 +228,10 @@ void MS5611::convert(const uint8_t addr, uint8_t bits)
   uint16_t del[5] = {600, 1200, 2300, 4600, 9100};
 
   uint8_t index = bits;
-  if (index < 8) index = 8;
-  else if (index > 12) index = 12;
+  if (index < 8)
+    index = 8;
+  else if (index > 12)
+    index = 12;
   index -= 8;
   uint8_t offset = index * 2;
   command(addr + offset);
@@ -237,12 +246,12 @@ void MS5611::convert(const uint8_t addr, uint8_t bits)
   }
 }
 
-
 uint16_t MS5611::readProm(uint8_t reg)
 {
   //  last EEPROM register is CRC - Page 13 datasheet.
   uint8_t promCRCRegister = 7;
-  if (reg > promCRCRegister) return 0;
+  if (reg > promCRCRegister)
+    return 0;
 
   uint8_t offset = reg * 2;
   command(MS5611_CMD_READ_PROM + offset);
@@ -260,7 +269,6 @@ uint16_t MS5611::readProm(uint8_t reg)
   }
   return 0;
 }
-
 
 uint32_t MS5611::readADC()
 {
@@ -281,7 +289,6 @@ uint32_t MS5611::readADC()
   return 0UL;
 }
 
-
 int MS5611::command(const uint8_t command)
 {
   yield();
@@ -290,7 +297,6 @@ int MS5611::command(const uint8_t command)
   _result = _wire->endTransmission();
   return _result;
 }
-
 
 void MS5611::initConstants(uint8_t mathMode)
 {
@@ -307,14 +313,13 @@ void MS5611::initConstants(uint8_t mathMode)
   C[5] = 256;             //  Tref     = C[5] * 2^8     |    * 2^8
   C[6] = 1.1920928955E-7; //  TEMPSENS = C[6] / 2^23    |    / 2^23
 
-  if (mathMode == 1)  //  Appnote version for pressure.
+  if (mathMode == 1) //  Appnote version for pressure.
   {
-    C[1] = 65536L;          //  SENSt1
-    C[2] = 131072L;         //  OFFt1
-    C[3] = 7.8125E-3;       //  TCS
-    C[4] = 1.5625e-2;       //  TCO
+    C[1] = 65536L;    //  SENSt1
+    C[2] = 131072L;   //  OFFt1
+    C[3] = 7.8125E-3; //  TCS
+    C[4] = 1.5625e-2; //  TCO
   }
 }
 
 // -- END OF FILE --
-

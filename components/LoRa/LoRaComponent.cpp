@@ -35,9 +35,9 @@ void LoRaComponent::vMainLoop_Task(void *arg)
 
   for (;;)
   {
+    // Sleeping happens within readSubs and TX, therefore don't sleep here.
     lora_component.vRX();
     lora_component.readSubs();
-    vTaskDelay(500);
   }
 }
 
@@ -92,12 +92,35 @@ void LoRaComponent::readSubs()
 
   for (int i = 0; i < _datalines.size(); i++)
   {
-    vTX(_datalines[i].first.toString(), _datalines[i].second);
-    // Delay to allow LoRa to actually send packets.
-    vTaskDelay(50 / portTICK_PERIOD_MS);
-    // Many failures because we aren't receiving packets. Attempt to check for reception here
-    // increases the chance that one goes through. Having another LoRa board would alleiviate this.
-    vRX();
+
+    std::string string = _datalines[i].first.toString();
+    // Max LoRa message length of 255
+    for (unsigned int i = 0; i < string.length(); i += 250)
+    {
+
+      // Because of async send, check if we can start a packet. If not, attempt to receive and wait.
+      while (LoRa.beginPacket() == 0)
+      {
+        vRX();
+        vTaskDelay(100 / portTICK_PERIOD_MS); // 100 ms here is importatnt
+      }
+
+      // use the x's to mark where messages should be joined. In GUI, these are removed.
+      std::string substr = string.substr(i, 250);
+      if (i != 0)
+      {
+        substr.insert(0, "IMU_2 x");
+        vTaskDelay(200 / portTICK_PERIOD_MS); // 200 ms here is important
+      }
+      else
+      {
+        substr += 'x';
+      }
+
+      vTX(substr, _datalines[i].second);
+      // If LoRa message over 255 bits, and inner loop runs, give LoRa modem time to update
+      vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
   }
 
   _datalines.clear();
@@ -105,12 +128,13 @@ void LoRaComponent::readSubs()
 
 void LoRaComponent::vTX(std::string msg, umsg_LoRa_msg_type_t msg_type)
 {
+
   umsg_LoRa_sent_msg_t sent_msg;
   sent_msg.sent_msg_type = msg_type;
 
   LoRa.beginPacket();
   LoRa.print(msg.c_str());
-  LoRa.endPacket();
+  LoRa.endPacket(true); // Async send
   sent_msg.send_tick = xTaskGetTickCount();
 
   umsg_LoRa_sent_msg_publish(&sent_msg);

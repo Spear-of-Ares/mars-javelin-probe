@@ -1,21 +1,21 @@
 {
     "enums": [
         {
-            "name": "iridium_state",
+            "name": "rfd_state",
             "enumerators": [
-                "iridium_ok",
-                "iridium_sleeping",
-                "iridium_off",
-                "iridium_disconnected"
+                "rfd_ok",
+                "rfd_sleeping",
+                "rfd_off",
+                "rfd_disconnected"
             ]
         },
         {
             "name": "msg_type",
             "enumerators": [
-                "iridium_msg_gps_data",
-                "iridium_msg_response",
-                "iridium_msg_command",
-                "iridium_msg_other"
+                "rfd_msg_gps_data",
+                "rfd_msg_response",
+                "rfd_msg_command",
+                "rfd_msg_other"
             ]
         }
     ],
@@ -61,7 +61,7 @@
             "fields": [
                 {
                     "name": "state",
-                    "type": "iridium_state"
+                    "type": "rfd_state"
                 }
             ]
         }

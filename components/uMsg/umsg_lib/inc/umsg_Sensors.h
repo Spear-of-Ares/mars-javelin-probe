@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-02-26
+// Generated with umsg_gen on 2023-03-03
 #pragma once
 #include <umsg_types.h>
 
@@ -51,6 +51,12 @@ typedef struct
     double attitude[3];
     double linear_accel[3];
     double gravity[3];
+    double velocity[3];
+    double position[3];
+    double angle_of_attack;
+    double vertical_speed;
+    double horizontal_speed;
+    double speed;
     uint8_t temperature_c;
     uint32_t measure_tick;
 } umsg_Sensors_imu_data_t;
@@ -65,6 +71,7 @@ typedef struct
 typedef struct
 {
     float start_pressure_hpa;
+    float sea_level_pressure_hpa;
     float start_alt_m;
     uint32_t measure_tick;
 } umsg_Sensors_baro_configuration_t;
@@ -72,7 +79,6 @@ typedef struct
 typedef struct
 {
     float pressure_pa;
-    float relative_humidity;
     float temperature_c;
     float gained_alt_m;
     float alt_above_sea_m;

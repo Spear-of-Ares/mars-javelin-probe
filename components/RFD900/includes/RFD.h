@@ -13,38 +13,22 @@
 #include <sstream>
 #include <string>
 #include <time.h>
-#include <HardwareSerial.h>
-#include "IridiumSBD.h"
-#include "datalogger.h"
 
-#define IRID_TASK_ID "IRID_TASK "
+#include "ComBus.h"
 
-// #define IRIDIUM_ATTACHED
-
-extern HardwareSerial SerialPort;
-extern IridiumSBD Iridium;
-
-class IridiumComponent
+class RFDComponent
 {
 public:
-  IridiumComponent()
+  RFDComponent()
   {
-#ifdef IRIDIUM_ATTACHED
 
-    SerialPort.begin(19200, SERIAL_8N1, TX, RX);
-    // Iridium.setPowerProfile(IridiumSBD::USB_POWER_PROFILE);
-    if (Iridium.begin() != ISBD_SUCCESS)
-    {
-      printf("Failed to init iridium\n");
-    }
-    printf("Iridium init\n");
-#endif
   }
   static void vMainLoop_Task(void *arg);
 
 private:
   void vRX();
   void checkQueue();
+
 };
 
 #endif /* __IRIDIUMSBD_COMPONENT_H__ */

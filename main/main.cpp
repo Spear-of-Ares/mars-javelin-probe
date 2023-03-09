@@ -22,7 +22,7 @@
 #include "Sensors.h"
 #include "CommandCenter.h"
 #include "GPSComponent.h"
-#include "IridiumComponent.h"
+#include "RFD.h"
 
 #include <umsg_StatusMsgs.h>
 #include <umsg_GPS.h>
@@ -39,10 +39,10 @@ extern "C" void app_main(void)
   // Initialize artuidno library
   initArduino();
 
-  vTaskDelay(inter_task_delay);
+  vTaskDelay(5000 / portTICK_PERIOD_MS);
 
   initComBus();
-  i2cScan();
+  i2cScanArduino();
 
   vTaskDelay(inter_task_delay);
   /**************************************
@@ -167,19 +167,19 @@ extern "C" void app_main(void)
 
   /**************************************
    *
-   *  Creating the IridiumSBD process
+   *  Creating the RFD process
    *
    ***************************************/
-  IridiumComponent iridium_component = IridiumComponent();
+  RFDComponent rfd_component = RFDComponent();
 
-  TaskHandle_t xIridiumComponentHandle = NULL;
+  TaskHandle_t xRFDComponentHandle = NULL;
   xReturned = xTaskCreate(
-      IridiumComponent::vMainLoop_Task, // Function for task
-      "IRID_TASK",                      // Name of task
-      1024 * 2,                         // Stack size of task
-      (void *)(&iridium_component),     // task parameters
-      15,                               // Task priority
-      &xIridiumComponentHandle          // Handle to resulting task
+      RFDComponent::vMainLoop_Task, // Function for task
+      "IRID_TASK",                  // Name of task
+      1024 * 2,                     // Stack size of task
+      (void *)(&rfd_component),     // task parameters
+      15,                           // Task priority
+      &xRFDComponentHandle          // Handle to resulting task
   );
   if (xReturned != pdPASS)
   {

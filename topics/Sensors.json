@@ -92,6 +92,32 @@
                     "length": 3
                 },
                 {
+                    "name": "velocity",
+                    "type": "double",
+                    "length": 3
+                },
+                {
+                    "name": "position",
+                    "type": "double",
+                    "length": 3
+                },
+                {
+                    "name": "angle_of_attack",
+                    "type": "double"
+                },
+                {
+                    "name": "vertical_speed",
+                    "type": "double"
+                },
+                {
+                    "name": "horizontal_speed",
+                    "type": "double"
+                },
+                {
+                    "name": "speed",
+                    "type": "double"
+                },
+                {
                     "name": "temperature_c",
                     "type": "uint8"
                 },
@@ -143,6 +169,10 @@
                     "type": "float"
                 },
                 {
+                    "name": "sea_level_pressure_hpa",
+                    "type": "float"
+                },
+                {
                     "name": "start_alt_m",
                     "type": "float"
                 },
@@ -157,10 +187,6 @@
             "fields": [
                 {
                     "name": "pressure_pa",
-                    "type": "float"
-                },
-                {
-                    "name": "relative_humidity",
                     "type": "float"
                 },
                 {

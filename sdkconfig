@@ -1340,11 +1340,11 @@ CONFIG_SD2_MOUNT="/sd2"
 #
 
 #
-# IridiumSBD config
+# LoRa Configuration
 #
 
 #
-# LoRa Configuration
+# IridiumSBD config
 #
 
 #

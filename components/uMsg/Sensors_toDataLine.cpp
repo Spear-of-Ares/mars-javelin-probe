@@ -92,6 +92,16 @@ DataLine imu_data_toDataLine(umsg_Sensors_imu_data_t &data)
     dataline.data.push_back(std::to_string(data.gravity[0]));
     dataline.data.push_back(std::to_string(data.gravity[1]));
     dataline.data.push_back(std::to_string(data.gravity[2]));
+    dataline.data.push_back(std::to_string(data.velocity[0]));
+    dataline.data.push_back(std::to_string(data.velocity[1]));
+    dataline.data.push_back(std::to_string(data.velocity[2]));
+    dataline.data.push_back(std::to_string(data.position[0]));
+    dataline.data.push_back(std::to_string(data.position[1]));
+    dataline.data.push_back(std::to_string(data.position[2]));
+    dataline.data.push_back(std::to_string(data.angle_of_attack));
+    dataline.data.push_back(std::to_string(data.vertical_speed));
+    dataline.data.push_back(std::to_string(data.horizontal_speed));
+    dataline.data.push_back(std::to_string(data.speed));
     dataline.data.push_back(std::to_string(data.temperature_c));
 
     return dataline;
@@ -114,6 +124,7 @@ DataLine baro_configuration_toDataLine(umsg_Sensors_baro_configuration_t &data)
     dataline.recorded_tick = data.measure_tick;
     dataline.data.push_back(std::to_string(data.start_pressure_hpa));
     dataline.data.push_back(std::to_string(data.start_alt_m));
+    dataline.data.push_back(std::to_string(data.sea_level_pressure_hpa));
 
     return dataline;
 }
@@ -123,7 +134,6 @@ DataLine baro_data_toDataLine(umsg_Sensors_baro_data_t &data)
     dataline.name = "BARO";
     dataline.recorded_tick = data.measure_tick;
     dataline.data.push_back(std::to_string(data.pressure_pa));
-    dataline.data.push_back(std::to_string(data.relative_humidity));
     dataline.data.push_back(std::to_string(data.temperature_c));
     dataline.data.push_back(std::to_string(data.gained_alt_m));
     dataline.data.push_back(std::to_string(data.alt_above_sea_m));

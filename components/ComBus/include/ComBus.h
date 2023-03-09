@@ -21,6 +21,7 @@
 #include "esp_vfs_fat.h"
 #include "esp_log.h"
 #include "sdkconfig.h"
+#include "SC16IS752.h"
 
 #include "SPI.h"
 
@@ -57,7 +58,8 @@ void initLoRaSPI();
 void initSDSPI();
 
 extern sdmmc_host_t SDHost; /*!< SDSPI host. Holds configuration values like max frequency.*/
-extern int i2c_master_port; /*< The port that I2C will be running on*/
+extern int i2c_master_port; /*!< The port that I2C will be running on*/
+extern SC16IS752 i2cuart;   /*!< I2C to uart bridge*/
 
 /*!
  * @brief Initializes the I2C
@@ -76,5 +78,11 @@ void initComBus();
  *
  */
 void i2cScan();
+
+/*!
+ * @brief Performs a scan on the I2C bus using arduino and prints out all addresses found.
+ *
+ */
+void i2cScanArduino();
 
 #endif /* __COM_BUS_H__ */

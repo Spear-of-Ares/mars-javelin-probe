@@ -12,6 +12,7 @@
 
 sdmmc_host_t SDHost;
 int i2c_master_port;
+SC16IS752 i2cuart;
 
 /*!
  * Both SPI busses are intialized. One is for LoRa and the other for the two storage SD cards.
@@ -74,6 +75,19 @@ void initI2C()
 {
   Wire.begin(I2C_SDA_GPIO, I2C_SCL_GPIO, 400000);
   Wire.setTimeOut(100);
+
+  // Initialize the i2c to uart bridge
+  i2cuart = SC16IS752(SC16IS750_PROTOCOL_I2C, SC16IS750_ADDRESS_BB);
+  // Begin A channel. Baud rate of RFD is 38400
+  i2cuart.beginA(38400);
+  if (i2cuart.ping() != 1)
+  {
+    printf("Device not found!\n");
+  }
+  else
+  {
+    printf("Device found\n");
+  }
 }
 
 /*!
@@ -108,4 +122,45 @@ void i2cScan()
       printf("Found device at: 0x%2x\n", i);
     }
   }
+}
+
+void i2cScanArduino()
+{
+  byte error, address;
+  int nDevices;
+
+  Serial.println("Scanning...");
+
+  nDevices = 0;
+  for (address = 1; address < 127; address++)
+  {
+    // The i2c_scanner uses the return value of
+    // the Write.endTransmisstion to see if
+    // a device did acknowledge to the address.
+    Wire.beginTransmission(address);
+
+    error = Wire.endTransmission();
+
+    if (error == 0)
+    {
+      printf("I2C device found at address 0x");
+      if (address < 16)
+        printf("0");
+      printf("%2x", address);
+      printf("  !\n");
+
+      nDevices++;
+    }
+    else if (error == 4)
+    {
+      printf("Unknown error at address 0x");
+      if (address < 16)
+        printf("0");
+      printf("%2x", address);
+    }
+  }
+  if (nDevices == 0)
+    printf("No I2C devices found\n");
+  else
+    printf("done\n");
 }
