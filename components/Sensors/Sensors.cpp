@@ -228,9 +228,13 @@ void Sensors::log_imu()
         double ACCEL_POS_TRANSITION = ACCEL_POS_TRANSITION_CALC(ACCEL_VEL_TRANSITION);
 
         /* Using timestamp from linear accelerometer is the most accurate for these calculations.*/
-        velocity[0] = velocity[0] + (lin_accel.acceleration.x * ACCEL_VEL_TRANSITION);
-        velocity[1] = velocity[1] + (lin_accel.acceleration.y * ACCEL_VEL_TRANSITION);
-        velocity[2] = velocity[2] + (lin_accel.acceleration.z * ACCEL_VEL_TRANSITION);
+        double filtered_lin_accel[3];
+        filtered_lin_accel[0] = lin_accel.acceleration.x;
+        filtered_lin_accel[1] = lin_accel.acceleration.y;
+        filtered_lin_accel[2] = lin_accel.acceleration.z;
+        velocity[0] = velocity[0] + (filtered_lin_accel[0] * ACCEL_VEL_TRANSITION);
+        velocity[1] = velocity[1] + (filtered_lin_accel[1] * ACCEL_VEL_TRANSITION);
+        velocity[2] = velocity[2] + (filtered_lin_accel[2] * ACCEL_VEL_TRANSITION);
 
         speed = velocity.magnitude();
 

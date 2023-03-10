@@ -1,26 +1,42 @@
-/*********************************************************************************
- *     File Name           :     /components/CommandCenter/CommandCenter.cpp
- *     Created By          :     jon
- *     Creation Date       :     [2022-10-26 00:34]
- *     Last Modified       :     [2022-10-28 00:50]
- *     Description         :     Component to control messages from LoRa and Iridium SBD
- **********************************************************************************/
+/*!
+ * @file CommandCenter.cpp
+ * @author Jon Kopf (kopf0033@vandals.uidaho.edu)
+ * @brief Implmentation of CommandCenter.h
+ * @version 0.1
+ * @date 2023-03-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 
 #include "CommandCenter.h"
 
+  /*!
+   * @brief The main task loop. Everything happening within this task starts here
+   * 
+   *
+   * @param arg A reference to a CommandComponent object.
+   */
 void CommandComponent::vMainLoop_Task(void *arg)
 {
   CommandComponent cmd_component = *((CommandComponent *)arg);
   const TickType_t xMaxBlockTime = 500 / portTICK_PERIOD_MS;
   cmd_component.initSubs();
 
+  // Infinite loop, will quit when microcontroller dies
   for (;;)
   {
     cmd_component.command_check();
+    // 1 second delay. Don't want to wait too long after getting a 
+    // command to actually perform the command.
     vTaskDelay(1000 / portTICK_PERIOD_MS);
   }
 }
 
+/*!
+   * @brief Initializes all umsg_sub_handle_t that this class has
+   * 
+   */
 void CommandComponent::initSubs()
 {
   // Every 30 seconds at 1hz
@@ -29,34 +45,24 @@ void CommandComponent::initSubs()
   // Every 3 seconds at 10hz
   _baro_data_sub = umsg_Sensors_baro_data_subscribe(30, 10);
 
+  // Look at every message received from RDF and lora
   _iridium_data_sub = umsg_Iridium_received_msg_subscribe(1, 5);
 
   _lora_data_sub = umsg_LoRa_received_msg_subscribe(1, 10);
 }
 
-void CommandComponent::handleCommands(uint8_t cmd_data[512])
-{
-  int i;
-  printf("Command: ");
-  for (i = 0; i < 512 && cmd_data[i] != 0x00; i++)
-  {
-    printf("0x%02x ", cmd_data[i]);
-  }
-  printf("\n");
-  if (cmd_data[1] == 0x01)
-  {
-    cutdown();
-    return;
-  }
-
-  // All messages end in 0x00
-}
-
+  /*!
+   * @brief Checks for any new commands
+   * 
+   */
 void CommandComponent::command_check()
 {
   int timeout = 1 / portTICK_PERIOD_MS; // 1 ms timeout
+
+  // Look for data from gps
   if (umsg_GPS_data_peek(&_gps_data))
   {
+    // For every bit of gps data, check if cutdown should happen
     while (umsg_GPS_data_receive(_gps_data_sub, &_gps_data, timeout) == pdPASS)
     {
       if (altitude_cutdown_check())
@@ -66,6 +72,7 @@ void CommandComponent::command_check()
     }
   }
 
+  // Read messages from RFD and LoRa. If they are commands, do something
   if (umsg_Iridium_received_msg_peek(&_iridium_data))
   {
     while (umsg_Iridium_received_msg_receive(_iridium_data_sub, &_iridium_data, timeout) == pdPASS)
@@ -89,8 +96,40 @@ void CommandComponent::command_check()
   }
 }
 
+/*!
+   * @brief If there is a new command, determine what it is and handle it
+   * 
+   *
+   * @param cmd_data byte data received from either LoRa or RFD.
+   */
+void CommandComponent::handleCommands(uint8_t cmd_data[512])
+{
+  int i;
+  printf("Command: ");
+  for (i = 0; i < 512 && cmd_data[i] != 0x00; i++)
+  {
+    printf("0x%02x ", cmd_data[i]);
+  }
+  printf("\n");
+  if (cmd_data[1] == 0x01)
+  {
+    cutdown();
+    return;
+  }
+
+  // All messages end in 0x00
+}
+
+ /*!
+   * @brief Check if payload should cut down due to being too high.
+   * 
+   *
+   * @return True if cutown should happen, false otherwise
+   */
 bool CommandComponent::altitude_cutdown_check()
 {
+
+  // If there is no good gps altitude
   if (_gps_data.altitude == 0)
   {
     // Average alt over 10 samples to reduce likelyhood of random sample causing cutdown.

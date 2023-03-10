@@ -1,11 +1,13 @@
-/*********************************************************************************
- *     File Name           :     /components/CommandCenter/include/CommandCenter.h
- *     Created By          :     jon
- *     Creation Date       :     [2022-10-26 00:29]
- *     Last Modified       :     [2022-10-28 01:34]
- *     Description         :     Component to control messages from LoRa and Iridium SBD
- **********************************************************************************/
-
+/*!
+ * @file CommandCenter.h
+ * @author Jon Kopf (kopf0033@vandals.uidaho.edu)
+ * @brief Gathers data from RDF, LoRa and sensors to determine if cutdown should happen and other important things.
+ * @version 0.1
+ * @date 2023-03-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #ifndef __COMMAND_CENTER_H__
 #define __COMMAND_CENTER_H__
 #include <stdio.h>
@@ -25,33 +27,83 @@ extern "C"
 
 #include "driver/gpio.h"
 
-#define MAX_ALTITUDE 30000
-#define HIGH_READINGS 5
+#define MAX_ALTITUDE 30000 /*! < The maximum altitude that should be flown to in meters. Altitude readings above this will trigger cutdown*/
+#define HIGH_READINGS 5    /*! < Number of readings in a row over max_altitude to cause cutdown. This is to avoid errors in baro cutting down*/
 
 #define CUT_DWN_GPIO GPIO_NUM_4
 #define CUT_DWN_DUR CONFIG_CUT_DWN_DUR
 
-#define CMDCNTR_TASK_ID "CMD CENTER"
-
+/*!
+ * @brief Component responsible for commands. Holds umsg subscriptions as well as the main task for this
+ *        comoponent.
+ * 
+ */
 class CommandComponent
 {
 public:
+  /*!
+   * @brief Sets the cutdown gpio to output on component creation
+   * 
+   */
   CommandComponent()
   {
     gpio_set_direction(CUT_DWN_GPIO, GPIO_MODE_OUTPUT);
   }
+
+  /*!
+   * @brief The main task loop. Everything happening within this task starts here
+   * 
+   *
+   * @param arg A reference to a CommandComponent object.
+   */
   static void vMainLoop_Task(void *arg);
 
 private:
+
+  /*!
+   * @brief Initializes all umsg_sub_handle_t that this class has
+   * 
+   */
   void initSubs();
+
+  /*!
+   * @brief Checks for any new commands
+   * 
+   */
   void command_check();
+
+  /*!
+   * @brief If there is a new command, determine what it is and handle it
+   * 
+   *
+   * @param cmd_data byte data received from either LoRa or RFD.
+   */
   void handleCommands(uint8_t cmd_data[512]);
+
+  /*!
+   * @brief Check if payload should cut down due to being too high.
+   * 
+   *
+   * @return True if cutown should happen, false otherwise
+   */
   bool altitude_cutdown_check();
+
+  /*!
+   * @brief Sets the cutdown pin to high, therefore starting cutdown
+   * 
+   */
   void cutdown();
+
+  /*!
+   * @brief Not implemented
+   * 
+   */
   void selftest();
 
-  uint8_t _high_alt_readings;
+  uint8_t _high_alt_readings; /*! < Number of High altitude readings*/
 
+
+  // umsg Subscriptions and data handles.
   umsg_sub_handle_t _gps_data_sub;
   umsg_GPS_data_t _gps_data;
 
