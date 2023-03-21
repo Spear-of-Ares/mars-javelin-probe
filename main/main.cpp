@@ -176,7 +176,7 @@ extern "C" void app_main(void)
   xReturned = xTaskCreate(
       RFDComponent::vMainLoop_Task, // Function for task
       "IRID_TASK",                  // Name of task
-      1024 * 2,                     // Stack size of task
+      1024 * 5,                     // Stack size of task
       (void *)(&rfd_component),     // task parameters
       15,                           // Task priority
       &xRFDComponentHandle          // Handle to resulting task

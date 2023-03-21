@@ -16,28 +16,33 @@
 
 #include "ComBus.h"
 
-extern "C" {
-  #include "umsg_GPS.h"
-  #include "umsg_Sensors.h"
+extern "C"
+{
+#include "umsg_GPS.h"
+#include "umsg_Sensors.h"
 }
 
-namespace RFD{
-  typedef struct
+namespace RFD
+{
+  typedef struct __attribute__((__packed__))
   {
-    uint64_t latitude;     /*! < Latitude. 10^-7*/
-    uint64_t longitude;    /*! < Longitude. 10^-7*/
-    uint32_t altitude_gps; /*! < Altitude in mm */
-    uint16_t pdop;         /*! < Accuracy of position. PDOP 10^-2*/
-    int32_t hour;          /*! < Hour in UTC from GPS*/
-    int32_t minute;        /*! < Minute in UTC from GPS*/
-    int32_t second;        /*! < Seconds in UTC from GPS*/
-    float pressure_hpa;    /*! < Pressure in hpa / millibar*/
-    float altitude_baro;   /*! < Altitude calculated by the barometer in meters*/
-    float baro_temp;       /*! < Temperature from the barometer*/
+    int64_t latitude;     /*! < Latitude. 10^-7*/
+    int64_t longitude;    /*! < Longitude. 10^-7*/
+    int32_t altitude_gps; /*! < Altitude in mm */
+    uint16_t pdop;        /*! < Accuracy of position. PDOP 10^-2*/
+    uint16_t year;        /*! < Year from GPS*/
+    uint8_t month;        /*! < Month from GPS */
+    uint8_t day;          /*! < Day from GPS*/
+    uint8_t hour;         /*! < Hour in UTC from GPS*/
+    uint8_t minute;       /*! < Minute in UTC from GPS*/
+    uint8_t second;       /*! < Seconds in UTC from GPS*/
+    float pressure_hpa;   /*! < Pressure in hpa / millibar*/
+    float altitude_baro;  /*! < Altitude calculated by the barometer in meters*/
+    float baro_temp;      /*! < Temperature from the barometer*/
   } RFDRemoteData;
 
   template <class T>
-  uint8_t* toByteArray(T data_struct, size_t &size);
+  uint8_t *toByteArray(T data_struct, size_t &size);
 }
 
 class RFDComponent
@@ -45,15 +50,15 @@ class RFDComponent
 public:
   RFDComponent()
   {
-
+    initSubs();
   }
   static void vMainLoop_Task(void *arg);
 
 private:
-
   void initSubs();
   void vRX();
   void readSubs();
+  size_t sendBytes(uint8_t *data, size_t data_size);
 
   umsg_sub_handle_t _gps_data_sub;
   umsg_GPS_data_t _gps_data;

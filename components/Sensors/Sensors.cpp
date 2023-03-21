@@ -50,7 +50,7 @@ void Sensors::setup()
 
     ESP_ERROR_CHECK(setup_imu());
     ESP_ERROR_CHECK(setup_baro());
-    // ESP_ERROR_CHECK(setup_therm());
+    ESP_ERROR_CHECK(setup_therm());
     // ESP_ERROR_CHECK(setup_accel());
 }
 
@@ -95,6 +95,7 @@ esp_err_t Sensors::setup_imu()
     conf_data.measure_tick = xTaskGetTickCount();
     umsg_Sensors_imu_configuration_publish(&conf_data);
 
+#ifdef CAL_IMU
     while (!_imu.isFullyCalibrated())
     {
         printf("The IMU is not fully calibrated. Calibration:\n");
@@ -103,7 +104,7 @@ esp_err_t Sensors::setup_imu()
         printf("sys: %d, gyro: %d, accel: %d, mag: %d\n", sys_cal, gyro_cal, accel_cal, mag_cal);
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
-
+#endif
     state_data.initializing = 0;
     state_data.measure_tick = xTaskGetTickCount();
     umsg_Sensors_imu_state_publish(&state_data);
@@ -199,7 +200,7 @@ void Sensors::log_data()
 
     log_imu();
     log_baro();
-    // log_therm();
+    log_therm();
 }
 
 void Sensors::log_imu()
@@ -342,6 +343,8 @@ void Sensors::log_baro()
     umsg_Sensors_baro_data_publish(&data);
 }
 
+// #define therm_attached
+
 void Sensors::log_therm()
 {
     Thermistors::readThermistors(_internal_thermistor_c, _external_thermistor_c);
@@ -349,11 +352,19 @@ void Sensors::log_therm()
     umsg_Sensors_thermistor_data_t internal_data;
     umsg_Sensors_thermistor_data_t external_data;
 
+#ifdef therm_attached
     internal_data.temperature_c = _internal_thermistor_c;
+#else
+    internal_data.temperature_c = 0;
+#endif
     internal_data.measure_tick = measure_tick;
     umsg_Sensors_thermistor_data_publish_ch(&internal_data, 0);
 
+#ifdef therm_attached
     external_data.temperature_c = _external_thermistor_c;
+#else
+    external_data.temperature_c = 0;
+#endif
     external_data.measure_tick = measure_tick;
     umsg_Sensors_thermistor_data_publish_ch(&external_data, 1);
 }

@@ -7,12 +7,14 @@
  **********************************************************************************/
 #include "LoRaComponent.h"
 
-namespace LoRaData{
-  template<class T>
-  uint8_t* toByteArray(T data_struct, size_t &size){
-    void* temp_pointer = &data_struct;
+namespace LoRaData
+{
+  template <class T>
+  uint8_t *toByteArray(T data_struct, size_t &size)
+  {
+    void *temp_pointer = &data_struct;
     size = sizeof(T);
-    uint8_t* buffer = new uint8_t[size];
+    uint8_t *buffer = new uint8_t[size];
 
     memcpy(buffer, temp_pointer, size);
 
@@ -51,6 +53,7 @@ void LoRaComponent::vMainLoop_Task(void *arg)
     // Sleeping happens within readSubs and TX, therefore don't sleep here.
     lora_component.vRX();
     lora_component.readSubs();
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
   }
 }
 
@@ -65,6 +68,9 @@ bool LoRaComponent::setup()
     printf("Starting LoRa failed!\n");
     return false;
   }
+
+  LoRa.enableCrc();
+
   return true;
 }
 
@@ -74,89 +80,91 @@ void LoRaComponent::readSubs()
   LoRaData::LoRaRemoteData data;
 
   // Peek first, then receive so we don't have to wait for timeout if there is no data.
-  while (umsg_GPS_data_receive(_gps_data_sub, &_gps_data, timeout) != pdPASS)
+  while (umsg_GPS_data_receive(_gps_data_sub, &_gps_data, timeout) == pdPASS)
   {
-    vTaskDelay(10 / portTICK_PERIOD_MS);
+    data.latitude = _gps_data.lat_long[0];
+    data.longitude = _gps_data.lat_long[1];
+    data.altitude_gps = _gps_data.altitude;
+    data.pdop = _gps_data.p_dilution_precision;
+    data.hour = _gps_data.time_ymd_hms[3];
+    data.minute = _gps_data.time_ymd_hms[4];
+    data.second = _gps_data.time_ymd_hms[5];
   }
 
-  data.latitude = _gps_data.lat_long[0];
-  data.longitude = _gps_data.lat_long[1];
-  data.altitude_gps = _gps_data.altitude;
-  data.pdop = _gps_data.p_dilution_precision;
-  data.hour = _gps_data.time_ymd_hms[3];
-  data.minute = _gps_data.time_ymd_hms[4];
-  data.second = _gps_data.time_ymd_hms[5];
-
-  while (umsg_Sensors_imu_data_receive(_imu_data_sub, &_imu_data, timeout) != pdPASS)
+  while (umsg_Sensors_imu_data_receive(_imu_data_sub, &_imu_data, timeout) == pdPASS)
   {
-    vTaskDelay(10 / portTICK_PERIOD_MS);
+    data.attitude_x = _imu_data.attitude[0];
+    data.attitude_y = _imu_data.attitude[1];
+    data.attitude_z = _imu_data.attitude[2];
+    data.linear_accel_x = _imu_data.linear_accel[0];
+    data.linear_accel_y = _imu_data.linear_accel[1];
+    data.linear_accel_z = _imu_data.linear_accel[2];
+    data.velocity_x = _imu_data.velocity[0];
+    data.velocity_y = _imu_data.velocity[1];
+    data.velocity_z = _imu_data.velocity[2];
+    data.position_x = _imu_data.position[0];
+    data.position_y = _imu_data.position[1];
+    data.position_z = _imu_data.position[2];
+    data.vertical_speed = _imu_data.vertical_speed;
+    data.horizontal_speed = _imu_data.horizontal_speed;
+    data.angle_of_attack = _imu_data.angle_of_attack;
+    data.imu_temp = _imu_data.temperature_c;
   }
 
-  data.attitude_x = _imu_data.attitude[0];
-  data.attitude_y = _imu_data.attitude[1];
-  data.attitude_z = _imu_data.attitude[2];
-  data.linear_accel_x = _imu_data.linear_accel[0];
-  data.linear_accel_y = _imu_data.linear_accel[1];
-  data.linear_accel_z = _imu_data.linear_accel[2];
-  data.velocity_x = _imu_data.velocity[0];
-  data.velocity_y = _imu_data.velocity[1];
-  data.velocity_z = _imu_data.velocity[2];
-  data.position_x = _imu_data.position[0];
-  data.position_y = _imu_data.position[1];
-  data.position_z = _imu_data.position[2];
-  data.vertical_speed = _imu_data.vertical_speed;
-  data.horizontal_speed = _imu_data.horizontal_speed;
-  data.angle_of_attack = _imu_data.angle_of_attack;
-  data.imu_temp = _imu_data.temperature_c;
-
-  while (umsg_Sensors_baro_data_receive(_baro_data_sub, &_baro_data, timeout) != pdPASS)
+  while (umsg_Sensors_baro_data_receive(_baro_data_sub, &_baro_data, timeout) == pdPASS)
   {
-    vTaskDelay(10 / portTICK_PERIOD_MS);
+    data.pressure_hpa = _baro_data.pressure_pa;
+    data.altitude_baro = _baro_data.alt_above_sea_m;
+    data.baro_temp = _baro_data.temperature_c;
   }
 
-  data.pressure_hpa = _baro_data.pressure_pa;
-  data.altitude_baro = _baro_data.alt_above_sea_m;
-  data.baro_temp = _baro_data.temperature_c;
-
-  while (umsg_Sensors_thermistor_data_receive(_therm_0_data_sub, &_therm_0_data, timeout) != pdPASS)
+  while (umsg_Sensors_thermistor_data_receive(_therm_0_data_sub, &_therm_0_data, timeout) == pdPASS)
   {
-    vTaskDelay(10 / portTICK_PERIOD_MS);
+    data.internal_temp = _therm_0_data.temperature_c;
   }
 
-  data.internal_temp = _therm_0_data.temperature_c;
-
-  while (umsg_Sensors_thermistor_data_receive(_therm_1_data_sub, &_therm_1_data, timeout) != pdPASS)
+  while (umsg_Sensors_thermistor_data_receive(_therm_1_data_sub, &_therm_1_data, timeout) == pdPASS)
   {
-    vTaskDelay(10 / portTICK_PERIOD_MS);
+    data.external_temp = _therm_1_data.temperature_c;
   }
-
-  data.external_temp = _therm_1_data.temperature_c;
 
   size_t data_bytes_size;
-  uint8_t* data_bytes = LoRaData::toByteArray<LoRaData::LoRaRemoteData>(data, data_bytes_size);
-  vTX((const uint8_t*) data_bytes, data_bytes_size, LORA_MSG_SENSOR_DATA);
+  uint8_t *data_bytes = LoRaData::toByteArray<LoRaData::LoRaRemoteData>(data, data_bytes_size);
+  vTX((uint8_t *)data_bytes, data_bytes_size, LORA_MSG_SENSOR_DATA);
 }
 
-void LoRaComponent::vTX(const uint8_t *msg, size_t size, umsg_LoRa_msg_type_t msg_type)
+void LoRaComponent::vTX(uint8_t *msg, size_t size, umsg_LoRa_msg_type_t msg_type)
 {
 
-  while(LoRa.beginPacket() == 0){
+  uint8_t packet_size = size + 4;
+  uint8_t *packet = new uint8_t[packet_size];
+  packet[0] = (uint8_t)'S';
+  packet[1] = (uint8_t)'T';
+  packet[1] = packet_size;
+  for (int i = 0; i < size; i++)
+  {
+    packet[i + 3] = msg[i];
+  }
+  packet[size + 3] = (uint8_t)'E';
+
+  while (LoRa.beginPacket() == 0)
+  {
     vRX();
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }
 
   umsg_LoRa_sent_msg_t sent_msg;
   sent_msg.sent_msg_type = msg_type;
-
   LoRa.beginPacket();
-  LoRa.write(msg, size);
+  LoRa.write(packet, packet_size);
   LoRa.endPacket(true); // Async send
   sent_msg.send_tick = xTaskGetTickCount();
 
   umsg_LoRa_sent_msg_publish(&sent_msg);
 }
 
-void LoRaComponent::vTX(std::string msg, umsg_LoRa_msg_type_t msg_type){
+void LoRaComponent::vTX(std::string msg, umsg_LoRa_msg_type_t msg_type)
+{
   vTX((uint8_t *)msg.c_str(), msg.length(), msg_type);
 }
 
