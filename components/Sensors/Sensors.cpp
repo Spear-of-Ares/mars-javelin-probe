@@ -225,17 +225,20 @@ void Sensors::log_imu()
     double horizontal_speed = 0.0;
     if (imu_last_read > 0)
     {
+
         double ACCEL_VEL_TRANSITION = ACCEL_VEL_TRANSITION_CALC(imu_last_read, lin_accel.timestamp);
         double ACCEL_POS_TRANSITION = ACCEL_POS_TRANSITION_CALC(ACCEL_VEL_TRANSITION);
 
-        /* Using timestamp from linear accelerometer is the most accurate for these calculations.*/
-        double filtered_lin_accel[3];
-        filtered_lin_accel[0] = lin_accel.acceleration.x;
-        filtered_lin_accel[1] = lin_accel.acceleration.y;
-        filtered_lin_accel[2] = lin_accel.acceleration.z;
-        velocity[0] = velocity[0] + (filtered_lin_accel[0] * ACCEL_VEL_TRANSITION);
-        velocity[1] = velocity[1] + (filtered_lin_accel[1] * ACCEL_VEL_TRANSITION);
-        velocity[2] = velocity[2] + (filtered_lin_accel[2] * ACCEL_VEL_TRANSITION);
+        // Convert milliseconds to seconds
+        float deltaTime = (lin_accel.timestamp - imu_last_read) / 1000;
+        float cutoffFrequency = 2;
+        lin_accel.acceleration.x = _low_pass_filters[0].update(lin_accel.acceleration.x, deltaTime, cutoffFrequency);
+        lin_accel.acceleration.y = _low_pass_filters[1].update(lin_accel.acceleration.x, deltaTime, cutoffFrequency);
+        lin_accel.acceleration.z = _low_pass_filters[2].update(lin_accel.acceleration.x, deltaTime, cutoffFrequency);
+
+        velocity[0] = velocity[0] + (lin_accel.acceleration.x * ACCEL_VEL_TRANSITION);
+        velocity[1] = velocity[1] + (lin_accel.acceleration.y * ACCEL_VEL_TRANSITION);
+        velocity[2] = velocity[2] + (lin_accel.acceleration.z * ACCEL_VEL_TRANSITION);
 
         speed = velocity.magnitude();
 

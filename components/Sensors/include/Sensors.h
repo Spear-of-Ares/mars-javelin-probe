@@ -12,6 +12,7 @@
 #include "Adafruit_BNO055.h"  // IMU
 #include "Adafruit_ADXL375.h" // Accelerometer
 #include "MS5611.h"           // Barometer
+#include "LowPassFilter.hpp"  // Filtering for the linear acceleration to eliminate bouncing of values
 
 extern "C"
 {
@@ -58,6 +59,7 @@ private:
     void log_therm();
 
     Adafruit_BNO055 _imu;
+    LowPassFilter _low_pass_filters[3]; /*! < Each axis of linear acceleration needs its own low pass filter */
     double position[3];
     imu::Vector<3> velocity;
     int32_t imu_last_read;

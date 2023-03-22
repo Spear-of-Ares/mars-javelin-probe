@@ -63,7 +63,7 @@ extern "C" void app_main(void)
   xReturned = xTaskCreate(
       DataLogger::vLogLoop_Task, // Function for task
       "LOGG_TASK",               // Name of task
-      1024 * 5,                  // Stack size of task
+      1024 * 10,                 // Stack size of task
       (void *)(&data_log),       // task parameters
       9,                         // Task priority
       &xDataLogHandle            // Handle to resulting task

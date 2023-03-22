@@ -273,11 +273,8 @@ void DataLogger::log_to_sd()
 
   // TODO:: Don't clear bufer if appendFile fails
   // if not connected, attemp to remount
-  if (!_sd1_connected)
-  {
-    mountSDFileSystem(_onboard_sd_conf, MOUNT1, 1);
-  }
-  else
+
+  if (_sd1_connected)
   {
     esp_err_t ret = appendFile(_path1, sd_data_msg);
     if (ret == ESP_FAIL)
@@ -285,12 +282,16 @@ void DataLogger::log_to_sd()
       _sd1_connected = false;
     }
   }
-#ifdef SD2_ATTACHED
-  if (!_sd2_connected)
-  {
-    mountSDFileSystem(_external_sd_conf, MOUNT2, 2);
-  }
+#ifdef ATTEMPT_REATTACH_SD
   else
+  {
+    mountSDFileSystem(_onboard_sd_conf, MOUNT1, 1);
+  }
+#endif
+
+#ifdef SD2_ATTACHED
+
+  if (_sd2_connected)
   {
     esp_err_t ret = appendFile(_path2, sd_data_msg);
     if (ret == ESP_FAIL)
@@ -298,6 +299,12 @@ void DataLogger::log_to_sd()
       _sd2_connected = false;
     }
   }
+#ifdef ATTEMPT_REATTACH_SD
+  else
+  {
+    mountSDFileSystem(_external_sd_conf, MOUNT2, 2);
+  }
+#endif
 #endif
 }
 

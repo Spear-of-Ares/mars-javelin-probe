@@ -136,16 +136,15 @@ void LoRaComponent::readSubs()
 void LoRaComponent::vTX(uint8_t *msg, size_t size, umsg_LoRa_msg_type_t msg_type)
 {
 
-  uint8_t packet_size = size + 4;
+  uint8_t packet_size = size + 3;
   uint8_t *packet = new uint8_t[packet_size];
   packet[0] = (uint8_t)'S';
-  packet[1] = (uint8_t)'T';
   packet[1] = packet_size;
   for (int i = 0; i < size; i++)
   {
-    packet[i + 3] = msg[i];
+    packet[i + 2] = msg[i];
   }
-  packet[size + 3] = (uint8_t)'E';
+  packet[size + 2] = (uint8_t)'E';
 
   while (LoRa.beginPacket() == 0)
   {
@@ -175,6 +174,7 @@ void LoRaComponent::vRX()
   std::string empty = "";
   if (packetSize)
   {
+    printf("Received LoRa\n");
     umsg_LoRa_received_msg_t recv_msg;
     recv_msg.receive_tick = xTaskGetTickCount();
     recv_msg.RSSI = LoRa.packetRssi();

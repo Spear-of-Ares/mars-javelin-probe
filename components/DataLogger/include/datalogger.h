@@ -35,6 +35,8 @@ extern "C"
 #define SD2_ATTACHED
 #endif
 
+// #define ATTEMPT_REATTACH_SD /*! < Attempts to reattach sd cards if they aren't attached
+
 #define SPEED_LOG
 
 #define LOGFILE "javelin2.log"
