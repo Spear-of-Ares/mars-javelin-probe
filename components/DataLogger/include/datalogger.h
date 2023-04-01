@@ -21,7 +21,7 @@ extern "C"
 {
 #include "umsg_CommandCenter.h"
 #include "umsg_GPS.h"
-#include "umsg_Iridium.h"
+#include "umsg_RFD.h"
 #include "umsg_LoRa.h"
 #include "umsg_Sensors.h"
 #include "umsg_Stats.h"
@@ -97,12 +97,12 @@ private:
   umsg_GPS_data_t _gps_data;
   umsg_GPS_state_t _gps_state_data;
 
-  umsg_sub_handle_t _iridium_received_msg_sub;
-  umsg_sub_handle_t _iridium_sent_msg_sub;
-  umsg_sub_handle_t _iridium_state_sub;
-  umsg_Iridium_received_msg_t _iridium_received_data;
-  umsg_Iridium_sent_msg_t _iridium_sent_data;
-  umsg_Iridium_state_t _iridium_state_data;
+  umsg_sub_handle_t _rfd_received_msg_sub;
+  umsg_sub_handle_t _rfd_sent_msg_sub;
+  umsg_sub_handle_t _rfd_state_sub;
+  umsg_RFD_received_msg_t _rfd_received_data;
+  umsg_RFD_sent_msg_t _rfd_sent_data;
+  umsg_RFD_state_t _rfd_state_data;
 
   umsg_sub_handle_t _LoRa_received_msg_sub;
   umsg_sub_handle_t _LoRa_sent_msg_sub;
@@ -124,6 +124,13 @@ private:
   umsg_Sensors_baro_configuration_t _baro_configuration_data;
   umsg_Sensors_baro_data_t _baro_data;
   umsg_Sensors_baro_state_t _baro_state_data;
+
+  umsg_sub_handle_t _accel_configuration_sub;
+  umsg_sub_handle_t _accel_data_sub;
+  umsg_sub_handle_t _accel_state_sub;
+  umsg_Sensors_accel_configuration_t _accel_configuration_data;
+  umsg_Sensors_accel_data_t _accel_data;
+  umsg_Sensors_accel_state_t _accel_state_data;
 
   umsg_sub_handle_t _therm_0_config_sub;
   umsg_sub_handle_t _therm_0_data_sub;

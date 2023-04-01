@@ -4,8 +4,8 @@ add_library(uMsgLib STATIC
     # generated files
     src/CommandCenter.c
     src/GPS.c
-    src/Iridium.c
     src/LoRa.c
+    src/RFD.c
     src/Sensors.c
     src/Stats.c
     src/StatusMsgs.c

@@ -4,9 +4,9 @@
  * @brief Gathers data from RDF, LoRa and sensors to determine if cutdown should happen and other important things.
  * @version 0.1
  * @date 2023-03-09
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 #ifndef __COMMAND_CENTER_H__
 #define __COMMAND_CENTER_H__
@@ -21,9 +21,10 @@ extern "C"
 #include "umsg_Sensors.h"
 #include "umsg_CommandCenter.h"
 #include "umsg_LoRa.h"
-#include "umsg_Iridium.h"
+#include "umsg_RFD.h"
 }
 #include "umsg_toDataLine.h"
+#include "umsg_helper.h"
 
 #include "driver/gpio.h"
 
@@ -38,14 +39,14 @@ extern "C"
 /*!
  * @brief Component responsible for commands. Holds umsg subscriptions as well as the main task for this
  *        comoponent.
- * 
+ *
  */
 class CommandComponent
 {
 public:
   /*!
    * @brief Sets the cutdown gpio to output on component creation
-   * 
+   *
    */
   CommandComponent()
   {
@@ -56,29 +57,40 @@ public:
 
   /*!
    * @brief The main task loop. Everything happening within this task starts here
-   * 
+   *
    *
    * @param arg A reference to a CommandComponent object.
    */
   static void vMainLoop_Task(void *arg);
 
 private:
-
   /*!
    * @brief Initializes all umsg_sub_handle_t that this class has
-   * 
+   *
    */
   void initSubs();
 
   /*!
+   * @brief Checks if all other components have been initialized and are ready to start running.
+   *
+   */
+  bool check_start_system();
+
+  /*!
+   * @brief Sends a message with the start system bit set to the integer value of start_system variable
+   *
+   */
+  void send_start_system();
+
+  /*!
    * @brief Checks for any new commands
-   * 
+   *
    */
   void command_check();
 
   /*!
    * @brief If there is a new command, determine what it is and handle it
-   * 
+   *
    *
    * @param cmd_data byte data received from either LoRa or RFD.
    */
@@ -86,7 +98,7 @@ private:
 
   /*!
    * @brief Check if payload should cut down due to being too high.
-   * 
+   *
    *
    * @return True if cutown should happen, false otherwise
    */
@@ -102,15 +114,17 @@ private:
 
   /*!
    * @brief Sets the cutdown pin to high, therefore starting cutdown
-   * 
+   *
    */
   void cutdown();
 
   /*!
    * @brief Not implemented
-   * 
+   *
    */
   void selftest();
+
+  bool start_system; /*! < If the system has started running. ie other processes have started looping through their main task.*/
 
   uint8_t _high_alt_readings; /*! < Number of High altitude readings*/
   bool _has_cutdown;
@@ -120,15 +134,33 @@ private:
   // umsg Subscriptions and data handles.
   umsg_sub_handle_t _gps_data_sub;
   umsg_GPS_data_t _gps_data;
+  umsg_sub_handle_t _gps_state_sub;
+  umsg_GPS_state_t _gps_state;
 
   umsg_sub_handle_t _baro_data_sub;
   umsg_Sensors_baro_data_t _baro_data;
+  umsg_sub_handle_t _baro_state_sub;
+  umsg_Sensors_baro_state_t _baro_state;
 
-  umsg_sub_handle_t _iridium_data_sub;
-  umsg_Iridium_received_msg_t _iridium_data;
+  umsg_sub_handle_t _imu_state_sub;
+  umsg_Sensors_imu_state_t _imu_state;
+  umsg_sub_handle_t _accel_state_sub;
+  umsg_Sensors_accel_state_t _accel_state;
+
+  umsg_sub_handle_t _therm_0_state_sub;
+  umsg_Sensors_thermistor_state_t _therm_0_state;
+  umsg_sub_handle_t _therm_1_state_sub;
+  umsg_Sensors_thermistor_state_t _therm_1_state;
+
+  umsg_sub_handle_t _rfd_data_sub;
+  umsg_RFD_received_msg_t _rfd_data;
+  umsg_sub_handle_t _rfd_state_sub;
+  umsg_RFD_state_t _rfd_state;
 
   umsg_sub_handle_t _lora_data_sub;
   umsg_LoRa_received_msg_t _lora_data;
+  umsg_sub_handle_t _lora_state_sub;
+  umsg_LoRa_state_msg_t _lora_state;
 };
 
 #endif

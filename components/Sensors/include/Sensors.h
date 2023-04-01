@@ -21,6 +21,10 @@ extern "C"
 #include "umsg_GPS.h"
 }
 
+#define INITIALIZING 1  // Different status values 
+#define INITIALIZED 2
+#define RUNNING 4
+
 /* Define to allow for accurate sea level pressure calculation using GPS altitude measurement
     BLOCKS TASK during barometer setup until accurate GPS data is received (PDOP > 7.0 ie > 700)*/
 #define ACCURATE_SEA_LEVL_PRESSURE
@@ -40,6 +44,7 @@ class Sensors
 {
 public:
     static void vMainLoop_Task(void *arg);
+    static void vAccelLoop_Task(void *arg);
 
 private:
     void variable_delay(int delay_ms);
@@ -47,11 +52,17 @@ private:
 
     void setup();
     void log_data();
+    void log_imu_calibration();
 
     esp_err_t setup_imu();
     esp_err_t setup_accel();
     esp_err_t setup_baro();
     esp_err_t setup_therm();
+
+    bool start_data_logging();
+    bool start_accel_logging();
+
+    void create_accel_task();
 
     void log_imu();
     void log_baro();
@@ -63,6 +74,9 @@ private:
     double position[3];
     imu::Vector<3> velocity;
     int32_t imu_last_read;
+
+    umsg_Sensors_sensor_state_t imu_state;
+    uint8_t imu_status;
 
     Adafruit_ADXL375 _impact_accel;
 

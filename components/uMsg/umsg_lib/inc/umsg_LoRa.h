@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-03-03
+// Generated with umsg_gen on 2023-03-23
 #pragma once
 #include <umsg_types.h>
 
@@ -40,6 +40,7 @@ typedef struct
 typedef struct
 {
     umsg_LoRa_lora_state_t state;
+    uint8_t initializing : 1, initialized : 1, running : 1;
     uint32_t measure_tick;
 } umsg_LoRa_state_msg_t;
 

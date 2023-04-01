@@ -6,8 +6,8 @@
  *     Description         :     Component to handle the task for the IridiumSBD
  **********************************************************************************/
 
-#ifndef __IRIDIUMSBD_COMPONENT_H__
-#define __IRIDIUMSBD_COMPONENT_H__
+#ifndef __RFD_COMPONENT_H__
+#define __RFD_COMPONENT_H__
 
 #include <stdio.h>
 #include <sstream>
@@ -15,10 +15,12 @@
 #include <time.h>
 
 #include "ComBus.h"
+#include "datalogger.h"
 
 extern "C"
 {
 #include "umsg_GPS.h"
+#include "umsg_RFD.h"
 #include "umsg_Sensors.h"
 }
 
@@ -48,17 +50,16 @@ namespace RFD
 class RFDComponent
 {
 public:
-  RFDComponent()
-  {
-    initSubs();
-  }
   static void vMainLoop_Task(void *arg);
 
 private:
+  void init();
   void initSubs();
   void vRX();
   void readSubs();
-  size_t sendBytes(uint8_t *data, size_t data_size);
+  size_t sendBytes(uint8_t *data, size_t data_size, umsg_RFD_msg_type_t msg_type);
+
+  RFD::RFDRemoteData _rfd_data;
 
   umsg_sub_handle_t _gps_data_sub;
   umsg_GPS_data_t _gps_data;

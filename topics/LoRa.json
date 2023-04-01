@@ -72,6 +72,23 @@
                     "type": "lora_state"
                 },
                 {
+                    "type": "uint8",
+                    "bitfield": [
+                        {
+                            "name": "initializing",
+                            "bits": 1
+                        },
+                        {
+                            "name": "initialized",
+                            "bits": 1
+                        },
+                        {
+                            "name": "running",
+                            "bits": 1
+                        }
+                    ]
+                },
+                {
                     "name": "measure_tick",
                     "type": "uint32"
                 }

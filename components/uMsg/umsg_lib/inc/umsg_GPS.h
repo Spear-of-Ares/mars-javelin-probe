@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-03-03
+// Generated with umsg_gen on 2023-03-23
 #pragma once
 #include <umsg_types.h>
 
@@ -33,7 +33,7 @@ typedef struct
 typedef struct
 {
     umsg_GPS_gps_state_t state;
-    uint8_t initializing : 1, not_enough_sats : 1, receiving_data : 1, reconnecting : 1, not_present : 1;
+    uint8_t initializing : 1, initialized : 1, running : 1;
     uint32_t measure_tick;
 } umsg_GPS_state_t;
 

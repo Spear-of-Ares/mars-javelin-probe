@@ -26,25 +26,29 @@ void GPSComponent::vMainLoop_Task(void *arg)
 void GPSComponent::setup()
 {
 
+    umsg_GPS_state_t state_data;
+    state_data.state = GPS_DISCONNECTED;
+    state_data.initializing = 1;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_GPS_state_publish(&state_data);
+
     while (_GNSS_1.begin(Wire) == false)
     {
         printf("Could not start _GNSS_1\n");
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
-    printf("GNSS 1 setup successfully\n");
+
+    state_data.state = GPS_OK;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_GPS_state_publish(&state_data);
+
     _GNSS_1.setNavigationFrequency(1); // Produce two solutions per second
     _GNSS_1.setAutoPVT(true);
-#ifdef DUAL_GPS
-    while (_GNSS_2.begin(Wire1) == false)
-    {
-        printf("Could not start _GNSS_2\n");
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-    }
-    printf("GNSS 2 setup successfully\n");
-    _GNSS_2.setNavigationFrequency(1); // Produce two solutions per second
-    _GNSS_2.setAutoPVT(true);
-#endif
-    printf("Finished GPS startup\n");
+
+    state_data.initializing = 0;
+    state_data.initialized = 1;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_GPS_state_publish(&state_data);
 }
 
 void GPSComponent::getGPS_MSG(int gps)

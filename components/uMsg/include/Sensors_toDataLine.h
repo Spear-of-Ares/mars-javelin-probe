@@ -17,6 +17,10 @@ DataLine baro_configuration_toDataLine(umsg_Sensors_baro_configuration_t &data);
 DataLine baro_data_toDataLine(umsg_Sensors_baro_data_t &data);
 DataLine baro_state_toDataLine(umsg_Sensors_baro_state_t &data);
 
+DataLine accel_configuration_toDataLine(umsg_Sensors_accel_configuration_t &data);
+DataLine accel_data_toDataLine(umsg_Sensors_accel_data_t &data);
+DataLine accel_state_toDataLine(umsg_Sensors_accel_state_t &data);
+
 DataLine therm_configuration_toDataLine(umsg_Sensors_thermistor_configuration_t &data, std::string name);
 DataLine therm_data_toDataLine(umsg_Sensors_thermistor_data_t &data, std::string name);
 DataLine therm_state_toDataLine(umsg_Sensors_thermistor_state_t &data, std::string name);
