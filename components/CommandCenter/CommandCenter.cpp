@@ -27,6 +27,8 @@ void CommandComponent::vMainLoop_Task(void *arg)
   for (;;)
   {
     cmd_component.command_check();
+    cmd_component.low_alt_reading_check();
+
     // 1 second delay. Don't want to wait too long after getting a 
     // command to actually perform the command.
     vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -67,6 +69,7 @@ void CommandComponent::command_check()
     {
       if (altitude_cutdown_check())
       {
+        _has_cutdown = true;
         cutdown();
       }
     }
@@ -150,13 +153,18 @@ bool CommandComponent::altitude_cutdown_check()
     {
       sum += alts[i];
     }
+
     float avg = sum / sizeof(alts);
+    _last_alt = avg;
 
     if (avg > MAX_ALTITUDE)
     {
       printf("Baro cutdown: %f\n", avg);
       return true;
     }
+  }
+  else{
+    _last_alt = _gps_data.altitude / 1000;
   }
 
   // Do not attempt cutdown if GPS accuracy is bad (ie above PDOP of 7.0)
@@ -181,11 +189,31 @@ bool CommandComponent::altitude_cutdown_check()
   return false;
 }
 
+  /*!
+   * @brief Check if the low altitude accelerometer should turn on
+   * 
+   *
+   * @return nothing. Will send command message 
+   */
+  void CommandComponent::low_alt_reading_check(){
+    if(_last_alt < LOW_ALT && _has_cutdown == true){
+      umsg_CommandCenter_command_t _cmd_data;
+
+      _cmd_data.low_alt_data_gather = 1;
+
+      umsg_CommandCenter_command_publish(&_cmd_data);
+    }
+  }
+
 void CommandComponent::cutdown()
 {
   umsg_CommandCenter_command_t _cmd_data;
 
   _cmd_data.cutdown = 1;
+
+  if(_last_alt > CUTDOWN_MIN){
+    _has_cutdown = true;
+  }
 
   gpio_set_level(CUT_DWN_GPIO, 1);
   vTaskDelay(5000 / portTICK_PERIOD_MS);

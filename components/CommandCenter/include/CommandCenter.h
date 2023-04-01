@@ -27,7 +27,9 @@ extern "C"
 
 #include "driver/gpio.h"
 
-#define MAX_ALTITUDE 30000 /*! < The maximum altitude that should be flown to in meters. Altitude readings above this will trigger cutdown*/
+#define MAX_ALTITUDE 25000 /*! < The maximum altitude that should be flown to in meters. Altitude readings above this will trigger cutdown*/
+#define LOW_ALT 2000
+#define CUTDOWN_MIN 1000 /*! < The minimum altitude where a real cutdown will be recognized*/
 #define HIGH_READINGS 5    /*! < Number of readings in a row over max_altitude to cause cutdown. This is to avoid errors in baro cutting down*/
 
 #define CUT_DWN_GPIO GPIO_NUM_4
@@ -48,6 +50,8 @@ public:
   CommandComponent()
   {
     gpio_set_direction(CUT_DWN_GPIO, GPIO_MODE_OUTPUT);
+    _has_cutdown = false;
+    _last_alt = 0;
   }
 
   /*!
@@ -89,6 +93,14 @@ private:
   bool altitude_cutdown_check();
 
   /*!
+   * @brief Check if the low altitude accelerometer should turn on
+   * 
+   *
+   * @return True if it should happen, false otherwise
+   */
+  void low_alt_reading_check();
+
+  /*!
    * @brief Sets the cutdown pin to high, therefore starting cutdown
    * 
    */
@@ -101,6 +113,8 @@ private:
   void selftest();
 
   uint8_t _high_alt_readings; /*! < Number of High altitude readings*/
+  bool _has_cutdown;
+  float _last_alt;
 
 
   // umsg Subscriptions and data handles.

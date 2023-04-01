@@ -65,7 +65,6 @@ void GPSComponent::getGPS_MSG(int gps)
     }
 
     // Calling getPVT returns true if there actually is a fresh navigation solution available.
-    // Get DOP will return true if there is Dilution of Precision Available
     // Start the reading only when valid LLH is available
     if (myGNSS->getPVT() && (myGNSS->getInvalidLlh() == false))
     {
@@ -89,6 +88,12 @@ void GPSComponent::getGPS_MSG(int gps)
         data.time_ymd_hms[6] = myGNSS->getMillisecond();
         data.valid_time = myGNSS->getTimeValid();
 
+        umsg_GPS_data_publish(&data);
+    }
+    else{
+        memset(&data, 0, sizeof(data));
+        // Set a bad pdop
+        data.p_dilution_precision = 9999;
         umsg_GPS_data_publish(&data);
     }
 }
