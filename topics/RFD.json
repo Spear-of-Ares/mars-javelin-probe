@@ -32,11 +32,6 @@
                     "type": "msg_type"
                 },
                 {
-                    "name": "time_ymd_hms",
-                    "type": "int32",
-                    "length": 6
-                },
-                {
                     "name": "msg_data",
                     "type": "uint8",
                     "length": 512
@@ -51,6 +46,23 @@
                     "type": "uint32"
                 },
                 {
+                    "type": "uint8",
+                    "bitfield": [
+                        {
+                            "name": "initializing",
+                            "bits": 1
+                        },
+                        {
+                            "name": "initialized",
+                            "bits": 1
+                        },
+                        {
+                            "name": "running",
+                            "bits": 1
+                        }
+                    ]
+                },
+                {
                     "name": "sent_msg_type",
                     "type": "msg_type"
                 }
@@ -62,6 +74,27 @@
                 {
                     "name": "state",
                     "type": "rfd_state"
+                },
+                {
+                    "type": "uint8",
+                    "bitfield": [
+                        {
+                            "name": "initializing",
+                            "bits": 1
+                        },
+                        {
+                            "name": "initialized",
+                            "bits": 1
+                        },
+                        {
+                            "name": "running",
+                            "bits": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
                 }
             ]
         }

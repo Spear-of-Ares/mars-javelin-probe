@@ -78,19 +78,11 @@
                             "bits": 1
                         },
                         {
-                            "name": "not_enough_sats",
+                            "name": "initialized",
                             "bits": 1
                         },
                         {
-                            "name": "receiving_data",
-                            "bits": 1
-                        },
-                        {
-                            "name": "reconnecting",
-                            "bits": 1
-                        },
-                        {
-                            "name": "not_present",
+                            "name": "running",
                             "bits": 1
                         }
                     ]

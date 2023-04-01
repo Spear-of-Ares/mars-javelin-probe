@@ -112,7 +112,10 @@ DataLine imu_state_toDataLine(umsg_Sensors_imu_state_t &data)
     dataline.name = "IMU_STATE";
     dataline.recorded_tick = data.measure_tick;
     dataline.data.push_back(sensor_state_toString(data.state));
-    dataline.data.push_back(std::to_string(data.initializing) + std::to_string(data.logging_data) + std::to_string(data.reconnecting) + std::to_string(data.not_present));
+    dataline.data.push_back(std::to_string(data.initializing) + std::to_string(data.initialized) + std::to_string(data.running));
+    dataline.data.push_back(std::to_string(data.calibration_state[0]));
+    dataline.data.push_back(std::to_string(data.calibration_state[1]));
+    dataline.data.push_back(std::to_string(data.calibration_state[2]));
 
     return dataline;
 }
@@ -146,7 +149,7 @@ DataLine baro_state_toDataLine(umsg_Sensors_baro_state_t &data)
     dataline.name = "BARO_STATE";
     dataline.recorded_tick = data.measure_tick;
     dataline.data.push_back(sensor_state_toString(data.state));
-    dataline.data.push_back(std::to_string(data.initializing) + std::to_string(data.logging_data) + std::to_string(data.reconnecting) + std::to_string(data.not_present));
+    dataline.data.push_back(std::to_string(data.initializing) + std::to_string(data.initialized) + std::to_string(data.running));
 
     return dataline;
 }
@@ -178,7 +181,41 @@ DataLine therm_state_toDataLine(umsg_Sensors_thermistor_state_t &data, std::stri
     DataLine dataline;
     dataline.name = "THERM_STATE_" + name;
     dataline.recorded_tick = data.measure_tick;
-    dataline.data.push_back(std::to_string(data.logging_data) + std::to_string(data.not_present));
+    dataline.data.push_back(std::to_string(data.initializing) + std::to_string(data.initialized) + std::to_string(data.running));
+
+    return dataline;
+}
+
+DataLine accel_configuration_toDataLine(umsg_Sensors_accel_configuration_t &data)
+{
+    DataLine dataline;
+    dataline.name = "ACCL_CONF";
+    dataline.recorded_tick = data.measure_tick;
+    dataline.data.push_back(std::to_string(data.sample_rate_hz));
+    dataline.data.push_back(std::to_string(data.accelerometer_range));
+
+    return dataline;
+}
+
+DataLine accel_data_toDataLine(umsg_Sensors_accel_data_t &data)
+{
+    DataLine dataline;
+    dataline.name = "ACCEL";
+    dataline.recorded_tick = data.measure_tick;
+    dataline.data.push_back(std::to_string(data.acceleration[0]));
+    dataline.data.push_back(std::to_string(data.acceleration[1]));
+    dataline.data.push_back(std::to_string(data.acceleration[2]));
+
+    return dataline;
+}
+
+DataLine accel_state_toDataLine(umsg_Sensors_accel_state_t &data)
+{
+    DataLine dataline;
+    dataline.name = "ACCEL_STATE";
+    dataline.recorded_tick = data.measure_tick;
+    dataline.data.push_back(sensor_state_toString(data.state));
+    dataline.data.push_back(std::to_string(data.initializing) + std::to_string(data.initialized) + std::to_string(data.running));
 
     return dataline;
 }

@@ -26,6 +26,8 @@ extern "C"
 #include "umsg_CommandCenter.h"
 }
 
+#include "umsg_helper.h"
+
 #define LoRa_TASK_ID "LoRa_TASK "
 
 namespace LoRaData
@@ -45,6 +47,15 @@ namespace LoRaData
     float pressure_hpa;      /*! < Pressure in hpa / millibar*/
     float altitude_baro;     /*! < Altitude calculated by the barometer in meters*/
     float baro_temp;         /*! < Temperature from the barometer*/
+    double accel_x;          /*! < Acceleration on x axis in m/s^2*/
+    double accel_y;          /*! < Acceleration on y axis in m/s^2*/
+    double accel_z;          /*! < Acceleration on z axis in m/s^2*/
+    double gyro_x;           /*! < Angular rate on x axis in rad/s*/
+    double gyro_y;           /*! < Angular rate on y axis in rad/s*/
+    double gyro_z;           /*! < Angular rate on z axis in rad/s*/
+    double mag_x;            /*! < Magnetometer measure on x axis in uT*/
+    double mag_y;            /*! < Magnetometer measure on y axis in uT*/
+    double mag_z;            /*! < Magnetometer measure on z axis in uT*/
     double attitude_x;       /*! < Attitude on x axis from imu in degrees*/
     double attitude_y;       /*! < Attitude on y axis from imu in degrees*/
     double attitude_z;       /*! < Attitude on z axis from imu in degrees*/
@@ -82,12 +93,15 @@ private:
   static void vTX(uint8_t *msg, size_t size, umsg_LoRa_msg_type_t msg_type);
   static void vTX(std::string msg, umsg_LoRa_msg_type_t msg_type);
   bool setup();
+  LoRaData::LoRaRemoteData _lora_data;
 
   umsg_sub_handle_t _gps_data_sub;
   umsg_GPS_data_t _gps_data;
 
   umsg_sub_handle_t _imu_data_sub;
   umsg_Sensors_imu_data_t _imu_data;
+  umsg_sub_handle_t _imu_state_sub;
+  umsg_Sensors_imu_state_t _imu_state;
 
   umsg_sub_handle_t _baro_data_sub;
   umsg_Sensors_baro_data_t _baro_data;

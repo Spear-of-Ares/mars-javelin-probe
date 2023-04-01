@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2023-03-03
+// Generated with umsg_gen on 2023-03-23
 #pragma once
 #include <umsg_types.h>
 
@@ -64,9 +64,30 @@ typedef struct
 typedef struct
 {
     umsg_Sensors_sensor_state_t state;
-    uint8_t initializing : 1, logging_data : 1, reconnecting : 1, not_present : 1;
+    uint8_t calibration_state[3];
+    uint8_t initializing : 1, initialized : 1, running : 1;
     uint32_t measure_tick;
 } umsg_Sensors_imu_state_t;
+
+typedef struct
+{
+    uint16_t sample_rate_hz;
+    uint16_t accelerometer_range;
+    uint32_t measure_tick;
+} umsg_Sensors_accel_configuration_t;
+
+typedef struct
+{
+    double acceleration[3];
+    uint32_t measure_tick;
+} umsg_Sensors_accel_data_t;
+
+typedef struct
+{
+    umsg_Sensors_sensor_state_t state;
+    uint8_t initializing : 1, initialized : 1, running : 1;
+    uint32_t measure_tick;
+} umsg_Sensors_accel_state_t;
 
 typedef struct
 {
@@ -88,7 +109,7 @@ typedef struct
 typedef struct
 {
     umsg_Sensors_sensor_state_t state;
-    uint8_t initializing : 1, logging_data : 1, reconnecting : 1, not_present : 1;
+    uint8_t initializing : 1, initialized : 1, running : 1;
     uint32_t measure_tick;
 } umsg_Sensors_baro_state_t;
 
@@ -111,7 +132,7 @@ typedef struct
 typedef struct
 {
     umsg_Sensors_sensor_state_t state;
-    uint8_t logging_data : 1, not_present : 1;
+    uint8_t initializing : 1, initialized : 1, running : 1;
     uint32_t measure_tick;
 } umsg_Sensors_thermistor_state_t;
 
@@ -136,6 +157,27 @@ void umsg_Sensors_imu_state_publish(umsg_Sensors_imu_state_t* data);
 void umsg_Sensors_imu_state_publish_ch(umsg_Sensors_imu_state_t* data, uint8_t channel);
 uint8_t umsg_Sensors_imu_state_receive(umsg_sub_handle_t queue, umsg_Sensors_imu_state_t* data, uint32_t timeout);
 uint8_t umsg_Sensors_imu_state_peek(umsg_Sensors_imu_state_t* data);
+
+umsg_sub_handle_t umsg_Sensors_accel_configuration_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_Sensors_accel_configuration_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
+void umsg_Sensors_accel_configuration_publish(umsg_Sensors_accel_configuration_t* data);
+void umsg_Sensors_accel_configuration_publish_ch(umsg_Sensors_accel_configuration_t* data, uint8_t channel);
+uint8_t umsg_Sensors_accel_configuration_receive(umsg_sub_handle_t queue, umsg_Sensors_accel_configuration_t* data, uint32_t timeout);
+uint8_t umsg_Sensors_accel_configuration_peek(umsg_Sensors_accel_configuration_t* data);
+
+umsg_sub_handle_t umsg_Sensors_accel_data_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_Sensors_accel_data_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
+void umsg_Sensors_accel_data_publish(umsg_Sensors_accel_data_t* data);
+void umsg_Sensors_accel_data_publish_ch(umsg_Sensors_accel_data_t* data, uint8_t channel);
+uint8_t umsg_Sensors_accel_data_receive(umsg_sub_handle_t queue, umsg_Sensors_accel_data_t* data, uint32_t timeout);
+uint8_t umsg_Sensors_accel_data_peek(umsg_Sensors_accel_data_t* data);
+
+umsg_sub_handle_t umsg_Sensors_accel_state_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_Sensors_accel_state_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
+void umsg_Sensors_accel_state_publish(umsg_Sensors_accel_state_t* data);
+void umsg_Sensors_accel_state_publish_ch(umsg_Sensors_accel_state_t* data, uint8_t channel);
+uint8_t umsg_Sensors_accel_state_receive(umsg_sub_handle_t queue, umsg_Sensors_accel_state_t* data, uint32_t timeout);
+uint8_t umsg_Sensors_accel_state_peek(umsg_Sensors_accel_state_t* data);
 
 umsg_sub_handle_t umsg_Sensors_baro_configuration_subscribe(uint32_t prescaler, uint8_t length);
 umsg_sub_handle_t umsg_Sensors_baro_configuration_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);

@@ -135,6 +135,11 @@
                     "type": "sensor_state"
                 },
                 {
+                    "name": "calibration_state",
+                    "type": "uint8",
+                    "length": 3
+                },
+                {
                     "type": "uint8",
                     "bitfield": [
                         {
@@ -142,15 +147,72 @@
                             "bits": 1
                         },
                         {
-                            "name": "logging_data",
+                            "name": "initialized",
                             "bits": 1
                         },
                         {
-                            "name": "reconnecting",
+                            "name": "running",
+                            "bits": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "accel_configuration",
+            "fields": [
+                {
+                    "name": "sample_rate_hz",
+                    "type": "uint16"
+                },
+                {
+                    "name": "accelerometer_range",
+                    "type": "uint16"
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "accel_data",
+            "fields": [
+                {
+                    "name": "acceleration",
+                    "type": "double",
+                    "length": 3
+                },
+                {
+                    "name": "measure_tick",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "accel_state",
+            "fields": [
+                {
+                    "name": "state",
+                    "type": "sensor_state"
+                },
+                {
+                    "type": "uint8",
+                    "bitfield": [
+                        {
+                            "name": "initializing",
                             "bits": 1
                         },
                         {
-                            "name": "not_present",
+                            "name": "initialized",
+                            "bits": 1
+                        },
+                        {
+                            "name": "running",
                             "bits": 1
                         }
                     ]
@@ -222,15 +284,11 @@
                             "bits": 1
                         },
                         {
-                            "name": "logging_data",
+                            "name": "initialized",
                             "bits": 1
                         },
                         {
-                            "name": "reconnecting",
-                            "bits": 1
-                        },
-                        {
-                            "name": "not_present",
+                            "name": "running",
                             "bits": 1
                         }
                     ]
@@ -294,11 +352,15 @@
                     "type": "uint8",
                     "bitfield": [
                         {
-                            "name": "logging_data",
+                            "name": "initializing",
                             "bits": 1
                         },
                         {
-                            "name": "not_present",
+                            "name": "initialized",
+                            "bits": 1
+                        },
+                        {
+                            "name": "running",
                             "bits": 1
                         }
                     ]

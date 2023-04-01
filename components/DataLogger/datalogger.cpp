@@ -8,9 +8,9 @@ void DataLogger::initSubs()
   _gps_configuration_sub = umsg_GPS_configuration_subscribe(1, 2);
   _gps_state_sub = umsg_GPS_state_subscribe(1, 4);
 
-  _iridium_received_msg_sub = umsg_Iridium_received_msg_subscribe(1, 2);
-  _iridium_sent_msg_sub = umsg_Iridium_sent_msg_subscribe(1, 2);
-  _iridium_state_sub = umsg_Iridium_state_subscribe(1, 2);
+  _rfd_received_msg_sub = umsg_RFD_received_msg_subscribe(1, 2);
+  _rfd_sent_msg_sub = umsg_RFD_sent_msg_subscribe(1, 2);
+  _rfd_state_sub = umsg_RFD_state_subscribe(1, 2);
 
   _LoRa_received_msg_sub = umsg_LoRa_received_msg_subscribe(1, 4);
   _LoRa_sent_msg_sub = umsg_LoRa_sent_msg_subscribe(1, 10);
@@ -23,6 +23,10 @@ void DataLogger::initSubs()
   _baro_configuration_sub = umsg_Sensors_baro_configuration_subscribe(1, 3);
   _baro_data_sub = umsg_Sensors_baro_data_subscribe(1, 30);
   _baro_state_sub = umsg_Sensors_baro_state_subscribe(1, 3);
+
+  _accel_configuration_sub = umsg_Sensors_accel_configuration_subscribe(1, 10);
+  _accel_data_sub = umsg_Sensors_accel_data_subscribe(1, 244);
+  _accel_state_sub = umsg_Sensors_accel_state_subscribe(1, 10);
 
   _therm_0_config_sub = umsg_Sensors_thermistor_configuration_subscribe_ch(1, 3, 0);
   _therm_1_config_sub = umsg_Sensors_thermistor_configuration_subscribe_ch(1, 3, 1);
@@ -80,9 +84,9 @@ void DataLogger::readSubs()
   }
 
   //=================
-  // Iridium
+  // RFD
   //=================
-  umsg_Iridium_received_msg_receive(_iridium_received_msg_sub, &_iridium_received_data, timeout);
+  umsg_RFD_received_msg_receive(_rfd_received_msg_sub, &_rfd_received_data, timeout);
 
   //=================
   // LoRa
@@ -158,6 +162,32 @@ void DataLogger::readSubs()
     while (umsg_Sensors_baro_state_receive(_baro_state_sub, &_baro_state_data, timeout) == pdPASS)
     {
       _datalines.push_back(baro_state_toDataLine(_baro_state_data));
+    }
+  }
+
+  //=================
+  // ACCEL
+  //=================
+
+  while (umsg_Sensors_accel_data_receive(_accel_data_sub, &_accel_data, timeout) == pdPASS)
+  {
+    _datalines.push_back(accel_data_toDataLine(_accel_data));
+  }
+
+  if (umsg_Sensors_accel_configuration_peek(&_accel_configuration_data))
+  {
+    while (umsg_Sensors_accel_configuration_receive(_accel_configuration_sub, &_accel_configuration_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(accel_configuration_toDataLine(_accel_configuration_data));
+    }
+  }
+
+  // Messages need to be removed from subscription queue
+  if (umsg_Sensors_accel_state_peek(&_accel_state_data))
+  {
+    while (umsg_Sensors_accel_state_receive(_accel_state_sub, &_accel_state_data, timeout) == pdPASS)
+    {
+      _datalines.push_back(accel_state_toDataLine(_accel_state_data));
     }
   }
 
@@ -246,15 +276,13 @@ void DataLogger::vLogLoop_Task(void *data_logger)
 void DataLogger::handleQueueData()
 {
 
-  // std::string sd_data_msg = *(sd_data->message);
-
   readSubs();
 
   // Sort all entries by the time at which they were recorded
   std::sort(_datalines.begin(), _datalines.end(), [](const DataLine &data1, const DataLine &data2)
             { return data1.recorded_tick < data2.recorded_tick; });
 
-  if (_datalines.size() > 50)
+  if (_datalines.size() > 25)
   {
     printf("Time of sd log: %d\n", xTaskGetTickCount());
     log_to_sd();
@@ -264,6 +292,7 @@ void DataLogger::handleQueueData()
 void DataLogger::log_to_sd()
 {
   std::string sd_data_msg = "";
+
   for (DataLine data : _datalines)
   {
     sd_data_msg += data.toString() + "\n";

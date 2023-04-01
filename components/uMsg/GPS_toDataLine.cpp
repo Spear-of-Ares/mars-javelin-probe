@@ -49,7 +49,7 @@ DataLine GPS_state_toDataLine(umsg_GPS_state_t &data)
     dataline.name = "GPS_STATE";
     dataline.recorded_tick = data.measure_tick;
     dataline.data.push_back(GPS_state_toString(data.state));
-    dataline.data.push_back(std::to_string(data.initializing) + std::to_string(data.not_enough_sats) + std::to_string(data.receiving_data) + std::to_string(data.reconnecting) + std::to_string(data.not_present));
+    dataline.data.push_back(std::to_string(data.initializing) + std::to_string(data.initialized) + std::to_string(data.running));
 
     return dataline;
 }

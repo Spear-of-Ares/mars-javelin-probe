@@ -1,26 +1,61 @@
 #include "Sensors.h"
 
-// void Sensors::vAccelLoop_Task(void *arg)
-// {
-//     Sensors sensors = *((Sensors *)arg);
-//     sensors.setup();
+void Sensors::vAccelLoop_Task(void *arg)
+{
+    Sensors sensors = *((Sensors *)arg);
 
-//     while (true) // limited / no movement for 5 seconds == kill task
-//     {
-//         // sensors.log_accel();
-//         vTaskDelay(1 / portTICK_PERIOD_MS);
-//     }
-// }
+    while (true) // limited / no movement for 5 seconds == kill task
+    {
+        sensors.log_accel();
+        vTaskDelay(1 / portTICK_PERIOD_MS);
+    }
+}
 
 void Sensors::vMainLoop_Task(void *arg)
 {
     Sensors sensors = *((Sensors *)arg);
     sensors.setup();
+
+    // Wait for signal to start logging
+    while (!sensors.start_data_logging())
+    {
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+
+    int count = 0;
     for (;;)
     {
+        if (count % 30 == 0)
+        {
+            count = 0;
+            sensors.log_imu_calibration();
+        }
+        if (sensors.start_accel_logging())
+        {
+            sensors.create_accel_task();
+        }
         sensors.log_data();
         sensors.variable_delay(1000 / sensors.sample_rate_hz);
+        count++;
     }
+}
+
+bool Sensors::start_accel_logging()
+{
+    if (umsg_CommandCenter_command_receive(_cmd_sub_handle, &_cmd_data, 1) == pdPASS)
+    {
+        return _cmd_data.low_alt_data_gather;
+    }
+    return false;
+}
+
+bool Sensors::start_data_logging()
+{
+    if (umsg_CommandCenter_command_receive(_cmd_sub_handle, &_cmd_data, 1) == pdPASS)
+    {
+        return _cmd_data.start_system;
+    }
+    return false;
 }
 
 void Sensors::variable_delay(int delay_ms)
@@ -38,6 +73,42 @@ void Sensors::set_sample_rate_hz(int hz)
     sample_rate_hz = hz;
 }
 
+void Sensors::log_imu_calibration()
+{
+    umsg_Sensors_imu_state_t imu_state;
+    imu_state.state = SENSOR_OK;
+    imu_state.running = 1;
+    imu_state.measure_tick = xTaskGetTickCount();
+
+    printf("IMU Calibration:\n");
+    uint8_t sys_cal, gyro_cal, accel_cal, mag_cal;
+    _imu.getCalibration(&sys_cal, &gyro_cal, &accel_cal, &mag_cal);
+    printf("sys: %d, gyro: %d, accel: %d, mag: %d\n", sys_cal, gyro_cal, accel_cal, mag_cal);
+
+    imu_state.calibration_state[0] = gyro_cal;
+    imu_state.calibration_state[1] = accel_cal;
+    imu_state.calibration_state[2] = mag_cal;
+
+    umsg_Sensors_imu_state_publish(&imu_state);
+
+    uint8_t sys_status,
+        self_test_result, system_error;
+    _imu.getSystemStatus(&sys_status, &self_test_result, &system_error);
+    printf("System Status:\n");
+    printf("sys: %d, self_test %d, sys_error: %d\n", sys_status, self_test_result, system_error);
+}
+
+void Sensors::create_accel_task()
+{
+    xTaskCreate(
+        Sensors::vAccelLoop_Task,
+        "ACCEL_TASK",
+        1024 * 2,
+        (void *)(this),
+        10,
+        NULL);
+}
+
 /**
  *  SETUP FUNCTIONS
  **/
@@ -51,7 +122,7 @@ void Sensors::setup()
     ESP_ERROR_CHECK(setup_imu());
     ESP_ERROR_CHECK(setup_baro());
     ESP_ERROR_CHECK(setup_therm());
-    // ESP_ERROR_CHECK(setup_accel());
+    ESP_ERROR_CHECK(setup_accel());
 }
 
 esp_err_t Sensors::setup_imu()
@@ -95,17 +166,8 @@ esp_err_t Sensors::setup_imu()
     conf_data.measure_tick = xTaskGetTickCount();
     umsg_Sensors_imu_configuration_publish(&conf_data);
 
-#ifdef CAL_IMU
-    while (!_imu.isFullyCalibrated())
-    {
-        printf("The IMU is not fully calibrated. Calibration:\n");
-        uint8_t sys_cal, gyro_cal, accel_cal, mag_cal;
-        _imu.getCalibration(&sys_cal, &gyro_cal, &accel_cal, &mag_cal);
-        printf("sys: %d, gyro: %d, accel: %d, mag: %d\n", sys_cal, gyro_cal, accel_cal, mag_cal);
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-    }
-#endif
     state_data.initializing = 0;
+    state_data.initialized = 1;
     state_data.measure_tick = xTaskGetTickCount();
     umsg_Sensors_imu_state_publish(&state_data);
 
@@ -114,7 +176,25 @@ esp_err_t Sensors::setup_imu()
 
 esp_err_t Sensors::setup_accel()
 {
-    //_impact_accel = Adafruit_ADXL375(375, &Wire);
+    umsg_Sensors_accel_state_t state_data;
+    state_data.initializing = 1;
+    state_data.state = SENSOR_DISCONNECTED;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_Sensors_accel_state_publish(&state_data);
+
+    _impact_accel = Adafruit_ADXL375(375, &Wire);
+
+    while (!_impact_accel.begin())
+    {
+        printf("ADXL375 Accelerometer could not be connected\n");
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+    }
+
+    state_data.state = SENSOR_OK;
+    state_data.initializing = 0;
+    state_data.initialized = 1;
+    state_data.measure_tick = xTaskGetTickCount();
+    umsg_Sensors_accel_state_publish(&state_data);
 
     return ESP_OK;
 }
@@ -181,6 +261,7 @@ esp_err_t Sensors::setup_baro()
     umsg_Sensors_baro_configuration_publish(&conf_data);
 
     state_data.initializing = 0;
+    state_data.initialized = 1;
     state_data.measure_tick = xTaskGetTickCount();
     umsg_Sensors_baro_state_publish(&state_data);
 
@@ -189,6 +270,13 @@ esp_err_t Sensors::setup_baro()
 
 esp_err_t Sensors::setup_therm()
 {
+    umsg_Sensors_thermistor_state_t therm_state;
+    therm_state.initialized = 1;
+    therm_state.state = SENSOR_OK;
+    therm_state.measure_tick = xTaskGetTickCount();
+
+    umsg_Sensors_thermistor_state_publish_ch(&therm_state, 0);
+    umsg_Sensors_thermistor_state_publish_ch(&therm_state, 1);
     return ESP_OK;
 }
 
@@ -231,10 +319,14 @@ void Sensors::log_imu()
 
         // Convert milliseconds to seconds
         float deltaTime = (lin_accel.timestamp - imu_last_read) / 1000;
-        float cutoffFrequency = 2;
-        lin_accel.acceleration.x = _low_pass_filters[0].update(lin_accel.acceleration.x, deltaTime, cutoffFrequency);
-        lin_accel.acceleration.y = _low_pass_filters[1].update(lin_accel.acceleration.x, deltaTime, cutoffFrequency);
-        lin_accel.acceleration.z = _low_pass_filters[2].update(lin_accel.acceleration.x, deltaTime, cutoffFrequency);
+        float cutoffFrequency = 10;
+        float cutoff = 0.2;
+        lin_accel.acceleration.x = abs(lin_accel.acceleration.x) > cutoff ? lin_accel.acceleration.x : 0;
+        lin_accel.acceleration.y = abs(lin_accel.acceleration.y) > cutoff ? lin_accel.acceleration.y : 0;
+        lin_accel.acceleration.z = abs(lin_accel.acceleration.z) > cutoff ? lin_accel.acceleration.z : 0;
+        // lin_accel.acceleration.x = _low_pass_filters[0].update(lin_accel.acceleration.x, deltaTime, cutoffFrequency);
+        // lin_accel.acceleration.y = _low_pass_filters[1].update(lin_accel.acceleration.x, deltaTime, cutoffFrequency);
+        // lin_accel.acceleration.z = _low_pass_filters[2].update(lin_accel.acceleration.x, deltaTime, cutoffFrequency);
 
         velocity[0] = velocity[0] + (lin_accel.acceleration.x * ACCEL_VEL_TRANSITION);
         velocity[1] = velocity[1] + (lin_accel.acceleration.y * ACCEL_VEL_TRANSITION);
@@ -370,4 +462,16 @@ void Sensors::log_therm()
 #endif
     external_data.measure_tick = measure_tick;
     umsg_Sensors_thermistor_data_publish_ch(&external_data, 1);
+}
+
+void Sensors::log_accel()
+{
+    sensors_event_t event;
+    _impact_accel.getEvent(&event);
+
+    umsg_Sensors_accel_data_t accel_data;
+    accel_data.acceleration[0] = event.acceleration.x;
+    accel_data.acceleration[1] = event.acceleration.y;
+    accel_data.acceleration[2] = event.acceleration.z;
+    accel_data.measure_tick = xTaskGetTickCount();
 }

@@ -18,6 +18,10 @@
                         {
                             "name": "self_test",
                             "bits": 1
+                        },
+                        {
+                            "name": "start_system",
+                            "bits": 1
                         }
                     ]
                 },
